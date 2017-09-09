@@ -17,8 +17,6 @@ const srcDir = path.resolve(__dirname, 'src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 const baseUrl = '/';
 
-console.log(NODE_ENV)
-
 const cssRules = [
   { loader: 'css-loader' },
   {
@@ -52,7 +50,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     chunkFilename: production ? '[name].[chunkhash].chunk.js' : '[name].[hash].chunk.js',
   },
   devServer: {
-    port: nodePort,
+    port: process.env.PORT || 9000,
     contentBase: outDir,
     // serve index.html for all 404 (required for push-state)
     historyApiFallback: true,
