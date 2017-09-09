@@ -13,8 +13,8 @@
     "node": ">= 6.0.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "nps",
+    "dev": "node server.js",
+    "start": "nps",
     "test": "nps test"
   },
   "jest": {
