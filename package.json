@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "nps",
-    "start": "nps serve",
+    "start": "http-server -a localhost -p $PORT",
     "test": "nps test",
     "build":"nps build"
   },
