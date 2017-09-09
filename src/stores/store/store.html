@@ -1,8 +1,19 @@
-<template >
+<template>
   <require from="material-design-lite/material.css"></require>
+   <ai-dialog>
+     <ai-dialog-header>
+        <h2>${message}</h2>
+     </ai-dialog-header>
 
-  <div class="mdl-list au-animate">
-    ${store.name}
-  </div>
+      <ai-dialog-body>
+         <h2>${message}</h2>
+         <div class="mdl-list au-animate">
+           ${store.name}
+      </ai-dialog-body>
 
+      <ai-dialog-footer>
+         <button click.trigger = "dController.cancel()">Cancel</button>
+         <button click.trigger = "dController.ok(message)">Ok</button>
+      </ai-dialog-footer>
+   </ai-dialog>
 </template>

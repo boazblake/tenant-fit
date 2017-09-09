@@ -1,26 +1,25 @@
-import { customElement, useView, inject } from 'aurelia-framework'
-import { DialogService } from 'aurelia-dialog'
+import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model'
 
 
 @customElement('store')
 @useView('./store.html')
-@inject(HttpClient, DialogService)
+@inject(HttpClient, DialogController)
 export class Store {
-  constructor( http, modal ) {
+  constructor( http, dController ) {
     this.disposables = new Set()
-    this.storeId = null
-    this.userId = null
+    this.dController = dController
+    this.id = null
     this.state = {}
     this.http = http
     this.style = 'style'
-    this.modal = modal
   }
 
-  activate(params, routeConfig, navigationInstruction){
-    console.log(params, routeConfig, navigationInstruction);
-    this.storeId = params.id
+  activate(id){
+    this.id = id
+    console.log('store id', id)
   }
 
 
@@ -33,7 +32,7 @@ export class Store {
       this.store = data
     }
 
-    getStoreTask(this.http)(this.storeId).fork(onError, onSuccess)
+    getStoreTask(this.http)(this.id).fork(onError, onSuccess)
   }
 
 

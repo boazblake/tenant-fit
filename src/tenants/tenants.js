@@ -3,6 +3,7 @@ import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getTenantsTask, addTypeTask} from './model'
 import { getStoresTask } from '../stores/model'
+import style from './styles.css'
 import { Prompt } from '../components/modal'
 import { checkUserId } from 'authConfig'
 
@@ -18,7 +19,7 @@ export class Tenants {
     this.userId = null
     this.state = {}
     this.http = http
-    this.style = 'style'
+    this.style = style
     this.modal = modal
     this.tenant = {name:'', userId:this.userId}
     this.store = {name:'', tenantId:'59b1f19cc64207001110f20f', userId:this.userId}

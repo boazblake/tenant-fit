@@ -2,7 +2,7 @@
   <require from="material-design-lite/material.css"></require>
   <div class="mdl-list au-animate">
     <div repeat.for="store of stores" class="stores-list">
-        <button class="mdl-list__item-primary-content" click.delegate="getStores(store._id)" >
+        <button class="mdl-list__item-primary-content" click.delegate="showStore(store._id)" >
         <!-- <a class="mdl-list__item-primary-content" route-href="route:stores; params.bind:{id:userId, id:store._id}" >${store.name}</a> -->
         <div class="demo-card-image mdl-card mdl-shadow--2dp">
           <div class="mdl-card__title mdl-card--expand"></div>

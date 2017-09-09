@@ -1,22 +1,26 @@
 import { customElement, useView, inject } from 'aurelia-framework'
+import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask } from './model'
-import { Prompt } from '../components/modal'
+import { getStoreTask } from './store/model'
+import { Store } from './store/store.js'
 
 
 @customElement('stores')
 @useView('./stores.html')
-@inject(HttpClient, DialogService)
+@inject(EventAggregator, HttpClient, DialogService)
 export class Stores {
-  constructor( http, modal ) {
+  constructor( emitter, http, modal ) {
     this.disposables = new Set()
     this.stores = []
     this.userId = null
     this.state = {}
+    this.emitter = emitter
     this.http = http
     this.style = 'style'
     this.modal = modal
+    this.errors=[]
   }
 
   activate(params){
@@ -29,12 +33,35 @@ export class Stores {
 
     const onSuccess = data => {
       console.log('success', data)
+      this.emitter.publish('loading-channel', false)
       this.stores = data
     }
 
     getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
   }
 
+  showStore(id) {
+    this.getStore(id)
+  }
 
+
+  getStore(id) {
+    const onError = error => {
+      console.error(error);
+      this.errors.push({type:'stores', msg: 'error with getting stores'})
+    }
+
+    const onSuccess = store => {
+      this.store = store
+      this.errors['store'] = ''
+      this.openModal(id)
+    }
+
+    getStoreTask(this.http)(id).fork(onError, onSuccess)
+  }
+
+  openModal(id) {
+    this.modal.open( {viewModel: Store, model: id })
+ }
 
 }
