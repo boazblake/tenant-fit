@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nps",
-    "test": "nps test",
+    "test": "nps test"
   },
   "jest": {
     "modulePaths": [
