@@ -5,7 +5,7 @@ import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask } from './model'
 import { getStoreTask } from './store/model'
 import { Store } from './store/store.js'
-
+import { style } from './style.css'
 
 @customElement('stores')
 @useView('./stores.html')
@@ -21,6 +21,7 @@ export class Stores {
     this.style = 'style'
     this.modal = modal
     this.errors=[]
+    this.style=style
   }
 
   activate(params){

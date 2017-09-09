@@ -1,0 +1,19 @@
+.mdc-card {
+  padding: 0!important;
+  /*display:flex;
+  padding: 30px 0;
+  text-align: center;*/
+}
+
+.store {
+  margin: 40px;
+}
+
+.stores {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  --mdc-layout-grid-margin-desktop: 40px;
+  --mdc-layout-grid-gutter-tablet: 16px;
+  --mdc-layout-grid-gutter-phone: 8px;
+}
