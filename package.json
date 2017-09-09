@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "nps",
     "postinstall": "nps webpack.build.production",
-    "start": "nps webpack.serve",
+    "start": "nps serve",
     "test": "nps test",
     "build": "nps build"
   },

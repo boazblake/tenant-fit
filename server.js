@@ -1,9 +1,9 @@
-var port = Number(process.env.PORT || 9000);
 
 var express = require('express');
-var app = express();
-app.use(express.static(__dirname + '/app'));
-
-var server = app.listen(port, function() {
-   console.log('Listening on port %d', server.address().port);
-});
+var path = require('path');
+var serveStatic = require('serve-static');
+app = express();
+app.use(serveStatic(__dirname + "/dist"));
+var port = process.env.PORT || 9000;
+app.listen(port);
+console.log('server started '+ port);
