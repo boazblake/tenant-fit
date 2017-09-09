@@ -1,0 +1,34 @@
+<template>
+    <require from="material-design-lite/material.css"></require>
+
+<div class="au-animate">
+  <form role="form">
+
+    <div class="mdl-textfield mdl-js-textfield">
+      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="email">Email</label>
+        <input class="mdl-textfield__input" style="outline: none;" type="text" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value.bind="_user.email" name="email">
+        <span class="mdl-textfield__error" show.bind="errors.email">Input is not a valid email!</span>
+      </fieldset>
+    </div>
+<br>
+    <div class="mdl-textfield mdl-js-textfield">
+      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="Password">Password</label>
+        <input class="mdl-textfield__input" style="outline: none;" type="password" value.bind="_user.password" name="password">
+        <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span>
+      </fieldset>
+    </div>
+    <label class="mdl-switch mdl-js-switch" for="isAdmin">
+      <input class="mdl-switch__input" style="outline: none;" type="checkbox" checked.bind="_user.isAdmin" name="isAdmin" id="isAdmin">
+      <span class="mdl-switch__label">Admin</span>
+    </label>
+    <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span>
+
+    <div class="actions">
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="register()">REGISTER</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="login()">LOGIN</button>
+    </div>
+  </form>
+</div>
+</template>

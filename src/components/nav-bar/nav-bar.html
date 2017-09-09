@@ -1,0 +1,41 @@
+<template bindable="router" >
+  <require from="material-design-lite/material.css"></require>
+  <require from="./styles.css"></require>
+
+  <nav class="navbar navbar-default navbar-fixed-top" id="navbar" role="navigation" >
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/tenantfit/${currentUser}">
+        <i show.bind="router.currentInstruction.config.name !== 'tenants' && authStatus" style={styles.home-button} class="fa fa-undo" aria-hidden="true" class="navbar-logo" ></i>
+      </a>
+      <a class="navbar-brand" href="#/tenantfit/${currentUser}/tenant/${currentTenant}/stores">
+        <i show.bind="router.currentInstruction.config.name !== 'stores' && authStatus" style={styles.home-button} class="fa fa-hone" aria-hidden="true" class="navbar-logo" ></i>
+      </a>
+      <span>${router.title}</span>
+    </div>
+    <div class="title">TENANT FIT</div>
+    <div class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse" >
+      <div class="authed" show.bind="authStatus">
+        <ul class="nav navbar-nav">
+          <li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''} ">
+            <a class="mdl-list__item-primary-content" data-toggle="collapse"
+            data-target="#skeleton-navigation-navbar-collapse.in" href.bind="route.href">${route.title}</a>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <a show.bind="authStatus" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="logout()">LOGOUT</a>
+        <li class="loader" if.bind="router.isNavigating">
+          <i class="fa fa-spinner fa-spin fa-2x"></i>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+</template>
