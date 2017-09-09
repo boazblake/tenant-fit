@@ -13,9 +13,10 @@
     "node": ">= 6.0.0"
   },
   "scripts": {
-    "dev": "node server.js",
-    "start": "nps",
-    "test": "nps test"
+    "dev": "nps",
+    "start": "nps serve",
+    "test": "nps test",
+    "build":"nps build"
   },
   "jest": {
     "modulePaths": [
