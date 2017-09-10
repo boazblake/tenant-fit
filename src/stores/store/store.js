@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model'
-
+import { style } from './style.css'
 
 @customElement('store')
 @useView('./store.html')
@@ -14,7 +14,7 @@ export class Store {
     this.id = null
     this.state = {}
     this.http = http
-    this.style = 'style'
+    this.style = style
   }
 
   activate(id){

@@ -1,18 +1,18 @@
 <template >
   <require from="material-design-lite/material.css"></require>
 
-  <div class="storeList mdc-layout-grid">
-    <div class="mdc-layout-grid__inner stores">
-      <div repeat.for="store of stores"  class="store mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-4 ">
-        <section class="mdc-card__primary">
-          <h3 class="mdc-card__title mdc-card__title--large">${store.name}</h3>
+  <div class="storeList mdl-layout mdl-layout-grid">
+    <div class="mdl-layout-grid__inner stores">
+      <div repeat.for="store of stores"  class="store mdl-card mdl-shadow--2dp mdl-layout-grid__cell mdl-layout-grid__cell--span-1 ">
+        <section class="mdl-card__title">
+          <h3 class="mdl-card__title-text mdl-card__title--large">${store.name}</h3>
         </section>
-        <section class="mdc-card__supporting-text">
+        <section class="mdl-card__supporting-text">
           <p>Expiration Date: ${store.expirationDate}</p>
           <p>Notification Date: ${store.notificationDate}</p>
         </section>
-        <section class="mdc-card__actions">
-          <button class="mdc-button mdc-button--compact mdc-button--theme-dark mdc-card__action" click.delegate="showStore(store._id)">MORE DETAIL</button>
+        <section class="mdl-card__actions mdl-card--border">
+          <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="showStore(store._id)">MORE DETAIL</button>
         </section>
       </div>
     </div>
