@@ -1,14 +1,16 @@
 <template >
   <require from="material-design-lite/material.css"></require>
 
-  <ul class="demo-list-three mdl-list">
-    <li repeat.for="store of stores" class="mdl-list__item mdl-list__item--three-line">
+  <ul class="storeList demo-list-three mdl-list">
+    <li repeat.for="store of stores" class="mdl-shadow--2dp mdl-list__item mdl-list__item--three-line">
       <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-avatar">STORE</i>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="#000000" d="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z" />
+          </svg>
         <span>${store.name}</span>
         <span class="mdl-list__item-text-body">
-          <p>Expiration Date: ${store.expirationDate}</p>
-          <p>Notification Date: ${store.notificationDate}</p>
+          <p>Expiration Date: ${store.expirationDate} <br>
+            Notification Date: ${store.notificationDate}</p>
         </span>
       </span>
       <span class="mdl-list__item-secondary-content">

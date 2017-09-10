@@ -33,9 +33,9 @@ export class Stores {
       console.error(error);
 
     const onSuccess = data => {
+      this.stores = data
       console.log('success', data)
       this.emitter.publish('loading-channel', false)
-      this.stores = data
     }
 
     getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
@@ -56,8 +56,10 @@ export class Stores {
       this.store = store
       this.errors['store'] = ''
       this.openModal(id)
+      this.emitter.publish('loading-channel', false)
     }
 
+    this.emitter.publish('loading-channel', true)
     getStoreTask(this.http)(id).fork(onError, onSuccess)
   }
 
