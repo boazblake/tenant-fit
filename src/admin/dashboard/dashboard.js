@@ -1,37 +1,38 @@
 import { customElement, useView, inject } from 'aurelia-framework'
 import { DialogService } from 'aurelia-dialog'
+import { EventAggregator } from 'aurelia-event-aggregator'
 import { HttpClient } from 'aurelia-http-client'
 import { getTenantsTask, addTypeTask} from './model'
 import { getStoresTask } from '../stores/model'
 import style from './styles.css'
-import { Prompt } from '../components/modal'
-import { checkUserId } from 'authConfig'
+import { CheckAuth } from 'authConfig'
 
 
-@customElement('tenants')
-@useView('./tenants.html')
-@inject(HttpClient, DialogService)
-export class Tenants {
-  constructor( http, modal ) {
+@customElement('dashboard')
+@useView('./dashboard.html')
+@inject(HttpClient, DialogService, EventAggregator)
+export class Dashboard {
+  constructor( http, modal, emitter) {
     this.disposables = new Set()
-    this.tenants = []
-    this.stores = []
-    this.userId = null
     this.state = {}
     this.http = http
     this.style = style
     this.modal = modal
-    this.tenant = {name:'', userId:this.userId}
-    this.store = {name:'', tenantId:'59b1f19cc64207001110f20f', userId:this.userId}
     this.errors = []
+    this.emitter = emitter
   }
 
   activate(){
-    this.userId = checkUserId()
+    this.userId = CheckAuth.userId()
     console.log(this.userId);
   }
 
   attached(params) {
+    this.getTenants()
+    this.getStores()
+  }
+
+  getTenants() {
     const onError = error => {
       console.error(error);
       this.errors.push({type:'attached', msg: 'error with attached'})
@@ -46,6 +47,24 @@ export class Tenants {
     getTenantsTask(this.http)(this.userId).fork(onError, onSuccess)
   }
 
+  getStores() {
+    const onError = error => {
+      console.error(error);
+      this.errors.push({type:'stores', msg: 'error with getting stores'})
+    }
+
+    const onSuccess = stores => {
+      this.stores = stores
+      this.errors['store'] = ''
+      this.emitter.publish('loading-channel', false)
+
+    }
+    console.log(CheckAuth.isAdmin())
+
+    CheckAuth.isAdmin()
+      ? getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
+      : console.log('not allowed')
+  }
 
   addTenant(){
     const onError = error => {
@@ -55,10 +74,10 @@ export class Tenants {
 
     const onSuccess = s => {
       console.log('success', s)
-      this.errors['tenants'] = ''
+      this.errors['admin'] = ''
     }
     this.tenant.userId = this.userId
-    addTypeTask('tenants')(this.http)(this.userId)(this.tenant).fork(onError, onSuccess)
+    addTypeTask('admin')(this.http)(this.userId)(this.tenant).fork(onError, onSuccess)
   }
 
   addStore(){
@@ -75,22 +94,10 @@ export class Tenants {
     addTypeTask('stores')(this.http)(this.userId)(this.store).fork(onError, onSuccess)
   }
 
-  getStores(id) {
-    const onError = error => {
-      console.error(error);
-      this.errors.push({type:'stores', msg: 'error with getting stores'})
-    }
 
-    const onSuccess = stores => {
-      this.stores = stores
-      this.errors['store'] = ''
-    }
-
-    getStoresTask(this.http)(id).fork(onError, onSuccess)
-  }
 
   openModal() {
-      this.modal.open( {viewModel: Prompt, model: 'Are you sure?' }).then(response => {
+      this.modal.open( {viewModel: '', model: 'Are you sure?' }).then(response => {
          console.log(response);
 
          if (!response.wasCancelled) {

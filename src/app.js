@@ -1,6 +1,6 @@
 import {PLATFORM} from 'aurelia-pal';
 import {Redirect, NavigationInstruction, RouterConfiguration, Router, Next} from 'aurelia-router'
-import { checkAuth } from 'authConfig'
+import { CheckAuth } from 'authConfig'
 
 const routes =
   [ { route: 'tenantfit'
@@ -10,12 +10,19 @@ const routes =
     , title: 'TENANT FIT LOGIN'
     , settings: { roles: [] }
     }
-  , { route: 'tenantfit/:id'
+  , { route: 'tenantfit/stores/:id'
     , name: 'home'
     , moduleId: PLATFORM.moduleName('./home/home')
     , nav: false
-    , title:'home'
+    , title:'CLIENT'
     , settings: { roles: ['auth'] }
+    }
+  , { route: ['tenantfit/:id/admin']
+    , name: 'admin'
+    , moduleId: PLATFORM.moduleName('./admin/admin')
+    , nav: false
+    , title: 'ADMIN'
+    , settings: { roles: ['auth', 'admin'] }
     }
   , { route: ['']
     , nav: false
@@ -24,33 +31,31 @@ const routes =
   ]
 
 
-  export class App {
-    constructor() {
-      this.style = 'style'
-    }
-
-    configureRouter(config, router) {
-      config.title = 'Tenant Fit'
-      config.pushState = true
-      config.addPipelineStep('authorize', AuthorizeStep)
-      config.exportToRouter(router)
-      config.map(routes)
-
-      config.mapUnknownRoutes(() => PLATFORM.moduleName('./home/home'))
-
-      this.router = router
-    }
+export class App {
+  constructor() {
+    this.style = 'style'
   }
 
+  configureRouter(config, router) {
+    config.title = 'Tenant Fit'
+    config.pushState = true
+    config.addPipelineStep('authorize', AuthorizeStep)
+    config.exportToRouter(router)
+    config.map(routes)
 
+    config.mapUnknownRoutes(() => PLATFORM.moduleName('./home/home'))
 
-  class AuthorizeStep {
-    run(navigationInstruction, next) {
-      if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('auth') !== -1)) {
-        if (! checkAuth()) {
-          return next.cancel(new Redirect('/'))
-        }
+    this.router = router
+  }
+}
+
+class AuthorizeStep {
+  run(navigationInstruction, next) {
+    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('auth') !== -1)) {
+      if (! CheckAuth.auth()) {
+        return next.cancel(new Redirect('/'))
       }
-      return next();
     }
+    return next();
   }
+}

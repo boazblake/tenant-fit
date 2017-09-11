@@ -3,14 +3,14 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask } from './model'
-import { getStoreTask } from './store/model'
-import { Store } from './store/store.js'
+import { getStoreTask } from '../store/model'
+import { Store } from '../store/store.js'
 import { style } from './style.css'
 
-@customElement('stores')
-@useView('./stores.html')
+@customElement('dashboard')
+@useView('./dashboard.html')
 @inject(EventAggregator, HttpClient, DialogService)
-export class Stores {
+export class Dashboard {
   constructor( emitter, http, modal ) {
     this.disposables = new Set()
     this.stores = []
@@ -34,7 +34,6 @@ export class Stores {
 
     const onSuccess = data => {
       this.stores = data
-      console.log('success', data)
       this.emitter.publish('loading-channel', false)
     }
 

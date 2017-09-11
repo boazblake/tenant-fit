@@ -5,18 +5,18 @@ import { CheckAuth } from 'authConfig'
 
 
 const routes =
-  [{ route: ['', 'tenantfit/stores/:id']
+  [{ route: ['', 'tenantfit/:id/admin']
     , name: 'dashboard'
     , moduleId: PLATFORM.moduleName('./dashboard/dashboard')
     , nav: false
     , title: 'Dashboard'
-    , settings: { roles: ['auth'] }
+    , settings: { roles: ['admin', 'auth'] }
     }
   ]
 
 @inject(Router)
-@useView('./home.html')
-export class Home {
+@useView('./admin.html')
+export class Admin {
   constructor(router) {
     this.style = 'style'
   }
@@ -24,7 +24,7 @@ export class Home {
   configureRouter(config, router) {
     config.map(routes)
 
-    config.mapUnknownRoutes(_ => PLATFORM.moduleName('./dashboard/dashboard'))
+    config.mapUnknownRoutes(_ => PLATFORM.moduleName('../home/home'))
 
     this.router = router
   }
@@ -34,7 +34,7 @@ export class Home {
 class AuthorizeStep {
   run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('admin') !== -1)) {
-      if (! CheckAuth.admin() ) {
+      if (! CheckAuth.admin ) {
         return next.cancel(new Redirect('/'))
       }
     }

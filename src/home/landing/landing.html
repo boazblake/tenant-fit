@@ -2,7 +2,7 @@
     <require from="material-design-lite/material.css"></require>
 
 <div class="au-animate">
-  <form role="form">
+  <form role=" landingForm mdl-card">
 
     <div class="mdl-textfield mdl-js-textfield">
       <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -19,14 +19,14 @@
         <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span>
       </fieldset>
     </div>
-    <label class="mdl-switch mdl-js-switch" for="isAdmin">
+    <!-- <label class="mdl-switch mdl-js-switch" for="isAdmin">
       <input class="mdl-switch__input" style="outline: none;" type="checkbox" checked.bind="_user.isAdmin" name="isAdmin" id="isAdmin">
       <span class="mdl-switch__label">Admin</span>
     </label>
-    <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span>
+    <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span> -->
 
     <div class="actions">
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="register()">REGISTER</button>
+      <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="register()">REGISTER</button> -->
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="login()">LOGIN</button>
     </div>
   </form>

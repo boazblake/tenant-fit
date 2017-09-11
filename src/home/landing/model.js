@@ -22,8 +22,9 @@ export const registerUserTask = http => data =>
 
 export const registerTask = http =>
   compose(map(map(identity(x => JSON.parse(x.response)))),registerUserTask)(http)
-  // =====LOGIN================================================================
 
+
+  // =====LOGIN================================================================
 export const loginUser = http => data => http.post("https://buxy-proxy.herokuapp.com/auth/login", data)
 
 export const loginUserTask = http => data =>
