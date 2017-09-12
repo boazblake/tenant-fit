@@ -1,4 +1,4 @@
-.store-collection {
+.storeList {
   margin-top: 50px;
 }
 
@@ -16,8 +16,4 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-storeBColor {
-  background-color: green;
 }

@@ -14,7 +14,7 @@ export const userModel = dto =>
 // =====REGISTER================================================================
 
 export const registerUser = http => data =>
-  http.post("https://buxy-proxy.herokuapp.com/auth/register",data)
+  http.post("http://localhost:8080/auth/register",data)
 
 
 export const registerUserTask = http => data =>
@@ -25,7 +25,7 @@ export const registerTask = http =>
 
 
   // =====LOGIN================================================================
-export const loginUser = http => data => http.post("https://buxy-proxy.herokuapp.com/auth/login", data)
+export const loginUser = http => data => http.post("http://localhost:8080/auth/login", data)
 
 export const loginUserTask = http => data =>
   new Task((rej, res) => loginUser(http)(data).then(res, rej))

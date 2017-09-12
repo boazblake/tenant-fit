@@ -4,10 +4,10 @@ import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model'
 import { style } from './style.css'
 
-@customElement('store')
-@useView('./store.html')
+@customElement('store-popup')
+@useView('./store-popup.html')
 @inject(HttpClient, DialogController)
-export class Store {
+export class StorePopup {
   constructor( http, dController ) {
     this.disposables = new Set()
     this.dController = dController
@@ -23,18 +23,30 @@ export class Store {
   }
 
 
-  attached(params) {
-    const onError = error =>
-      console.error(error);
-
-    const onSuccess = data => {
-      console.log('success', data)
-      this.store = data
-    }
-
-    getStoreTask(this.http)(this.id).fork(onError, onSuccess)
+  attached() {
+    this.reset()
+    this.getStore()
   }
 
+  getStore(id) {
+    const onError = error => {
+      console.error(error);
+      this.errors.push({type:'stores', msg: 'error with getting stores'})
+    }
 
+    const onSuccess = store => {
+      this.store = store
+      this.errors['store'] = ''
+      this.openModal(id)
+      this.emitter.publish('loading-channel', false)
+    }
+
+    this.emitter.publish('loading-channel', true)
+    getStoreTask(this.http)(id).fork(onError, onSuccess)
+  }
+
+  reset() {
+
+  }
 
 }

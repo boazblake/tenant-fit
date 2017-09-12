@@ -1,0 +1,19 @@
+<template>
+  <div class="mdl-cell mdl-shadow--2dp mdl-grid__item mdl-grid__item--three-div" css="${style.storeColor}" ref="storeColors[$index]"}>
+    <span class="mdl-grid__item-primary-content">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="#000000" d="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z" />
+        </svg>
+      <span>${store.name}</span>
+      <span class="mdl-grid__item-text-body">
+        <p>Expiration Date: ${store.expirationDate} <br>
+          Notification Date: ${store.notificationDate}</p>
+      </span>
+    </span>
+    <span class="mdl-grid__item-secondary-content">
+      <a class="mdl-grid__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="showStore(store._id)">MORE DETAIL</button>
+    </span>
+  </li>
+  </div>
+<template >

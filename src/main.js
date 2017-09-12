@@ -1,4 +1,5 @@
 // we want font-awesome to load as soon as possible to show the fa-spinner
+import "babel-polyfill";
 import '../static/styles.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -24,11 +25,14 @@ export async function configure(aurelia) {
 
     .plugin(PLATFORM.moduleName('aurelia-mdl-plugin'))
     .plugin(PLATFORM.moduleName('aurelia-dialog'))
-    .plugin(PLATFORM.moduleName('aurelia-animator-css'));
+    .plugin(PLATFORM.moduleName('aurelia-animator-css'))
+    // .plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'))
 
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
-  // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
 
   await aurelia.start();
   await aurelia.setRoot(PLATFORM.moduleName('app'));
 }
+
+
+// TODO : add expiration to sessions? find out

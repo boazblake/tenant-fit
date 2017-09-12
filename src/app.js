@@ -10,7 +10,7 @@ const routes =
     , title: 'TENANT FIT LOGIN'
     , settings: { roles: [] }
     }
-  , { route: 'tenantfit/stores/:id'
+  , { route: 'tenantfit/dashboard/:id'
     , name: 'home'
     , moduleId: PLATFORM.moduleName('./home/home')
     , nav: false
@@ -33,7 +33,6 @@ const routes =
 
 export class App {
   constructor() {
-    this.style = 'style'
   }
 
   configureRouter(config, router) {
@@ -51,7 +50,7 @@ export class App {
 
 class AuthorizeStep {
   run(navigationInstruction, next) {
-    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('auth') !== -1)) {
+    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('auth') !== -1)) { // TODO: use Ramda js and include admin if needed
       if (! CheckAuth.auth()) {
         return next.cancel(new Redirect('/'))
       }

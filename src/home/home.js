@@ -5,7 +5,7 @@ import { CheckAuth } from 'authConfig'
 
 
 const routes =
-  [{ route: ['', 'tenantfit/stores/:id']
+  [{ route: ['', 'tenantfit/dashboard/:id']
     , name: 'dashboard'
     , moduleId: PLATFORM.moduleName('./dashboard/dashboard')
     , nav: false
@@ -33,7 +33,7 @@ export class Home {
 
 class AuthorizeStep {
   run(navigationInstruction, next) {
-    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('admin') !== -1)) {
+    if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('auth') !== -1)) {
       if (! CheckAuth.admin() ) {
         return next.cancel(new Redirect('/'))
       }
