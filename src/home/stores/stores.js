@@ -3,19 +3,19 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask, toVm } from './model'
-import { getStoreTask } from './store/model'
-import { Store } from './store/store.js'
+import { getStoreTask } from './store-front/model'
 import { style } from './style.css'
-import { map } from 'ramda'
+import { map, clone } from 'ramda'
 
 @customElement('stores')
 @useView('./stores.html')
 @inject(EventAggregator, HttpClient, DialogService)
 export class Stores {
-  @bindable tenantIds
+  @bindable tenants
+  @bindable userId
   constructor( emitter, http, modal ) {
     this.disposables = new Set()
-    this.stores = []
+    this.data = {}
     this.state = {}
     this.emitter = emitter
     this.http = http
@@ -25,7 +25,7 @@ export class Stores {
 
   attached() {
     this.reset()
-    // this.getStores()
+    this.getStores()
   }
 
   getStores() {
@@ -33,18 +33,21 @@ export class Stores {
       console.error(error);
 
     const onSuccess = data => {
-      this.stores = data
+      this.data.stores = data
+      console.log(this.data.stores)
       this.emitter.publish('loading-channel', false)
     }
 
-    getStoresTask(this.http)(this.ids).fork(onError, onSuccess)
+    this.emitter.publish('loading-channel', true)
+    getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
   }
 
-  openModal(id) {
-    this.modal.open( {viewModel: Store, model: id })
-  }
+  // openModal(id) {
+  //   this.this.modal.open( {viewModel: Store, model: id })
+  // }
 
   reset() {
-    console.log('tenant ids in store ', this.tenantIds)
   }
+
+
 }
