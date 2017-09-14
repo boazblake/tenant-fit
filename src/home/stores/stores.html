@@ -4,7 +4,9 @@
 
   <div class="store-collection">
     <div class=" mdl-grid">
-      <store-front repeat.for="store of data.stores" store-front.bind="store"></store-front>
+      <store-front
+              repeat.for="s of stores"
+              store-front.bind="s"></store-front>
     </div>
   </div>
 </template>

@@ -26,15 +26,17 @@ export class Landing {
   login() {
     this.user = userModel(this._user)
 
-    const onError = error =>
-      console.error(error);
+    const onError = error =>{
+      console.error(error)
+      this.emitter.publish('notify-error', error.response)
+    }
 
     const onSuccess = data => {
       sessionStorage.setItem('userId', JSON.stringify(data.userId))
       sessionStorage.setItem('isAdmin', JSON.stringify(data.isAdmin))
 
       this.emitter.publish('auth-channel', true)
-
+      console.log(data)
       data.isAdmin
         ? this.router.navigateToRoute('admin', {id: data.userId})
         : this.router.navigateToRoute('home', {id: data.userId})
@@ -43,21 +45,5 @@ export class Landing {
 
     loginTask(this.http)(this.user).fork(onError, onSuccess)
   }
-
-  // register() {
-  //   this.user = userModel(this._user)
-  //
-  //   const onError = error =>
-  //     console.error(error);
-  //
-  //   const onSuccess = data => {
-  //     log('success')(data)
-  //     sessionStorage.setItem('userId', JSON.stringify(data._id))
-  //     if ( CheckAuth.auth() ) this.emitter.publish('auth-channel', true)
-  //     this.router.navigateToRoute('home', {id: data._id})
-  //   }
-  //
-  //   registerTask(this.http)(this.user).fork(onError, onSuccess)
-  // }
 
 }

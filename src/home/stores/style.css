@@ -2,15 +2,6 @@
   margin-top: 50px;
 }
 
-.mdl-cell {
-  box-sizing: border-box;
-  /*background-color: #BDBDBD;*/
-  height: 200px;
-  padding-left: 8px;
-  padding-top: 4px;
-  /*color: white;*/
-  display:inline-block;
-}
 
 .stores {
   display: flex;

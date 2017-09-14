@@ -94,6 +94,22 @@ export class Dashboard {
     addTypeTask('stores')(this.http)(this.userId)(this.store).fork(onError, onSuccess)
   }
 
+  // register() {
+  //   this.user = userModel(this._user)
+  //
+  //   const onError = error =>{
+  //   console.error(error)
+  //   this.emitter.publish('notify-error', error.response)
+  // }
+  //   const onSuccess = data => {
+  //     log('success')(data)
+  //     sessionStorage.setItem('userId', JSON.stringify(data._id))
+  //     if ( CheckAuth.auth() ) this.emitter.publish('auth-channel', true)
+  //     this.router.navigateToRoute('home', {id: data._id})
+  //   }
+  //
+  //   registerTask(this.http)(this.user).fork(onError, onSuccess)
+  // }
 
 
   openModal() {

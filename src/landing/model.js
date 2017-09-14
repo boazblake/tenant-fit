@@ -5,12 +5,15 @@ import { tagged } from 'daggy'
 
 // =====MODELS================================================================
 export const userModel = dto =>
-  ({ email:dto.email
+  ({  email:dto.email
   , password: dto.password
   , isAdmin: dto.isAdmin
   })
 
-
+export const toVm = dto =>
+  ({ userId:dto.UserId
+  , isAdmin: dto.IsAdmin
+  })
 // =====REGISTER================================================================
 
 export const registerUser = http => data =>
@@ -21,7 +24,7 @@ export const registerUserTask = http => data =>
   new Task((rej, res) => registerUser(http)(data).then(res, rej))
 
 export const registerTask = http =>
-  compose(map(map(identity(x => JSON.parse(x.response)))),registerUserTask)(http)
+  compose(map(map(toVm)), map(map(identity(x => JSON.parse(x.response)))),registerUserTask)(http)
 
 
   // =====LOGIN================================================================
@@ -32,4 +35,4 @@ export const loginUserTask = http => data =>
 
 
 export const loginTask = http =>
-  compose(map(map(identity(x => JSON.parse(x.response)))),loginUserTask)(http)
+  compose(map(map(toVm)),map(map(identity(x => JSON.parse(x.response)))),loginUserTask)(http)

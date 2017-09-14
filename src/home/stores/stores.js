@@ -15,6 +15,7 @@ export class Stores {
   @bindable userId
   constructor( emitter, http, modal ) {
     this.disposables = new Set()
+    this.stores = [{}, {}]
     this.data = {}
     this.state = {}
     this.emitter = emitter
@@ -23,8 +24,11 @@ export class Stores {
     this.style=style
   }
 
-  attached() {
+  created() {
     this.reset()
+  }
+
+  attached() {
     this.getStores()
   }
 
@@ -33,8 +37,8 @@ export class Stores {
       console.error(error);
 
     const onSuccess = data => {
-      this.data.stores = data
-      console.log(this.data.stores)
+      this.stores = clone(data)
+      console.log('stores', this.stores )
       this.emitter.publish('loading-channel', false)
     }
 

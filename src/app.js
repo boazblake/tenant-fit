@@ -1,6 +1,8 @@
+import { inject } from 'aurelia-framework';
 import {PLATFORM} from 'aurelia-pal';
 import {Redirect, NavigationInstruction, RouterConfiguration, Router, Next} from 'aurelia-router'
 import { CheckAuth } from 'authConfig'
+import { Notify } from './components/notify/notify'
 
 const routes =
   [ { route: 'tenantfit'
@@ -31,8 +33,10 @@ const routes =
   ]
 
 
+@inject(Notify)
 export class App {
-  constructor() {
+  constructor(notify) {
+    this.notify = notify
   }
 
   configureRouter(config, router) {
@@ -42,7 +46,7 @@ export class App {
     config.exportToRouter(router)
     config.map(routes)
 
-    config.mapUnknownRoutes(() => PLATFORM.moduleName('./home/home'))
+    config.mapUnknownRoutes(() => PLATFORM.moduleName('./landing/landing'))
 
     this.router = router
   }
