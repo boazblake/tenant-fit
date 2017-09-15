@@ -20,7 +20,7 @@ const routes =
     , title:'CLIENT'
     , settings: { roles: ['auth'] }
     }
-  , { route: 'tenantfit/admin/:id'
+  , { route: 'tenantfit/:id'
     , name: 'admin'
     , moduleId: PLATFORM.moduleName('./admin/admin')
     , nav: false

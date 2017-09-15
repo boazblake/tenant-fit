@@ -19,7 +19,7 @@ const routes =
   }
 , { route:'add-user'
   , name: 'addUser'
-  , moduleId: PLATFORM.moduleName('../users/users')
+  , moduleId: PLATFORM.moduleName('../add-user/add-user')
   , nav: true
   , title:'ADD A USER'
   , settings: { roles: [] }
@@ -48,23 +48,17 @@ export class Dashboard {
   configureRouter(config, router) {
     config.title = 'ADMIN CHILD ROUTER'
     config.map(routes)
-    config.mapUnknownRoutes(_ => PLATFORM.moduleName('../stores/stores'))
 
     this.router = router
   }
 
   activate(){
     this.userId = CheckAuth.userId()
-    console.log('userId', this.userId);
   }
 
   attached(params) {
   }
 
-  toUser() {
-    console.log(this.router)
-    this.router.navigateToRoute('addUser', {id:this.userId} )
-  }
   // addTenant(){
   //   const onError = error => {
   //     console.error(error);

@@ -13,7 +13,7 @@ const routes =
     , settings: { roles: ['admin', 'auth'] }
     }
   , { route: ''
-    , redirect: 'dashboard'
+    , redirect: 'admin'
     }
   ]
 

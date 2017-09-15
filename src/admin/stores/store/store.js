@@ -18,7 +18,7 @@ export class Store {
     this.style = style
   }
 
-  bind() {
+  attached() {
     return console.log('store??',this.store)
     this.reset()
     this.getStore(this.store._id)
