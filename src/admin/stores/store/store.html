@@ -1,28 +1,19 @@
 <template>
-  <require from="material-design-lite/material.css"></require>
-
-   <ai-dialog class="mdl-card mdl-shadow--2dp mdl-layout-grid__cell mdl-layout-grid__cell--span-1 au-animate" >
-     <ai-dialog-header class="mdl-card__title ">
-         <h2 class="mdl-card__title-text mdl-card__title--large">${store.name}</h2>
-     </ai-dialog-header>
-
-      <ai-dialog-body>
-         <div class="mdl-card__media">
-           <img src="https://i.redd.it/hq6afmze8sdz.jpg">
-         </div>
-         <div class="mdl-card__supporting-text au-animate">
-           <p class="mdl-card__subtitle">Expiration Date: ${store.expirationDate} ${message}</p>
-           <p class="mdl-card__subtitle">Notification Date: ${store.notificationDate}</p>
-      </ai-dialog-body>
-
-      <ai-dialog-footer class="mdl-card__actions mdl-card--border">
-        <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "dController.ok(message)">
-            DISMISS
-          </button>
-        </div>
-      </ai-dialog-footer>
-   </ai-dialog>
-</template>
-
+  <div css="${style.storeColor}"}>
+    <span class="mdl-grid__item-primary-content">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="#000000" d="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z" />
+        </svg>
+      <span>${store.name}</span>
+      <span class="mdl-grid__item-text-body">
+        <p>Expiration Date: ${store.expirationDate} <br>
+          Notification Date: ${store.notificationDate}</p>
+      </span>
+    </span>
+    <span class="mdl-grid__item-secondary-content">
+      <a class="mdl-grid__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="showStore(store._id)">MORE DETAIL</button>
+    </span>
+  </li>
+  </div>
 <template >

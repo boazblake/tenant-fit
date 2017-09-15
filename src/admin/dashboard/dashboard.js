@@ -1,11 +1,34 @@
 import { customElement, useView, inject } from 'aurelia-framework'
 import { DialogService } from 'aurelia-dialog'
+import { Router } from 'aurelia-router'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { HttpClient } from 'aurelia-http-client'
 import { getTenantsTask, addTypeTask} from './model'
 import { getStoresTask } from '../stores/model'
-import style from './styles.css'
+import { style } from './styles.css'
 import { CheckAuth } from 'authConfig'
+
+
+const routes =
+[ { route: 'stores'
+  , name: 'stores'
+  , moduleId: PLATFORM.moduleName('../stores/stores')
+  , nav: true
+  , title: 'STORES'
+  , settings: { roles: [] }
+  }
+, { route:'add-user'
+  , name: 'addUser'
+  , moduleId: PLATFORM.moduleName('../users/users')
+  , nav: true
+  , title:'ADD A USER'
+  , settings: { roles: [] }
+  }
+, { route: ''
+  , redirect: 'stores'
+  }
+]
+
 
 
 @customElement('dashboard')
@@ -22,94 +45,54 @@ export class Dashboard {
     this.emitter = emitter
   }
 
+  configureRouter(config, router) {
+    config.title = 'ADMIN CHILD ROUTER'
+    config.map(routes)
+    config.mapUnknownRoutes(_ => PLATFORM.moduleName('../stores/stores'))
+
+    this.router = router
+  }
+
   activate(){
     this.userId = CheckAuth.userId()
-    console.log(this.userId);
+    console.log('userId', this.userId);
   }
 
   attached(params) {
-    this.getTenants()
-    this.getStores()
   }
 
-  getTenants() {
-    const onError = error => {
-      console.error(error);
-      this.errors.push({type:'attached', msg: 'error with attached'})
-    }
-
-    const onSuccess = data =>{
-      console.log(data);
-      this.tenants = data
-      this.errors['attached'] = ''
-    }
-
-    getTenantsTask(this.http)(this.userId).fork(onError, onSuccess)
+  toUser() {
+    console.log(this.router)
+    this.router.navigateToRoute('addUser', {id:this.userId} )
   }
-
-  getStores() {
-    const onError = error => {
-      console.error(error);
-      this.errors.push({type:'stores', msg: 'error with getting stores'})
-    }
-
-    const onSuccess = stores => {
-      this.stores = stores
-      this.errors['store'] = ''
-      this.emitter.publish('loading-channel', false)
-
-    }
-    console.log(CheckAuth.isAdmin())
-
-    CheckAuth.isAdmin()
-      ? getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
-      : console.log('not allowed')
-  }
-
-  addTenant(){
-    const onError = error => {
-      console.error(error);
-      this.errors.push({type:'tenant', msg: 'error with addign a tenant'})
-    }
-
-    const onSuccess = s => {
-      console.log('success', s)
-      this.errors['admin'] = ''
-    }
-    this.tenant.userId = this.userId
-    addTypeTask('admin')(this.http)(this.userId)(this.tenant).fork(onError, onSuccess)
-  }
-
-  addStore(){
-    const onError = error => {
-      console.error(error);
-      this.errors.push({type:'store', msg: 'error with adding a store'})
-    }
-
-    const onSuccess = s => {
-      console.log('success', s)
-      this.errors['stores'] = ''
-    }
-
-    addTypeTask('stores')(this.http)(this.userId)(this.store).fork(onError, onSuccess)
-  }
-
-  // register() {
-  //   this.user = userModel(this._user)
-  //
-  //   const onError = error =>{
-  //   console.error(error)
-  //   this.emitter.publish('notify-error', error.response)
-  // }
-  //   const onSuccess = data => {
-  //     log('success')(data)
-  //     sessionStorage.setItem('userId', JSON.stringify(data._id))
-  //     if ( CheckAuth.auth() ) this.emitter.publish('auth-channel', true)
-  //     this.router.navigateToRoute('home', {id: data._id})
+  // addTenant(){
+  //   const onError = error => {
+  //     console.error(error);
+  //     this.errors.push({type:'tenant', msg: 'error with addign a tenant'})
   //   }
   //
-  //   registerTask(this.http)(this.user).fork(onError, onSuccess)
+  //   const onSuccess = s => {
+  //     console.log('success', s)
+  //     this.errors['admin'] = ''
+  //   }
+  //   this.tenant.userId = this.userId
+  //   addTypeTask('admin')(this.http)(this.userId)(this.tenant).fork(onError, onSuccess)
   // }
+  //
+  // addStore(){
+  //   const onError = error => {
+  //     console.error(error);
+  //     this.errors.push({type:'store', msg: 'error with adding a store'})
+  //   }
+  //
+  //   const onSuccess = s => {
+  //     console.log('success', s)
+  //     this.errors['stores'] = ''
+  //   }
+  //
+  //   addTypeTask('stores')(this.http)(this.userId)(this.store).fork(onError, onSuccess)
+  // }
+
 
 
   openModal() {

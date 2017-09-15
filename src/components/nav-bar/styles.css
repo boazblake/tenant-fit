@@ -1,9 +1,13 @@
-home-button  {
+.home-button  {
   border-radius: 50%;
   -webkit-transition: -webkit-transform .8s ease-in-out;
           transition:         transform .8s ease-in-out;
 }
-home-button :hover {
+.home-button :hover {
   -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
+}
+
+.nav-itle {
+  font=size: 25px;
 }

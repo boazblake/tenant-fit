@@ -5,12 +5,15 @@ import { CheckAuth } from 'authConfig'
 
 
 const routes =
-  [{ route: ['', 'tenantfit/dashboard/:id']
+  [{ route: [':dashboard/:id']
     , name: 'dashboard'
     , moduleId: PLATFORM.moduleName('./dashboard/dashboard')
     , nav: false
     , title: 'Dashboard'
     , settings: { roles: ['auth'] }
+    }
+  , { route: ''
+    , redirect: 'dashboard'
     }
   ]
 

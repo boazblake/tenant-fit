@@ -2,7 +2,7 @@ import { useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { CheckAuth } from 'authConfig'
 import { EventAggregator } from 'aurelia-event-aggregator'
-import style from './style.css'
+import { style } from './styles.css'
 
 @inject(HttpClient, EventAggregator, Element)
 export class NavBar {
@@ -24,9 +24,9 @@ export class NavBar {
     this.el.querySelector('#p2').style.width = "100%"
 
     const handler = authStatus => {
-      this.currentUser = CheckAuth.userId()
-      this.authStatus = CheckAuth.auth()
-      this.adminStatus = CheckAuth.isAdmin()
+      this.state.currentUser = CheckAuth.userId()
+      this.state.authStatus = CheckAuth.auth()
+      this.state.adminStatus = CheckAuth.isAdmin()
     }
 
     const loader = bool =>

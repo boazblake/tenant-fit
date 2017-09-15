@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask, toVm } from './model'
-import { getStoreTask } from './store-front/model'
+import { getStoreTask } from './store/model'
 import { style } from './style.css'
 import { map, clone } from 'ramda'
 
@@ -33,22 +33,18 @@ export class Stores {
   }
 
   getStores() {
-    const onError = error =>
-      console.error(error);
-
+    const onError = error =>{
+      console.error(error)
+      this.emitter.publish('notify-error', error.response)
+    }
     const onSuccess = data => {
       this.stores = clone(data)
-      console.log('stores', this.stores )
       this.emitter.publish('loading-channel', false)
     }
 
     this.emitter.publish('loading-channel', true)
     getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
   }
-
-  // openModal(id) {
-  //   this.this.modal.open( {viewModel: Store, model: id })
-  // }
 
   reset() {
   }

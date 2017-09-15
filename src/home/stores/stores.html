@@ -1,12 +1,10 @@
 <template >
   <require from="material-design-lite/material.css"></require>
-  <require from="./store-front/store-front"></require>
+  <require from="./store/store"></require>
 
-  <div class="store-collection">
+  <div class="stores">
     <div class=" mdl-grid">
-      <store-front
-              repeat.for="s of stores"
-              store-front.bind="s"></store-front>
+      <store repeat.for="store of stores" class="mdl-cell mdl-shadow--2dp " store.bind="store"></store>
     </div>
   </div>
 </template>

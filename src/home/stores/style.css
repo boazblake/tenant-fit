@@ -1,9 +1,5 @@
-.storeList {
-  margin-top: 50px;
-}
-
-
 .stores {
+  padding-top:100px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

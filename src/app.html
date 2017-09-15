@@ -2,6 +2,6 @@
 <template>
   <require from="toastr/build/toastr.min.css"></require>
   <div class="page-host container">
-    <router-view swap-order="after" ></router-view>
+    <router-view class="${router.isNavigating ? 'navigating' : ''}" swap-order="after" ></router-view>
   </div>
 </template>

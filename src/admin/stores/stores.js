@@ -4,7 +4,7 @@ import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask } from './model'
 import { getStoreTask } from './store/model'
-import { Store } from './store/store.js'
+import { StorePopup } from '../store-popup/store-popup'
 import { style } from './style.css'
 
 @customElement('stores')
@@ -63,7 +63,7 @@ export class Stores {
   }
 
   openModal(id) {
-    this.modal.open( {viewModel: Store, model: id })
+    this.modal.open( {viewModel: StorePopup, model: id })
  }
 
 }

@@ -32,9 +32,11 @@ export class Dashboard {
   }
 
   getTenants() {
-    const onError = error =>
-      console.error(error);
-
+    const onError = error =>{
+      console.error(error)
+      this.emitter.publish('notify-error', error.response)
+    }
+    
     const onSuccess = data => {
       this.data.tenants = data
       this.state.tenants = clone(this.data.tenants)

@@ -5,12 +5,15 @@ import { CheckAuth } from 'authConfig'
 
 
 const routes =
-  [{ route: ['', 'tenantfit/:id/admin']
+  [ { route: [':admin/:id']
     , name: 'dashboard'
     , moduleId: PLATFORM.moduleName('./dashboard/dashboard')
     , nav: false
     , title: 'Dashboard'
     , settings: { roles: ['admin', 'auth'] }
+    }
+  , { route: ''
+    , redirect: 'dashboard'
     }
   ]
 

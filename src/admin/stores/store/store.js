@@ -1,40 +1,47 @@
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask } from './model'
+import { getStoreTask } from './model.js'
 import { style } from './style.css'
 
 @customElement('store')
 @useView('./store.html')
 @inject(HttpClient, DialogController)
 export class Store {
+  @bindable store
   constructor( http, dController ) {
     this.disposables = new Set()
     this.dController = dController
-    this.id = null
+    this.store = ''
     this.state = {}
     this.http = http
     this.style = style
   }
 
-  activate(id){
-    this.id = id
-    console.log('store id', id)
+  bind() {
+    return console.log('store??',this.store)
+    this.reset()
+    this.getStore(this.store._id)
   }
 
-
-  attached(params) {
-    const onError = error =>
+  getStore(id) {
+    const onError = error => {
       console.error(error);
-
-    const onSuccess = data => {
-      console.log('success', data)
-      this.store = data
+      this.emitter.publish('notify-error', error.response)
     }
 
-    getStoreTask(this.http)(this.id).fork(onError, onSuccess)
+    const onSuccess = store => {
+      this.store = store
+      this.errors['store'] = ''
+      this.openModal(id)
+      this.emitter.publish('loading-channel', false)
+    }
+
+    this.emitter.publish('loading-channel', true)
+    getStoreTask(this.http)(id).fork(onError, onSuccess)
   }
 
-
+   reset() {
+   }
 
 }

@@ -1,8 +1,14 @@
 <template >
-  <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--4-col">4</div>
-  <div class="mdl-cell mdl-cell--4-col">4</div>
-  <div class="mdl-cell mdl-cell--4-col">4</div>
-</div>
+  <require from="./styles.css"></require>
+
+  <div class="dashboard">
+    <div class="mdl-grid admin-nav" router.bind="router">
+      <div repeat.for="row of router.navigation" class="mdl-cell mdl-cell-add-user mdl-cell--4-col ${row.isActive ? 'active' : ''}">
+        <a href.bind="row.href">${row.title}</a>
+      </div>
+    </div>
+
+    <router-view class="${router.isNavigating ? 'navigating' : ''}" swap-order="after" ></router-view>
+  </div>
 
 </template>

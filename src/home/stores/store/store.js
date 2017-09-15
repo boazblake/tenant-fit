@@ -4,31 +4,30 @@ import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model.js'
 import { style } from './style.css'
 
-@customElement('store-front')
-@useView('./store-front.html')
+@customElement('store')
+@useView('./store.html')
 @inject(HttpClient, DialogController)
-export class StoreFront {
-  @bindable storeFront
+export class Store {
+  @bindable store
   constructor( http, dController ) {
     this.disposables = new Set()
     this.dController = dController
     this.store = ''
-    this.id = null
     this.state = {}
     this.http = http
     this.style = style
   }
 
   bind() {
-    return console.log('store??',this.storeFront)
+    return console.log('store??',this.store)
     this.reset()
-    this.getStore(this.storeFront._id)
+    this.getStore(this.store._id)
   }
 
   getStore(id) {
     const onError = error => {
       console.error(error);
-      this.errors.push({type:'store', msg: 'error with getting store'})
+      this.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = store => {
@@ -43,7 +42,6 @@ export class StoreFront {
   }
 
    reset() {
-     console.log('store?',this.store)
    }
 
 }
