@@ -9,9 +9,9 @@ import { style } from './style.css'
 @inject(HttpClient, DialogController)
 export class Store {
   @bindable store
-  constructor( http, dController ) {
+  constructor( http, modal ) {
     this.disposables = new Set()
-    this.dController = dController
+    this.modal = modal
     this.store = ''
     this.state = {}
     this.http = http

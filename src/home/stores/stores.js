@@ -22,6 +22,7 @@ export class Stores {
     this.http = http
     this.errors=[]
     this.style=style
+    this.modal = modal
   }
 
   created() {

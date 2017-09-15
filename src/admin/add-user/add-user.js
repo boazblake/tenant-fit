@@ -19,9 +19,7 @@ export class AddUser {
       users:[]
     }
     this.state = {
-      user: {
-        
-      }
+      user: {}
     }
     this.http = http
     this.style = style
@@ -56,11 +54,15 @@ export class AddUser {
     this.validateUser()
   }
 
+  clearUser() {
+    this.state.user.addUser = null
+  }
+
   validateUser() {
     const onSuccess = validatedUser => {
       this.validatedUser = validatedUser
       log('user')(validatedUser)
-      this.emitter.publish('notify-success', validatedUser.name)
+      this.emitter.publish('notify-success', `${validatedUser.name} was sucessfully added to the database`)
 
     }
 

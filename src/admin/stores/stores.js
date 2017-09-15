@@ -62,8 +62,4 @@ export class Stores {
     getStoreTask(this.http)(id).fork(onError, onSuccess)
   }
 
-  openModal(id) {
-    this.modal.open( {viewModel: StorePopup, model: id })
- }
-
 }

@@ -19,13 +19,13 @@ export const getUsersTask = id =>
 // ===VALIDATE USER============================================================
 export const validate = dto => {
   let validation =
-  (dto.addUser && dto.selectedUser)
-    ? {msg: 'please select one and leave the other blank'}
-    : dto.addUser
-      ? dto.addUser
+  dto.selectedUser
+    ? (dto.addUser && dto.addUser.name)
+      ? {msg: 'please select one and leave the other blank'}
       : dto.selectedUser
-        ? dto.selectedUser
-        : {msg: 'please select a user'}
+    : dto.addUser 
+      ? dto.addUser
+      : {msg: 'please select a user'}
 
   return validation
 }

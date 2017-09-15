@@ -19,8 +19,8 @@
 
               <div class="userDropdown">
                 <select class="userDropdown" name="userSelect" value.bind="state.user.selectedUser">
-                  <option ></option>
-                  <option repeat.for="user of data.users" model.bind="user">${user.id}</option>
+                  <option model.bind="null"></option>
+                  <option repeat.for="user of data.users" model.bind="user" >${user.id}</option>
                 </select>
               </div>
               <label class="mdl-textfield__label" for="userSelect">Select a User</label>

@@ -1,27 +1,29 @@
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
-import { DialogController } from 'aurelia-dialog'
+import { EventAggregator } from 'aurelia-event-aggregator'
+import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model.js'
 import { style } from './style.css'
+import { StorePopup } from '../store-popup/store-popup'
 
 @customElement('store')
 @useView('./store.html')
-@inject(HttpClient, DialogController)
+@inject(HttpClient, DialogService, EventAggregator, StorePopup)
 export class Store {
-  @bindable store
-  constructor( http, dController ) {
+  @bindable s
+  constructor( http, modal, emitter ) {
     this.disposables = new Set()
-    this.dController = dController
-    this.store = ''
     this.state = {}
     this.http = http
     this.style = style
+    this.emitter = emitter
+    this.errors = {}
+    this.modal = modal
   }
 
   attached() {
-    return console.log('store??',this.store)
     this.reset()
-    this.getStore(this.store._id)
+    this.getStore(this.s._id)
   }
 
   getStore(id) {
@@ -33,7 +35,6 @@ export class Store {
     const onSuccess = store => {
       this.store = store
       this.errors['store'] = ''
-      this.openModal(id)
       this.emitter.publish('loading-channel', false)
     }
 
@@ -41,7 +42,13 @@ export class Store {
     getStoreTask(this.http)(id).fork(onError, onSuccess)
   }
 
-   reset() {
-   }
+  showStore(id) {
+    console.log(this.modal)
+    this.modal.open( {viewModel: StorePopup, model: id })
+  }
+
+
+  reset() {
+  }
 
 }
