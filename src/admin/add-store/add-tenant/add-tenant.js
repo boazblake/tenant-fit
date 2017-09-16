@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getTenantsTask, validateTenantsTask, tenantModel, addTenantTask } from './model'
+import { getTenantsTask, validateTenantTask, tenantModel, addTenantTask } from './model'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 import { log } from 'utilities'
@@ -35,7 +35,6 @@ export class addTenant {
     this.clientId = CheckAuth.clientId()
     this.adminId = CheckAuth.adminId()
     this.clientName = CheckAuth.clientName()
-    console.log(this.clientId, this.adminId)
     this.getTenants()
   }
 
@@ -69,7 +68,7 @@ export class addTenant {
       log('tenant')(validatedTenant)
 
       validatedTenant.id
-        ? this.storeModel.tenant = validatedTenant
+        ? this.storeTenant(validatedTenant)
         : this.registerTenant(validatedTenant)
     }
 
@@ -82,7 +81,7 @@ export class addTenant {
     validateTenantTask(this.state.tenant).fork(onError, onSuccess)
   }
 
-  registerTenant(_tenant) {
+  registerTenant(tenant) {
     const onError = error =>{
       console.error(error)
       this.emitter.publish('notify-error', error.response)
@@ -90,13 +89,20 @@ export class addTenant {
 
     const onSuccess = tenant => {
       log('success')(tenant)
-      this.storeModel.tenant = tenant
       this.emitter.publish('notify-success', `${tenant.name} was sucessfully added to the database`)
       this.isDisabled = true
+      this.storeTenant(tenant)
     }
 
-    console.log(_tenant)
-    addTenantTask(this.http)(this.userId)(this.storeModel.user.id)(_tenant).fork(onError, onSuccess)
+    console.log(tenant)
+    addTenantTask(this.http)(this.adminId)(this.clientId)(tenant).fork(onError, onSuccess)
+  }
+
+  storeTenant(tenant) {
+    sessionStorage.setItem('tenantName', JSON.stringify(tenant.name))
+    sessionStorage.setItem('tenantId', JSON.stringify(tenant.id))
+    this.emitter.publish('show-channel', {tenant:false})
+    this.emitter.publish('show-channel', {store:true})
   }
 
   DropDownChanged(tenant) {

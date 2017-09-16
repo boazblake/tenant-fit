@@ -11,6 +11,7 @@ export const CheckAuth =
   , clientId: () => sessionStorage.clientId ? JSON.parse(sessionStorage.clientId) : false // admin side - client id for new store
   , clientName: () => sessionStorage.clientName ? JSON.parse(sessionStorage.clientName) : false // admin side - client id for new store
   , tenantId: () => sessionStorage.tenantId ? JSON.parse(sessionStorage.tenantId) : false //admin side  - tenant Id for new store
+  , tenantName: () => sessionStorage.tenantName ? JSON.parse(sessionStorage.tenantName) : false //admin side  - tenant Id for new store
   , storeId: () => sessionStorage.storeId ? JSON.parse(sessionStorage.storeId) : false //admin side  - store Id for new store
   , userName: () => sessionStorage.userName ? JSON.parse(sessionStorage.userName) : false //admin side  - store Id for new store
   }

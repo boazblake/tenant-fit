@@ -11,12 +11,13 @@ export const toVm = dto =>
   })
 
 
-export const toRequest = userId => tenantUserId => dto =>
-  ({ Name: dto.name
+export const toRequest = userId => tenantUserId => dto =>{
+  console.log(tenantUserId)
+  return ({ Name: dto.name
   , UserId: tenantUserId
   , ModifiedBy: userId
   })
-
+}
 export const toUserVm = dto =>
   ({ name: dto.name
   })
@@ -30,7 +31,7 @@ export const getTenants = http => id =>
 export const getTenantsTask = id =>
   compose(map(map(toVm)), map(identity(dto => JSON.parse(dto.response))),  getTenants(id))
 
-// ===VALIDATE USER============================================================
+// ===VALIDATE Tenant============================================================
 export const validate = dto => {
   let validation =
   dto.selectedTenant
