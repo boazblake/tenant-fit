@@ -11,8 +11,8 @@
         <div class="mdl-card__supporting-text">
             <div class="mdl-textfield mdl-js-textfield">
               <div class="userDropdown">
-                <select class="userDropdown" name="userSelect" value.bind="state.user.addUser" style="width:100%;">
-                  <option model.bind="null"></option>
+                <select class="userDropdown" name="userSelect" value.bind="state.user.addUser" style="width:100%;" change.delegate="DropDownChanged(state.user.addUser)" >
+                  <option model.bind="null" >SELECT A USER</option>
                   <option repeat.for="user of data.users" model.bind="user" >${user.name}</option>
                 </select>
               </div>
@@ -31,30 +31,39 @@
           <h2 class="mdl-card__title-text">ADD A NEW USER</h2>
         </div>
         <div class="mdl-card__supporting-text">
+          <div style=="${styles.home-button}">
+            <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect clear-user" click.delegate-"DropDownChanged()">
+              <i class="material-icons" >clear_all</i>
+            </button>
+          </div>
           <div class="mdl-textfield mdl-js-textfield">
             <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="text" class="mdl-textfield__input" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;">
+              <input type="text" class="mdl-textfield__input" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;" >
+              <!-- disabled.bind='${isDisabled}' -->
               <label class="mdl-textfield__label mdl-textfield--floating-label" for="name">NAME</label>
               <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
           <div class="mdl-textfield mdl-js-textfield">
             <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="email" class="mdl-textfield__input" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;">
+              <input type="email" class="mdl-textfield__input" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;" >
+              <!-- disabled.bind='${isDisabled}' -->
               <label class="mdl-textfield__label mdl-textfield--floating-label" for="email">EMAIL</label>
               <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH EMAIL</span>
             </fieldset>
           </div>
           <div class="mdl-textfield mdl-js-textfield">
             <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="number" class="mdl-textfield__input" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;">
+              <input type="number" class="mdl-textfield__input" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;" >
+              <!-- disabled.bind='${isDisabled}' -->
               <label class="mdl-textfield__label mdl-textfield--floating-label" for="cellphone">CELLPHONE</label>
               <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH CELLPHONE</span>
             </fieldset>
           </div>
           <div class="mdl-textfield mdl-js-textfield">
             <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="number" class="mdl-textfield__input" name="workphone" value.bind="state.user.addUser.workphone" style="outline: none; text-align:right;">
+              <input type="number" class="mdl-textfield__input" name="workphone" value.bind="state.user.addUser.workphone" style="outline: none; text-align:right;" >
+              <!-- disabled.bind='${isDisabled}' -->
               <label class="mdl-textfield__label mdl-textfield--floating-label" for="workphone">WORKPHONE</label>
               <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH WORKPHONE</span>
             </fieldset>

@@ -11,12 +11,11 @@
         <span class="icon-bar"></span>
       </button>
       <p class.="${style.nav-title}">WELCOME  ${state.currentUser} </p>
-      <a class="navbar-brand" href="#/tenantfit/${currentUser}">
-        <i if.bind="router.currentInstruction.config.name !== 'tenants' && state.authStatus" class="fa fa-undo ${style.home-button}" aria-hidden="true" class="navbar-logo" ></i>
+      <a class="navbar-brand" href="#/tenantfit/${currentUser}" class="navbar-logo">
       </a>
-      <!-- <a class="navbar-brand" href="#/tenantfit/${currentUser}/tenant/${currentTenant}/stores">
-        <i if.bind="router.currentInstruction.config.name !== 'stores' && state.authStatus" style={style.home-button} class="fa fa-hone" aria-hidden="true" class="navbar-logo" ></i>
-      </a> -->
+      <a class="navbar-brand" href="#">
+        <i style={style.home-button} class="fa fa-hone" aria-hidden="true" class="navbar-logo" ></i>
+      </a>
     </div>
     <div class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse" >
       <div class="authed" if.bind="state.authStatus">

@@ -3,6 +3,6 @@
   <require from="./add-user/add-user"></require>
 
   <main class="mdl-layout__content">
-    <add-user store-model.two-way="storeModel"></add-user>
+    <add-user store-model.two-way="storeModel" show.bind="!storeModel.user.name"></add-user>
   </main>
 </template>

@@ -18,6 +18,7 @@ export class AddStore {
     this.data ={}
     this.state = {}
     this.http = http
+    this.isDisabled = false
     this.styles = styles
     this.modal = modal
     this.emitter = emitter
@@ -33,4 +34,5 @@ export class AddStore {
 
     this.emitter.publish('loading-channel', false)
   }
+
 }

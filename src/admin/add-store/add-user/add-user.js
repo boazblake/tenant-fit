@@ -28,6 +28,7 @@ export class AddStore {
     this.modal = modal
     this.errors = []
     this.emitter = emitter
+    this.isDisabled = false
   }
 
   attached(){
@@ -89,9 +90,17 @@ export class AddStore {
       log('success')(user)
       this.storeModel.user = user
       this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
+      this.isDisabled = true
     }
 
     console.log(_user)
     registerTask(this.http)(this.userId)(_user).fork(onError, onSuccess)
+  }
+
+  DropDownChanged(user) {
+    console.log(user)
+    user !== null
+      ? this.isDisabled = true
+      : this.isDisabled = false
   }
  }
