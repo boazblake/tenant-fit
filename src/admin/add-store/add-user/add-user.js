@@ -19,10 +19,7 @@ export class AddStore {
     this.data ={
       users:[]
     }
-    this.state = {
-      user: {},
-      selectUser: {}
-    }
+    this.state = {}
     this.http = http
     this.styles = styles
     this.modal = modal
@@ -33,7 +30,6 @@ export class AddStore {
 
   attached(){
     this.userId = CheckAuth.userId()
-    console.log(this.storeModel)
     this.emitter.publish('loading-channel', false)
     this.getUsers()
   }
@@ -41,7 +37,6 @@ export class AddStore {
   getUsers(){
     const onSuccess = users => {
       this.data.users = users
-      log('USERS')(this.data.users)
     }
 
     const onError = error => {
@@ -58,7 +53,7 @@ export class AddStore {
   }
 
   clearUser() {
-    this.state.user.addUser = null
+    sessionStorage.setItem('clientId', '')
   }
 
   validateUser() {
@@ -67,7 +62,7 @@ export class AddStore {
       log('user')(validatedUser)
 
       validatedUser.id
-        ? this.storeModel.user = validatedUser
+        ? this.storeUser(validatedUser.id)
         : this.registerUser(validatedUser)
     }
 
@@ -88,7 +83,8 @@ export class AddStore {
 
     const onSuccess = user => {
       log('success')(user)
-      this.storeModel.user = user
+      sessionStorage.setItem('clientId', JSON.stringify(user.id))
+      this.emitter.publish('show-channel', {user: false})
       this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
       this.isDisabled = true
     }
@@ -97,10 +93,17 @@ export class AddStore {
     registerTask(this.http)(this.userId)(_user).fork(onError, onSuccess)
   }
 
+  storeUser(id) {
+    sessionStorage.setItem('clientId', JSON.stringify(id))
+    console.log('here')
+    this.emitter.publish('show-channel', {user: false})
+    this.emitter.publish('show-channel', {tenant: true})
+  }
+
   DropDownChanged(user) {
-    console.log(user)
-    user !== null
-      ? this.isDisabled = true
-      : this.isDisabled = false
+    console.log('dropdownchanged user', user)
+    if (user === null) {
+      this.clearUser()
+    }
   }
  }

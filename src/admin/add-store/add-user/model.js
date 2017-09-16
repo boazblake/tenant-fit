@@ -58,7 +58,7 @@ export const toTask = dto =>
     : Task.of(dto)
 
 export const validateUserTask =
-  compose(map(log('state')), toTask, validate )
+  compose(toTask, validate )
 
 
   // ===REGISTER USER============================================================

@@ -14,7 +14,7 @@ import { log } from 'utilities'
 export class AddStore {
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
-    this.userId = null
+    this.adminId = null
     this.data ={}
     this.state = {}
     this.http = http
@@ -22,17 +22,24 @@ export class AddStore {
     this.styles = styles
     this.modal = modal
     this.emitter = emitter
-    this.storeModel =
-      { user:{}
-      ,tenant:{}
-      , store:{}
-      }
+    this.show = {
+      user: true,
+      tenant: false,
+      store: false
+    }
   }
 
   attached(){
-    this.userId = CheckAuth.userId()
+    const handler = msg => {
+      console.log(msg)
+      this.show = msg
+    }
 
+    this.adminId = CheckAuth.userId()
     this.emitter.publish('loading-channel', false)
+    this.emitter.subscribe('show-channel', handler)
   }
+
+
 
 }

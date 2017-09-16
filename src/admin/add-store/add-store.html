@@ -1,8 +1,10 @@
 <template >
   <require from="material-design-lite/material.css"></require>
   <require from="./add-user/add-user"></require>
+  <require from="./add-tenant/add-tenant"></require>
 
   <main class="mdl-layout__content">
-    <add-user store-model.two-way="storeModel" show.bind="!storeModel.user.name"></add-user>
+    <add-user admin-id="adminId" show.bind="show.user"></add-user>
+    <add-tenant admin-id="adminId" if.bind="show.tenant"></add-tenant>
   </main>
 </template>
