@@ -4,7 +4,7 @@ import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask } from './model'
 import { getStoreTask } from './store/model'
-import { StorePopup } from '../store-popup/store-popup'
+import { StorePopup } from './store-popup/store-popup'
 import { style } from './style.css'
 
 @customElement('stores')

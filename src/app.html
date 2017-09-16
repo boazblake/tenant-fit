@@ -1,7 +1,11 @@
 <!-- TODO need to add animation or style? -->
 <template>
   <require from="toastr/build/toastr.min.css"></require>
+  <require from="components/footer/footer"></require>
+
+
   <div class="page-host container">
     <router-view class="${router.isNavigating ? 'navigating' : ''}" swap-order="after" ></router-view>
-  </div>
+  </div>.
+  <footer></footer>
 </template>

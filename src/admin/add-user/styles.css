@@ -1,3 +1,13 @@
-progress-bar: {
-  width:9000px; margin:auto
+export class styles {
+  progress-bar = {
+    width:9000px;
+    margin:auto;
+  }
+
+  user-card = {
+    width: 512px;
+    margin:0 auto;
+    height: 176px;
+  }
+
 }
