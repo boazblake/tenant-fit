@@ -28,7 +28,7 @@ export const getTenants = http => id =>
   new Task((rej, res) => tentants(http)(id).then(res, rej))
 
 export const getTenantsTask = id =>
-  compose(map(map(toVm)), map(identity(dto => JSON.parse(dto.response))), getTenants(id))
+  compose(map(map(toVm)), map(identity(dto => JSON.parse(dto.response))),  getTenants(id))
 
 // ===VALIDATE USER============================================================
 export const validate = dto => {

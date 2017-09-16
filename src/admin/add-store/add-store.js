@@ -30,12 +30,13 @@ export class AddStore {
   }
 
   attached(){
+    this.adminId = CheckAuth.userId()
+
     const handler = msg => {
       console.log(msg)
       this.show = msg
     }
 
-    this.adminId = CheckAuth.userId()
     this.emitter.publish('loading-channel', false)
     this.emitter.subscribe('show-channel', handler)
   }

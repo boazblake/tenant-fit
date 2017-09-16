@@ -32,18 +32,32 @@ export class Landing {
     }
 
     const onSuccess = data => {
-      sessionStorage.setItem('userId', JSON.stringify(data.userId))
-      sessionStorage.setItem('isAdmin', JSON.stringify(data.isAdmin))
-
       this.emitter.publish('auth-channel', true)
-      console.log(data)
-      data.isAdmin
-        ? this.router.navigateToRoute('admin', {id: data.userId})
-        : this.router.navigateToRoute('home', {id: data.userId})
+      this.state.user = data
+      this.toLogin()
     }
-
 
     loginTask(this.http)(this.user).fork(onError, onSuccess)
   }
 
+  toLogin() {
+    this.state.user.isAdmin
+      ? this.toAdmin(this.state.user)
+      : this.toClient(this.state.user)
+  }
+
+  toAdmin(user) {
+    sessionStorage.setItem('adminId', JSON.stringify(user.id))
+    sessionStorage.setItem('userId', JSON.stringify(user.id))
+    sessionStorage.setItem('isAdmin', JSON.stringify(user.isAdmin))
+    sessionStorage.setItem('userName', JSON.stringify(user.name))
+    this.router.navigateToRoute('admin', {id: user.id})
+  }
+
+  toClient(user) {
+    console.log('toclient', user)
+    sessionStorage.setItem('userName', JSON.stringify(user.name))
+    sessionStorage.setItem('userId', JSON.stringify(user.id))
+    this.router.navigateToRoute('home', {id: user.id})
+  }
 }

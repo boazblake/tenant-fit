@@ -24,7 +24,7 @@ export class NavBar {
     this.el.querySelector('#p2').style.width = "100%"
 
     const handler = authStatus => {
-      this.state.currentUser = CheckAuth.userId()
+      this.state.currentUser = CheckAuth.userName()
       this.state.authStatus = CheckAuth.auth()
       this.state.adminStatus = CheckAuth.isAdmin()
     }
@@ -43,7 +43,7 @@ export class NavBar {
   logout(){
     Promise.resolve(this.http.get("http://localhost:8080/auth/logout")).then(() => {
       sessionStorage.clear()
-      if( ! CheckAuth.auth() ) this.emitter.publish('auth-channel', false )
+      if(! CheckAuth.auth() ) this.emitter.publish('auth-channel', false )
       this.router.navigateToRoute('tenantfit')
     })
   }

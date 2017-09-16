@@ -11,7 +11,7 @@ import { log } from 'utilities'
 @customElement('add-tenant')
 @useView('./add-tenant.html')
 @inject(HttpClient, DialogService, EventAggregator)
-export class AddStore {
+export class addTenant {
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
     this.tenantId = ''
@@ -19,8 +19,7 @@ export class AddStore {
       tenants:[]
     }
     this.state = {
-      tenant: {},
-      selectTenant: {}
+      tenant: {}
     }
     this.http = http
     this.styles = styles
@@ -34,6 +33,9 @@ export class AddStore {
   attached(){
     this.emitter.publish('loading-channel', false)
     this.clientId = CheckAuth.clientId()
+    this.adminId = CheckAuth.adminId()
+    this.clientName = CheckAuth.clientName()
+    console.log(this.clientId, this.adminId)
     this.getTenants()
   }
 
@@ -44,10 +46,11 @@ export class AddStore {
     }
 
     const onError = error => {
-    console.error(error)
-    this.emitter.publish('notify-error', error.response)
-  }
+      console.error(error)
+      this.emitter.publish('notify-error', error.response)
+    }
 
+    console.log(this)
     getTenantsTask(this.http)(this.clientId).fork(onError, onSuccess)
   }
 

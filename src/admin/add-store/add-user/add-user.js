@@ -15,7 +15,7 @@ export class AddStore {
   @bindable storeModel
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
-    this.userId = null
+    this.adminId = null
     this.data ={
       users:[]
     }
@@ -29,7 +29,7 @@ export class AddStore {
   }
 
   attached(){
-    this.userId = CheckAuth.userId()
+    this.adminId = CheckAuth.adminId()
     this.emitter.publish('loading-channel', false)
     this.getUsers()
   }
@@ -40,11 +40,11 @@ export class AddStore {
     }
 
     const onError = error => {
-    console.error(error)
-    this.emitter.publish('notify-error', error.response)
-  }
+      console.error(error)
+      this.emitter.publish('notify-error', error.response)
+    }
 
-    getUsersTask(this.http)(this.userId).fork(onError, onSuccess)
+    getUsersTask(this.http)(this.adminId).fork(onError, onSuccess)
   }
 
 
@@ -62,7 +62,7 @@ export class AddStore {
       log('user')(validatedUser)
 
       validatedUser.id
-        ? this.storeUser(validatedUser.id)
+        ? this.storeUser(validatedUser)
         : this.registerUser(validatedUser)
     }
 
@@ -71,7 +71,6 @@ export class AddStore {
       this.emitter.publish('notify-error', error)
     }
 
-    log('this.state.user')(this.state.user)
     validateUserTask(this.state.user).fork(onError, onSuccess)
   }
 
@@ -83,25 +82,23 @@ export class AddStore {
 
     const onSuccess = user => {
       log('success')(user)
-      sessionStorage.setItem('clientId', JSON.stringify(user.id))
-      this.emitter.publish('show-channel', {user: false})
       this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
       this.isDisabled = true
+      this.storeUser(user)
     }
 
     console.log(_user)
-    registerTask(this.http)(this.userId)(_user).fork(onError, onSuccess)
+    registerTask(this.http)(this.adminId)(_user).fork(onError, onSuccess)
   }
 
-  storeUser(id) {
-    sessionStorage.setItem('clientId', JSON.stringify(id))
-    console.log('here')
+  storeUser(user) {
+    sessionStorage.setItem('clientName', JSON.stringify(user.name))
+    sessionStorage.setItem('clientId', JSON.stringify(user.id))
     this.emitter.publish('show-channel', {user: false})
     this.emitter.publish('show-channel', {tenant: true})
   }
 
   DropDownChanged(user) {
-    console.log('dropdownchanged user', user)
     if (user === null) {
       this.clearUser()
     }

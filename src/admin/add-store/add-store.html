@@ -4,7 +4,7 @@
   <require from="./add-tenant/add-tenant"></require>
 
   <main class="mdl-layout__content">
-    <add-user admin-id="adminId" show.bind="show.user"></add-user>
-    <add-tenant admin-id="adminId" if.bind="show.tenant"></add-tenant>
+    <add-user show.bind="show.user"></add-user>
+    <add-tenant if.bind="show.tenant"></add-tenant>
   </main>
 </template>

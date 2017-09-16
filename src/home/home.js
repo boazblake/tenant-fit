@@ -37,7 +37,7 @@ export class Home {
 class AuthorizeStep {
   run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('auth') !== -1)) {
-      if (! CheckAuth.admin() ) {
+      if ( !CheckAuth.auth() ) {
         return next.cancel(new Redirect('/'))
       }
     }

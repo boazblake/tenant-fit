@@ -5,27 +5,16 @@ import { tagged } from 'daggy'
 
 // =====MODELS================================================================
 export const userModel = dto =>
-  ({  email:dto.email
+  ({ email:dto.email
   , password: dto.password
   , isAdmin: dto.isAdmin
   })
 
 export const toVm = dto =>
-  ({ userId:dto.UserId
+  ({ id:dto.Id
   , isAdmin: dto.IsAdmin
+  , name: dto.UserName
   })
-// =====REGISTER================================================================
-
-export const registerUser = http => data =>
-  http.post("http://localhost:8080/auth/register",data)
-
-
-export const registerUserTask = http => data =>
-  new Task((rej, res) => registerUser(http)(data).then(res, rej))
-
-export const registerTask = http =>
-  compose(map(map(toVm)), map(map(identity(x => JSON.parse(x.response)))),registerUserTask)(http)
-
 
   // =====LOGIN================================================================
 export const loginUser = http => data => http.post("http://localhost:8080/auth/login", data)
