@@ -8,13 +8,25 @@ export const userModel = dto =>
 export const toVm = dto =>
   ({ id: dto._id
   , name: dto.Name
+  , email:  dto.email
+  , cellphone:  parseInt(dto.CellPhone)
+  , workphone:  parseInt(dto.WorkPhone)
   })
 
-export const toRequest = dto =>
+
+export const toRequest = userId => dto =>
   ({ Name: dto.name
   , email:  dto.email
-  , Cellphone:  dto.cellphone
-  , Workphone:  dto.workphone
+  , CellPhone:  dto.cellphone
+  , WorkPhone:  dto.workphone
+  , ModifiedBy: userId
+  })
+
+export const toUserVm = dto =>
+  ({ name: dto.name
+  , email:  dto.email
+  , cellphone:  dto.cellphone
+  , workphone:  dto.workphone
   })
 
 export const users = http => id =>
@@ -51,11 +63,11 @@ export const validateUserTask =
 
   // ===REGISTER USER============================================================
 export const add = http => data =>
-  http.post(`http://localhost:8080/admin/addCustomer/`, data)
+  http.post(`http://localhost:8080/auth/register`, data)
 
 export const addTask = http => data =>
   new Task( (rej, res) => add(http)(data).then(res, rej))
 
-export const registerTask = http =>
-  compose(map(identity(dto => JSON.parse(dto.response))), addTask(http), log('data?'),toRequest)
+export const registerTask = http => userId =>
+  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), addTask(http), toRequest(userId))
   // compose(console.log('type', type, 'http', http, 'id', id, 'data',data))

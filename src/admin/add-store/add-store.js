@@ -8,10 +8,10 @@ import styles from './styles.css'
 import { log } from 'utilities'
 
 
-@customElement('add-user')
-@useView('./add-user.html')
+@customElement('add-store')
+@useView('./add-store.html')
 @inject(HttpClient, DialogService, EventAggregator)
-export class AddUser {
+export class AddStore {
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
     this.userId = null
@@ -19,13 +19,19 @@ export class AddUser {
       users:[]
     }
     this.state = {
-      user: {}
+      user: {},
+      selectUser: {}
     }
     this.http = http
     this.styles = styles
     this.modal = modal
     this.errors = []
     this.emitter = emitter
+    this.DTO = {
+      user:{}
+      ,tenant:{}
+      , store:{}
+    }
   }
 
   attached(){
@@ -64,8 +70,8 @@ export class AddUser {
       log('user')(validatedUser)
 
       validatedUser.id
-        ? this._user = validatedUser
-        : this._user = this.registerUser(validatedUser)
+        ? this.DTO.user = validatedUser
+        : this.registerUser(validatedUser)
     }
 
     const onError = error => {
@@ -83,14 +89,13 @@ export class AddUser {
       this.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = data => {
-      log('success')(data)
-      this.emitter.publish('notify-success', `${data.name} was sucessfully added to the database`)
-      sessionStorage.setItem('userId', JSON.stringify(data._id))
-      if ( CheckAuth.auth() ) this.emitter.publish('auth-channel', true)
-      this.router.navigateToRoute('home', {id: data._id})
+    const onSuccess = user => {
+      log('success')(user)
+      this.DTO.user = user
+      this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
     }
+
     console.log(_user)
-    registerTask(this.http)(_user).fork(onError, onSuccess)
+    registerTask(this.http)(this.userId)(_user).fork(onError, onSuccess)
   }
  }

@@ -17,11 +17,11 @@ const routes =
   , title: 'STORES'
   , settings: { roles: [] }
   }
-, { route:'add-user'
+, { route:'add-store'
   , name: 'addUser'
-  , moduleId: PLATFORM.moduleName('../add-user/add-user')
+  , moduleId: PLATFORM.moduleName('../add-store/add-store')
   , nav: true
-  , title:'ADD A USER'
+  , title:'ADD A STORE'
   , settings: { roles: [] }
   }
 , { route: ''
