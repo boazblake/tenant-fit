@@ -6,17 +6,15 @@ import { getStoresTask } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import { style } from './style.css'
+import { CheckAuth } from 'authConfig'
 
 @customElement('stores')
 @useView('./stores.html')
 @inject(EventAggregator, HttpClient, DialogService)
 export class Stores {
-  @bindable tenants
-  @bindable userId
   constructor( emitter, http, modal ) {
     this.disposables = new Set()
     this.stores = []
-    this.userId = null
     this.state = {}
     this.emitter = emitter
     this.http = http
@@ -26,13 +24,10 @@ export class Stores {
     this.style=style
   }
 
-  activate(params){
-    this.userId = userId
-    this.tenants = tenants
-    console.log('stoes', this.tenants, this.id)
-  }
 
   attached(params) {
+    this.userId = CheckAuth.userId()
+
     const onError = error =>
       console.error(error);
 

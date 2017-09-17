@@ -19,10 +19,10 @@ export const toVm = Dto => {
 }
 
 export const get = http => id =>
-  http.get(`http://localhost:8080/stores/${id}`)
+  http.get(`http://localhost:8080/stores/${id}`, id)
 
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))
 
-export const getStoreTask = id =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), getTask(id))
+export const getStoreTask = http =>
+  compose(map(toVm), map(log('store')),map(identity(dto => JSON.parse(dto.response))), getTask(http))

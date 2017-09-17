@@ -34,6 +34,7 @@ export class Store {
 
     const onSuccess = store => {
       this.store = store
+      console.log('store - comp', this.store)
       this.errors['store'] = ''
       this.emitter.publish('loading-channel', false)
     }

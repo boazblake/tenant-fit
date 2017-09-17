@@ -20,6 +20,7 @@ export class Dashboard {
     this.modal = modal
     this.errors=[]
     this.style=style
+    this.tenants = []
   }
 
   activate(params){
@@ -36,11 +37,11 @@ export class Dashboard {
       console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
-    
+
     const onSuccess = data => {
       this.data.tenants = data
-      this.state.tenants = clone(this.data.tenants)
-      // map(this.tenants.push(data))
+      this.state.tenants = map(this.tenants.push(this.data.tenants))
+
       // this.emitter.publish('loading-channel', false)
     }
 
