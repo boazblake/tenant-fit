@@ -15,7 +15,7 @@ const routes =
   , moduleId: PLATFORM.moduleName('../stores/stores')
   , nav: true
   , title: 'STORES'
-  , settings: { roles: [] }
+  , settings: { roles: [], icon:'store' }
   }
 , { route:'add-store'
   , name: 'addStore'

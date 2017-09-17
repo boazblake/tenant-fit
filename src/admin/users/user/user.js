@@ -44,7 +44,16 @@ export class User {
   }
 
   showUser(id) {
-    this.modal.open( {viewModel: UserPopup, model: id })
+    this.modal.open( {viewModel: UserPopup, model: id }).then(response => {
+         console.log(response);
+
+         if (!response.wasCancelled) {
+            console.log('OK');
+         } else {
+            console.log('cancelled');
+         }
+         console.log(response.output);
+      });
   }
 
 

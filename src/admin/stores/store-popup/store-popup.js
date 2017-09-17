@@ -28,6 +28,7 @@ export class StorePopup {
       console.error(error);
       this.emitter.publish('notify-error', error.response)
     }
+
     const onSuccess = data => {
       console.log('success', data)
       this.store = data

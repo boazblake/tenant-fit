@@ -2,9 +2,13 @@
   <require from="./styles.css"></require>
 
   <div class="dashboard">
-    <div class="mdl-grid admin-nav" router.bind="router">
+    <div class="mdl-grid admin-nav mdl-navigation" router.bind="router">
       <div repeat.for="row of router.navigation" class="mdl-cell mdl-cell-add-user mdl-cell--4-col ${row.isActive ? 'active' : ''}">
-        <a href.bind="row.href">${row.title}</a>
+        <a class="mdl-navigation__link" show.bind="! row.settings.icon" href.bind="row.href">${row.title}</a>
+        <a class="mdl-navigation__link" show.bind=" row.settings.icon" href.bind="row.href">
+          <i show.bind="row.settings.icon" class="material-icons storeIcon">${row.settings.icon}</i>
+        </a>
+
       </div>
     </div>
 

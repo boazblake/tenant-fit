@@ -1,7 +1,11 @@
-.mdc-card-store {
-  background-image: url("https://i.redd.it/hq6afmze8sdz.jpg");
-}
-img {
-  max-width: 100%;
+
+mdl-card {
+  max-width: 60%;
   height: auto;
 }
+
+.mdl-card__supporting_text {
+  display: flex;
+}
+
+ux-dialog-overlay.active { background-color: black; opacity: .5; }

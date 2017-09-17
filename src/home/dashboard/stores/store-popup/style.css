@@ -5,3 +5,4 @@ img {
   max-width: 100%;
   height: auto;
 }
+ux-dialog-overlay.active { background-color: black; opacity: .5; }
