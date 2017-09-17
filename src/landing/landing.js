@@ -31,9 +31,9 @@ export class Landing {
       this.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = data => {
+    const onSuccess = user => {
       this.emitter.publish('auth-channel', true)
-      this.state.user = data
+      this.state.user = user
       this.toLogin()
     }
 

@@ -31,15 +31,9 @@
           <h2 class="mdl-card__title-text">ADD A NEW TENANT</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <div style=="${styles.home-button}">
-            <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect clear-tenant" click.delegate-"DropDownChanged()">
-              <i class="material-icons" >clear_all</i>
-            </button>
-          </div>
           <div class="mdl-textfield mdl-js-textfield">
             <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input type="text" class="mdl-textfield__input" name="name" value.bind="state.tenant.addTenant.name" style="outline: none; text-align:right;" >
-              <!-- disabled.bind='${isDisabled}' -->
               <label class="mdl-textfield__label mdl-textfield--floating-label" for="name">NAME</label>
               <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
