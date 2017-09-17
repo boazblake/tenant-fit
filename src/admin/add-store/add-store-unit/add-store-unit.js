@@ -75,8 +75,12 @@ export class addStoreUnit {
   }
 
   cookiStore(store) {
-    sessionStorage.setItem('storeName', JSON.stringify(store.name))
-    sessionStorage.setItem('storeId', JSON.stringify(store.id))
+    sessionStorage.removeItem('storeId')
+    sessionStorage.removeItem('storeName')
+    sessionStorage.removeItem('clientId')
+    sessionStorage.removeItem('clientName')
+    sessionStorage.removeItem('tenantId')
+    sessionStorage.removeItem('tenantName')
     this.router.navigateToRoute('stores')
   }
 
