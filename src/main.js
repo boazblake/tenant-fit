@@ -4,6 +4,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'babel-polyfill';
 import 'material-design-lite/material';
+import 'material-design-icons/index';
 
 import * as Bluebird from 'bluebird';
 

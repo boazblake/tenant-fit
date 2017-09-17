@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model.js'
-import { style } from './style.css'
+import { styles } from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 
 @customElement('store')
@@ -15,7 +15,7 @@ export class Store {
     this.disposables = new Set()
     this.state = {}
     this.http = http
-    this.style = style
+    this.style = styles
     this.emitter = emitter
     this.errors = {}
     this.modal = modal
@@ -43,7 +43,6 @@ export class Store {
   }
 
   showStore(id) {
-    console.log(this.modal)
     this.modal.open( {viewModel: StorePopup, model: id })
   }
 

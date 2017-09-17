@@ -101,7 +101,7 @@ export class addTenant {
   storeTenant(tenant) {
     sessionStorage.setItem('tenantName', JSON.stringify(tenant.name))
     sessionStorage.setItem('tenantId', JSON.stringify(tenant.id))
-    this.emitter.publish('show-channel', {tenant:false})
+    // this.emitter.publish('show-channel', {tenant:false})
     this.emitter.publish('show-channel', {storeUnit:true})
   }
 

@@ -1,28 +1,28 @@
 <template>
   <require from="material-design-lite/material.css"></require>
 
-   <ai-dialog class="mdl-card mdl-shadow--2dp mdl-layout-grid__cell mdl-layout-grid__cell--span-1 au-animate" >
-     <ai-dialog-header class="mdl-card__title ">
-         <h2 class="mdl-card__title-text mdl-card__title--large">${store.name}</h2>
-     </ai-dialog-header>
-
-      <ai-dialog-body>
-         <div class="mdl-card__media">
-           <img src="https://i.redd.it/hq6afmze8sdz.jpg">
-         </div>
-         <div class="mdl-card__supporting-text au-animate">
-           <p class="mdl-card__subtitle">Expiration Date: ${store.expirationDate} ${message}</p>
-           <p class="mdl-card__subtitle">Notification Date: ${store.notificationDate}</p>
-      </ai-dialog-body>
-
-      <ai-dialog-footer class="mdl-card__actions mdl-card--border">
-        <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "dController.ok(message)">
-            DISMISS
-          </button>
-        </div>
-      </ai-dialog-footer>
-   </ai-dialog>
-</template>
-
+  <ai-dialog class="mdl-card mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-shadow--2dp" au-animate>
+    <figure class="mdl-card__media">
+      <img src="https://tfirdaus.github.io/mdl/images/laptop.jpg" alt="" />
+    </figure>
+    <ai-dialog-header class="mdl-card__title">
+      <h1 class="mdl-card__title-text">${store.name}</h1>
+    </ai-dialog-header>
+    <ai-dialog-body class="mdl-card__supporting-text">
+      <p class="mdl-card__subtitle">Expiration Date: ${store.leaseExpirationDate}</p>
+      <p class="mdl-card__subtitle">Notification Date: ${store.leaseNotificationDate}</p>
+    </ai-dialog-body>
+    <ai-dialog-footer class="mdl-card__actions mdl-card--border">
+      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "dController.ok(message)">
+        DISMISS
+      </button>
+    <ai-dialog-footer class="mdl-layout-spacer"></div>
+      <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
+      <button id="share-post-1" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>
+    <ul class="mdl-menu mdl-menu--top-right mdl-js-menu" for="share-post-1">
+      <li class="mdl-menu__item">Facebook</li>
+      <li class="mdl-menu__item">Twitter</li>
+      <li class="mdl-menu__item">Pinterest</li>
+    </ul>
+  </ai-dialog>
 <template >

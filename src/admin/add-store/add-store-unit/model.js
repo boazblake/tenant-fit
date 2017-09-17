@@ -12,7 +12,7 @@ export const toVm = Dto => {
 export const storeDto = clientId => tenantId => adminId => dto => {
   let Dto =
     { Name: dto.name
-    , LandlordEntity: dto.LandlordEntity
+    , LandlordEntity: dto.landlordEntity
     , PropertyName: dto.propertyName
     , LeaseExpirationDate: dto.leaseExpirationDate
     , LeaseNotificationDate: dto.leaseNotificationDate

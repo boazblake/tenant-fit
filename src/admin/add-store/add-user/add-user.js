@@ -94,7 +94,7 @@ export class AddStore {
   storeUser(user) {
     sessionStorage.setItem('clientName', JSON.stringify(user.name))
     sessionStorage.setItem('clientId', JSON.stringify(user.id))
-    this.emitter.publish('show-channel', {user: false})
+    // this.emitter.publish('show-channel', {user: false})
     this.emitter.publish('show-channel', {tenant: true})
   }
 

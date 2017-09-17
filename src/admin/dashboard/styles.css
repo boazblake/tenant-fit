@@ -2,10 +2,10 @@
   padding-top: 100px;
 }
 
-.mdl-cell {
+.mdl-cell .admin-nav {
   box-sizing: border-box;
   background-color: #BDBDBD;
-  height: 200px;
+  height: 112px;
   padding-left: 8px;
   padding-top: 4px;
   color: white;
