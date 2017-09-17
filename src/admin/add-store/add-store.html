@@ -2,9 +2,11 @@
   <require from="material-design-lite/material.css"></require>
   <require from="./add-user/add-user"></require>
   <require from="./add-tenant/add-tenant"></require>
+  <require from="./add-store-unit/add-store-unit"></require>
 
   <main class="mdl-layout__content">
     <add-user show.bind="show.user"></add-user>
     <add-tenant if.bind="show.tenant"></add-tenant>
+    <add-store-unit if.bind="show.store-unit"></add-store-unit>
   </main>
 </template>

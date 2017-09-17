@@ -25,7 +25,7 @@ export class AddStore {
     this.show = {
       user: true,
       tenant: false,
-      store: false
+      storeUnit: false
     }
   }
 
