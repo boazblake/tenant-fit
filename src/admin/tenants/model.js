@@ -3,7 +3,7 @@ import { compose, map, identity } from 'ramda'
 import { log } from 'utilities'
 
 export const tenants = http => id =>
-  http.get(`http://localhost:8080/tenants/${id}`)
+  http.get(`https://buxy-proxy.herokuapp.com/tenants/${id}`)
 
 export const getTenants = http => id =>
   new Task((rej, res) => tenants(http)(id).then(res, rej))
@@ -13,7 +13,7 @@ export const getTenantsTask = id =>
 
 ////////////////////////////////////////////////////////////////////////////
 export const add = type => http => data =>
-  http.post(`http://localhost:8080/${type}/add/`, data)
+  http.post(`https://buxy-proxy.herokuapp.com/${type}/add/`, data)
 
 export const addTask = type => http => data =>
   new Task( (rej, res) => add(type)(http)(data).then(res, rej))

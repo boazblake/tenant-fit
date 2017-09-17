@@ -17,7 +17,7 @@ export const toVm = dto =>
   })
 
   // =====LOGIN================================================================
-export const loginUser = http => data => http.post("http://localhost:8080/auth/login", data)
+export const loginUser = http => data => http.post("https://buxy-proxy.herokuapp.com/auth/login", data)
 
 export const loginUserTask = http => data =>
   new Task((rej, res) => loginUser(http)(data).then(res, rej))

@@ -29,7 +29,7 @@ export const toStoreDto = clientId => tenantId => adminId => store =>
   storeDto(clientId)(tenantId)(adminId)(store)
 
 export const add = http => data =>
-  http.post(`http://localhost:8080/stores/add`, data)
+  http.post(`https://buxy-proxy.herokuapp.com/stores/add`, data)
 
 export const addTask = http => data =>
   new Task( (rej, res) => add(http)(data).then(res, rej))
