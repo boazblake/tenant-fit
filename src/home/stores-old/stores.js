@@ -7,10 +7,10 @@ import { getStoreTask } from './store/model'
 import { style } from './style.css'
 import { map, clone } from 'ramda'
 
-@customElement('stores')
-@useView('./stores.html')
+@customElement('stores-old')
+@useView('./stores-old.html')
 @inject(EventAggregator, HttpClient, DialogService)
-export class Stores {
+export class StoresOld {
   @bindable tenants
   @bindable userId
   constructor( emitter, http, modal ) {

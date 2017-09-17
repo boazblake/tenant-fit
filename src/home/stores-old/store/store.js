@@ -4,10 +4,10 @@ import { HttpClient } from 'aurelia-http-client'
 import { getStoreTask } from './model.js'
 import { style } from './style.css'
 
-@customElement('store')
-@useView('./store.html')
+@customElement('store-old')
+@useView('./store-old.html')
 @inject(HttpClient, DialogController)
-export class Store {
+export class StoreOld {
   @bindable store
   constructor( http, modal ) {
     this.disposables = new Set()

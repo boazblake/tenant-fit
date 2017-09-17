@@ -23,30 +23,18 @@ export class StorePopup {
   }
 
 
-  attached() {
-    this.reset()
-    this.getStore()
-  }
-
-  getStore(id) {
-    const onError = error => {
+  attached(params) {
+    const onError = error =>
       console.error(error);
-      this.errors.push({type:'stores', msg: 'error with getting stores'})
+
+    const onSuccess = data => {
+      console.log('success', data)
+      this.store = data
     }
 
-    const onSuccess = store => {
-      this.store = store
-      this.errors['store'] = ''
-      this.openModal(id)
-      this.emitter.publish('loading-channel', false)
-    }
-
-    this.emitter.publish('loading-channel', true)
-    getStoreTask(this.http)(id).fork(onError, onSuccess)
+    getStoreTask(this.http)(this.id).fork(onError, onSuccess)
   }
 
-  reset() {
 
-  }
 
 }

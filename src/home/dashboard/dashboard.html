@@ -1,6 +1,9 @@
 <template >
   <require from="material-design-lite/material.css"></require>
-  <require from="../stores/stores"></require>
+  <require from="./stores/stores"></require>
 
-  <stores tenants.bind="state.tenants" user-id.bind="userId"></stores>
+  <div class="stores">
+      <stores tenants.bind="state.tenants" user-id.bind="userId"></stores>
+    </div>
+  </div>
 </template>
