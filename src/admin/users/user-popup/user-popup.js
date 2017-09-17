@@ -1,25 +1,26 @@
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask } from './model'
+import { getUserTask } from './model'
 import { style } from './style.css'
+import { CheckAuth } from 'authConfig'
 
-@customElement('store-popup')
-@useView('./store-popup.html')
+@customElement('user-popup')
+@useView('./user-popup.html')
 @inject(HttpClient, DialogController)
-export class StorePopup {
+export class UserPopup {
   constructor( http, dController ) {
     this.disposables = new Set()
     this.dController = dController
-    this.id = null
     this.state = {}
     this.http = http
     this.style = style
   }
 
-  activate(id){
-    this.id = id
-    console.log('store id', id)
+  activate(userId){
+    this.userId = userId
+    this.adminId = CheckAuth.adminId()
+    console.log(this.adminId, this.userId)
   }
 
 
@@ -30,10 +31,10 @@ export class StorePopup {
     }
     const onSuccess = data => {
       console.log('success', data)
-      this.store = data
+      this.user = data
     }
 
-    getStoreTask(this.http)(this.id).fork(onError, onSuccess)
+    getUserTask(this.http)(this.adminId)(this.userId).fork(onError, onSuccess)
   }
 
 

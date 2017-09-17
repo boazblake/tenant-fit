@@ -18,10 +18,17 @@ const routes =
   , settings: { roles: [] }
   }
 , { route:'add-store'
-  , name: 'addUser'
+  , name: 'addStore'
   , moduleId: PLATFORM.moduleName('../add-store/add-store')
   , nav: true
   , title:'ADD A STORE'
+  , settings: { roles: [] }
+  }
+, { route: 'users'
+  , name: 'users'
+  , moduleId: PLATFORM.moduleName('../users/users')
+  , nav: true
+  , title: 'USERS'
   , settings: { roles: [] }
   }
 , { route: ''
