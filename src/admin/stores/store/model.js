@@ -1,14 +1,19 @@
 import Task from 'data.task'
 import { compose, map, identity } from 'ramda'
 import { log } from 'utilities'
+import { moment } from 'moment'
+
+
+const parseDate = date =>
+  moment(date)
 
 export const toVm = Dto => {
   let dto =
     { name: Dto.Name
     // , landlordEntity: Dto.LandlordEntity
     , propertyName: Dto.PropertyName
-    , leaseExpirationDate: Dto.LeaseExpirationDate
-    , leaseNotificationDate: Dto.LeaseNotificationDate
+    , leaseExpirationDate: parseDate(Dto.LeaseExpirationDate)
+    , leaseNotificationDate: parseDate(Dto.LeaseNotificationDate)
     , _id: Dto._id
     // , comments: Dto.Comments
     // , tenantId: TenantId
