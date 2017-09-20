@@ -43,6 +43,7 @@ export class Store {
   }
 
   showStore(id) {
+    console.log(id)
     this.modal.open( {viewModel: StorePopup, model: id })
   }
 

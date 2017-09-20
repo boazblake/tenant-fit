@@ -10,7 +10,6 @@ export const toVm = dto =>
   , name: dto.Name
   , email:  dto.email
   , cellphone:  parseInt(dto.CellPhone)
-  , workphone:  parseInt(dto.WorkPhone)
   })
 
 
@@ -18,7 +17,6 @@ export const toRequest = userId => dto =>
   ({ Name: dto.name
   , email:  dto.email
   , CellPhone:  dto.cellphone
-  , WorkPhone:  dto.workphone
   , ModifiedBy: userId
   })
 
@@ -26,7 +24,6 @@ export const toUserVm = dto =>
   ({ name: dto.name
   , email:  dto.email
   , cellphone:  dto.cellphone
-  , workphone:  dto.workphone
   })
 
 export const users = http => id =>

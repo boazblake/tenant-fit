@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getUserTask, toggleVisibility, updateContactTask } from './model'
+import { getUserTask, toggleVisibility, updateUserTask } from './model'
 import { style } from './style.css'
 import { CheckAuth } from 'authConfig'
 
@@ -50,7 +50,7 @@ export class UserPopup {
     this.isEditable = !this.isEditable
   }
 
-  updateContact() {
+  updateUser() {
     const onError = error =>{
       console.error(error);
       this.emitter.publish('notify-error', error.response)
@@ -61,7 +61,7 @@ export class UserPopup {
       this.emitter.publish('notify-success', user.name)
     }
 
-    updateContactTask(this.http)(this.adminId)(this.clientId)(this.state.user).fork(onError, onSuccess)
+    updateUserTask(this.http)(this.adminId)(this.clientId)(this.state.user).fork(onError, onSuccess)
   }
 
 

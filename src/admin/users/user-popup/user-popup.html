@@ -41,21 +41,13 @@
           <label class="mdl-textfield__label mdl-textfield--floating-label" for="cellphone">CELLPHONE</label>
           <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH CELLPHONE</span>
         </fieldset>
-      </div><div class="mdl-layout-spacer"></div>
-      <div class="mdl-textfield mdl-js-textfield">
-        <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="number" class="mdl-textfield__input" name="workphone" value.bind="state.user.workphone" style="outline: none; text-align:right;" disabled.bind="isDisabled">
-          <label class="mdl-textfield__label mdl-textfield--floating-label" for="workphone">WORKPHONE</label>
-          <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH WORKPHONE</span>
-        </fieldset>
-      </div>
 
     </ai-dialog-body>
     <ai-dialog-footer class="mdl-card__actions mdl-card--border">
       <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "dController.ok(message)">
         DISMISS
       </button>
-      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "updateContact()">
+      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "updateUser()">
         UPDATE
       </button>
     <ai-dialog-footer class="mdl-layout-spacer"></div>

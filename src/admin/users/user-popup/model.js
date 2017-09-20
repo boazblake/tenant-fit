@@ -16,7 +16,6 @@ export const toVm = Dto => {
     // , landlordEntity: Dto.LandlordEntity
     , email: Dto.email
     , cellphone: Dto.CellPhone
-    , workphone: Dto.WorkPhone
     , password: Dto.password
     , id: Dto._id
     // , comments: Dto.Comments
@@ -33,7 +32,6 @@ export const toRequest = adminId => dto => {
     // , landlordEntity: dto.LandlordEntity
     , email: dto.email
     , CellPhone: dto.cellphone
-    , WorkPhone: dto.workphone
     , password: dto.password
     , ModifiedBy: adminId
     // , comments: dto.Comments
@@ -62,5 +60,5 @@ export const update = http => adminId => userId => dto =>
 export const updateTask = http => adminId => userId => dto =>
   new Task((rej, res) => update(http)(adminId)(userId)(dto).then(res, rej))
 
-export const updateContactTask = http => adminId => userId =>
+export const updateUserTask = http => adminId => userId =>
   compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), map(log('data')), updateTask(http)(adminId)(userId),toRequest(adminId))

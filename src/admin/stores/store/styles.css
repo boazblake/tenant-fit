@@ -46,3 +46,7 @@
 .demo-card-square > .mdl-card__accent {
   background: #ff9800;
 }
+
+.fa-flag {
+  color: red;
+}

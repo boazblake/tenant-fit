@@ -93,6 +93,7 @@
     "babel-register": "6.24.1",
     "bluebird": "3.5.0",
     "bootstrap": "3.3.7",
+    "bulma": "^0.5.3",
     "copy-webpack-plugin": "4.0.1",
     "cross-env": "5.0.1",
     "css-loader": "0.28.4",

@@ -1,10 +1,13 @@
 <!-- TODO need to add animation or style? -->
 <template>
+  <require from="material-design-lite/material.css"></require>
+  <require from="bulma/css/bulma.css"></require>
+
   <require from="toastr/build/toastr.min.css"></require>
   <require from="components/footer/footer"></require>
 
 
-  <div class="page-host container">
+  <div class="page-host mdl-layout mdl-js-layout au-animate">
     <router-view class="${router.isNavigating ? 'navigating' : ''}" swap-order="after" ></router-view>
   </div>.
   <footer></footer>

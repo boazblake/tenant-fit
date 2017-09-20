@@ -1,0 +1,14 @@
+
+popup {
+  width: 600px;
+  height: auto;
+}
+
+.mdl-card__supporting_text {
+  display: flex;
+}
+
+ux-dialog-overlay.active {
+  background-color: yellow;
+  opacity: .5;
+}

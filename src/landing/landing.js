@@ -7,7 +7,7 @@ import { CheckAuth } from 'authConfig'
 import { userModel, registerTask, loginTask } from './model'
 import { log } from 'utilities'
 import { map } from 'ramda'
-import { style } from './style.css'
+import { styles } from './styles.css'
 
 @customElement('landing')
 @useView('./landing.html')
@@ -20,7 +20,7 @@ export class Landing {
     this.http = http
     this.router = router
     this.emitter = emitter
-    this.style = style
+    this.styles = styles
   }
 
   login() {

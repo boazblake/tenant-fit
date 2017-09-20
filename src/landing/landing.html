@@ -1,34 +1,54 @@
 <template>
-    <require from="material-design-lite/material.css"></require>
+  <require from="./styles.css"></require>
 
-<div class="au-animate">
-  <form role=" landingForm mdl-card">
+  <section class="hero is-fullheight is-dark is-bold">
 
-    <div class="mdl-textfield mdl-js-textfield">
-      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <label class="mdl-textfield__label" for="email">Email</label>
-        <input class="mdl-textfield__input" style="outline: none;" type="text" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value.bind="_user.email" name="email">
-        <span class="mdl-textfield__error" show.bind="errors.email">Input is not a valid email!</span>
-      </fieldset>
+    <div class="hero">
+      <h1 class="title has-text-centered">WELCOME TO TENANT FIT</h1>
+      <h3 class="subtitle has-text-centered">Your Online Lease Hub</h3>
     </div>
-<br>
-    <div class="mdl-textfield mdl-js-textfield">
-      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <label class="mdl-textfield__label" for="Password">Password</label>
-        <input class="mdl-textfield__input" style="outline: none;" type="password" value.bind="_user.password" name="password">
-        <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span>
-      </fieldset>
-    </div>
-    <!-- <label class="mdl-switch mdl-js-switch" for="isAdmin">
-      <input class="mdl-switch__input" style="outline: none;" type="checkbox" checked.bind="_user.isAdmin" name="isAdmin" id="isAdmin">
-      <span class="mdl-switch__label">Admin</span>
-    </label>
-    <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span> -->
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-vcentered">
+            <div class="column is-4 is-offset-4">
+              <div class="box">
+                <label class="label" for="email">Email</label>
+                <span class="control has-icons-left has-icons-right">
+                  <input class="input" type="text" placeholder="jsmith@example.org" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value.bind="_user.email" name="email">
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                  <span class="icon is-small is-right">
+                    <i show.bind="state.user" class="fa fa-check"></i>
+                  </span>
+                  <span if.bind="errors.email" class="help is-danger">Invalid Email</span>
+                </span>
+                <hr>
+                <label class="label" for="Password">Password</label>
+                <span class="control has-icons-left has-icons-right">
+                  <input class="input" type="password" placeholder="●●●●●●●" type="password" value.bind="_user.password" name="password">
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-lock"></i>
+                  </span>
+                  <span class="icon is-small is-right">
+                    <i show.bind="state.user" class="fa fa-check"></i>
+                  </span>
+                  <span if.bind="errors.email" class="help is-danger">Invalid Email</span>
+                </span>
+                <hr>
+                <span class="control">
+                  <button class="button is-default is-fullwidth" click.delegate="login()">Login</button>
+                </span>
+              </div>
+              <span class="has-text-centered">
+                <a href="#">Need help?</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="actions">
-      <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="register()">REGISTER</button> -->
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="login()">LOGIN</button>
-    </div>
-  </form>
-</div>
+    </section>
+
+
 </template>

@@ -1,25 +1,29 @@
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask } from './model'
-import { style } from './style.css'
+import { getStoreTask, updateStoreTask } from './model'
+import styles from './styles.css'
+import { CheckAuth } from 'authConfig'
 
 @customElement('store-popup')
 @useView('./store-popup.html')
-@inject(HttpClient, DialogController)
+@inject(HttpClient, DialogController, EventAggregator)
 export class StorePopup {
-  constructor( http, dController ) {
+  constructor( http, dController, emitter) {
     this.disposables = new Set()
     this.dController = dController
-    this.id = null
     this.state = {}
     this.http = http
-    this.style = style
+    this.emitter = emitter
+    this.isEditable = false
+    this.isDisabled = true
+    this.styles = styles
   }
 
-  activate(id){
-    this.id = id
-    console.log('store id', id)
+  activate(storeId){
+    this.storeId = storeId
+    this.adminId = CheckAuth.adminId()
   }
 
 
@@ -29,12 +33,32 @@ export class StorePopup {
       this.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = data => {
-      console.log('success', data)
-      this.store = data
+    const onSuccess = store => {
+      this.state.store = store
+      console.log(this.state.store)
     }
 
-    getStoreTask(this.http)(this.id).fork(onError, onSuccess)
+    getStoreTask(this.http)(this.storeId).fork(onError, onSuccess)
+  }
+
+  editForm() {
+    this.isDisabled = !this.isDisabled
+    this.isEditable = !this.isEditable
+  }
+
+  updateStore(storeId) {
+    const onError = error =>{
+      console.error(error);
+      this.emitter.publish('notify-error', error.response)
+    }
+
+    const onSuccess = store => {
+      this.state.store = store
+      this.emitter.publish('notify-success', store.name)
+      this.dController.ok(store.name)
+    }
+
+    updateStoreTask(this.http)(this.adminId)(storeId)(this.state.store).fork(onError, onSuccess)
   }
 
 
