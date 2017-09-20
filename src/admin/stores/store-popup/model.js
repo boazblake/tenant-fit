@@ -6,14 +6,19 @@ import moment from 'moment'
 export const parseDate = date =>
   moment(date).format('ll')
 
+export const updateStoreDto = oldStore => {
+
+}
+
+
 export const toVm = Dto => {
   let dto =
   { comments: Dto.Comments
   , isConfirmed: Dto.IsConfirmed
   , landlordEntity: Dto.LandlordEntity
-  , leaseExpirationDate: parseDate(Dto.LeaseExpirationDate)
   , LeaseNotificationArray: Dto.LeaseNotificationArray
-  , leaseExpirationDate: parseDate(Dto.LeaseNotificationDate)
+  , leaseExpirationDate: Dto.LeaseExpirationDate
+  , leaseNotificationDate: Dto.LeaseNotificationDate
   , modifiedBy: Dto.ModifiedBy
   , name: Dto.Name
   , propertyName: Dto.PropertyName
@@ -30,7 +35,7 @@ export const toDto = adminId => dto => {
   let Dto =
   { Comments: dto.comments
   , IsConfirmed: dto.isConfirmed
-  , landlordEntity: dto.landlordEntity
+  , LandlordEntity: dto.landlordEntity
   , LeaseExpirationDate: dto.leaseExpirationDate
   , LeaseNotificationArray: dto.leaseNotificationArray
   , LeaseExpirationDate: dto.leaseNotificationDate
