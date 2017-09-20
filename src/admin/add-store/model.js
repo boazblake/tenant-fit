@@ -27,7 +27,7 @@ export const toUserVm = dto =>
   })
 
 export const users = http => id =>
-  http.get(`https://buxy-proxy.herokuapp.com/admin/${id}/allusers`)
+  http.get(`http://localhost:8080/admin/${id}/allusers`)
 
 export const getUsers = http => id =>
   new Task((rej, res) => users(http)(id).then(res, rej))
@@ -60,7 +60,7 @@ export const validateUserTask =
 
   // ===REGISTER USER============================================================
 export const add = http => data =>
-  http.post(`https://buxy-proxy.herokuapp.com/auth/register`, data)
+  http.post(`http://localhost:8080/auth/register`, data)
 
 export const addTask = http => data =>
   new Task( (rej, res) => add(http)(data).then(res, rej))
