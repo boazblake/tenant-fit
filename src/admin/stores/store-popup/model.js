@@ -6,8 +6,8 @@ import moment from 'moment'
 export const parseDate = date =>
   moment(date).format('ll')
 
-export const updateStoreDto = oldStore => {
-
+export const dirtyState = oldStore => {
+  console.log(oldStore)
 }
 
 
@@ -64,11 +64,11 @@ export const getStoreTask = http =>
 
 
 // UPDATE STORE===============================================================================
-export const update = http => adminId => storeId => Dto =>{
+export const update = http => adminId => storeId => Dto =>
   http.put(`http://localhost:8080/admin/${adminId}/allstores/${storeId}`, Dto)
-}
+
 export const updateStore = http => adminId => storeId => Dto =>
-  new Task((res, rej) => update(http)(adminId)(storeId)(Dto))
+  new Task((rej, res) => update(http)(adminId)(storeId)(Dto).then(res, rej))
 
 export const updateStoreTask = http => adminId => storeId =>
   compose( map(toVm),  map(identity(Dto => JSON.parse(Dto.response))), updateStore(http)(adminId)(storeId),  toDto(adminId))

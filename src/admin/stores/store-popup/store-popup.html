@@ -10,7 +10,7 @@
           <abbr title="Store has not been confirmed"><i if.bind="!state.store.isConfirmed" class="fa fa-flag" ></i></abbr>
         </div>
         <div class="field control title">
-          <strong><input class="input is-large" type="text" name="name" value.bind="state.store.name" disabled.bind="isDisabled"></strong >
+          <strong><input class="input is-large title" type="text" name="name" value.two-way="state.store.name" disabled.bind="isDisabled"></strong >
         </div>
     </ai-dialog-header>
     <ai-dialog-body class="container">
@@ -18,14 +18,14 @@
         <div class="field-body">
           <label class="label" for="propertyName">Property Name</label>
           <div class="control">
-            <input class="input is-expanded" type="text" name="propertyName" value.bind="state.store.propertyName" disabled.bind="isDisabled">
+            <input class="input is-expanded" type="text" name="propertyName" value.two-way="state.store.propertyName" disabled.bind="isDisabled">
           </div>
         </div>
 
         <div class="field-body">
           <label class="label" for="landlordEntity">Landlord</label>
           <div class="control">
-            <input class="input is-expanded" type="text" name="landlordEntity" value.bind="state.store.landlordEntity" disabled.bind="isDisabled">
+            <input class="input is-expanded" type="text" name="landlordEntity" value.two-way="state.store.landlordEntity" disabled.bind="isDisabled">
           </div>
         </div>
 
@@ -33,7 +33,7 @@
           <div class="field-body">
             <label class="label" for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
             <div class="control">
-              <input show.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.dirty.leaseExpirationDate" disabled.bind="isDisabled">
+              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.two-way="state.store.leaseExpirationDate" disabled.bind="isDisabled">
               <p><span if.bind="isEditable" >previous date:</span>  ${state.store.leaseExpirationDate | leaseDateFormat}  </p>
             </div>
           </div>
@@ -41,7 +41,7 @@
           <div class="field-body">
             <label class="label" for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
             <div class="control">
-              <input show.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.dirty.leaseNotificationDate"  disabled.bind="isDisabled">
+              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.two-way="state.store.leaseNotificationDate"  disabled.bind="isDisabled">
               <p><span if.bind="isEditable" >previous date:</span> ${state.store.leaseNotificationDate | leaseDateFormat} </p>
             </div>
           </div>
@@ -50,7 +50,7 @@
         <div class="field is-left">
           <label class="field-label" for="comments">COMMENTS</label>
           <div class="control">
-            <textarea class="textarea" type="text" name="comments" value.bind="state.store.comments" disabled.bind="isDisabled"></textarea>
+            <textarea class="textarea" type="text" name="comments" value.two-way="state.store.comments" disabled.bind="isDisabled"></textarea>
           </div>
         </div>
       </div>
@@ -59,8 +59,8 @@
       </ai-dialog-body>
 
       <ai-dialog-footer class="box">
-        <button class="button is-danger" click.trigger="dController.cancel(message)">CANCEL</button>
-        <button class="button is-success" click.trigger="validateStore()">UPDATE</button>
+        <button class="button is-danger" click.trigger="dController.cancel(message)">DISMISS</button>
+        <button show.bind="isEditable" class="button is-success" click.trigger="validateStore()">UPDATE</button>
       </ai-dialog-footer>
     </div>
   </ai-dialog>
