@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask, updateStoreTask } from './model'
+import { getStoreTask, updateStoreTask, updateStoreDto } from './model'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 
@@ -46,6 +46,16 @@ export class StorePopup {
     this.isEditable = !this.isEditable
   }
 
+  validateStore() {
+    if (! this.state.dirty) {
+      this.emitter.publish('notify-info', 'nothing to update')
+    }
+    else {
+      this.state.store = updateStoreDto(this.state.store)(this.state.dirty)
+      this.updateStore(this.store._id)
+    }
+  }
+
   updateStore(storeId) {
     const onError = error =>{
       console.error(error);
@@ -57,8 +67,8 @@ export class StorePopup {
       this.emitter.publish('notify-success', store.name)
       this.dController.ok(store.name)
     }
-
-    updateStoreTask(this.http)(this.adminId)(storeId)(this.state.store).fork(onError, onSuccess)
+    if(state.dirty)
+    updateStoreTask(this.http)(this.adminId)(storeId)(this.state).fork(onError, onSuccess)
   }
 
 

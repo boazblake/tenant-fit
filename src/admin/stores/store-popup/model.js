@@ -53,7 +53,7 @@ export const toDto = adminId => dto => {
 
 // GET STORE===============================================================================
 export const get = http => id =>
-  http.get(`https://buxy-proxy.herokuapp.com/stores/${id}`)
+  http.get(`http://localhost:8080/stores/${id}`)
 
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))
@@ -64,11 +64,11 @@ export const getStoreTask = http =>
 
 
 // UPDATE STORE===============================================================================
-export const update = http => adminId => storeId => Dto =>
-  http.put(`https://buxy-proxy.herokuapp.com/admin/${adminId}/allstores/${storeId}`, Dto)
-
+export const update = http => adminId => storeId => Dto =>{
+  http.put(`http://localhost:8080/admin/${adminId}/allstores/${storeId}`, Dto)
+}
 export const updateStore = http => adminId => storeId => Dto =>
-  new Task((res, rej) => update(http)(adminId)(Dto))
+  new Task((res, rej) => update(http)(adminId)(storeId)(Dto))
 
 export const updateStoreTask = http => adminId => storeId =>
-  compose(log('dto'), map(toVm), map(identity(Dto => JSON.parse(Dto.response))), updateStore(http)(adminId)(storeId),  toDto(adminId))
+  compose( map(toVm),  map(identity(Dto => JSON.parse(Dto.response))), updateStore(http)(adminId)(storeId),  toDto(adminId))

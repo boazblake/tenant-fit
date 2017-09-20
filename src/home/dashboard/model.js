@@ -3,7 +3,7 @@ import { compose, map, identity, lensProp } from 'ramda'
 import { log } from 'utilities'
 
 export const get = http => id =>
-  http.get(`https://buxy-proxy.herokuapp.com/tenants/userId/${id}`)
+  http.get(`http://localhost:8080/tenants/userId/${id}`)
 
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))

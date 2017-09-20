@@ -44,7 +44,7 @@ export const toRequest = adminId => dto => {
 
 
 export const get = http => adminId => userId =>
-  http.get(`https://buxy-proxy.herokuapp.com/admin/${adminId}/allusers/${userId}`)
+  http.get(`http://localhost:8080/admin/${adminId}/allusers/${userId}`)
 
 export const getTask = http => adminId => userId =>
   new Task((rej, res) => get(http)(adminId)(userId).then(res, rej))
@@ -55,7 +55,7 @@ compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), getTask(admin
 
 
 export const update = http => adminId => userId => dto =>
-  http.put(`https://buxy-proxy.herokuapp.com/admin/${adminId}/allusers/${userId}`, dto)
+  http.put(`http://localhost:8080/admin/${adminId}/allusers/${userId}`, dto)
 
 export const updateTask = http => adminId => userId => dto =>
   new Task((rej, res) => update(http)(adminId)(userId)(dto).then(res, rej))
