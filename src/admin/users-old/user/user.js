@@ -5,7 +5,6 @@ import { HttpClient } from 'aurelia-http-client'
 import { getUserTask } from './model.js'
 import { styles } from './styles.css'
 import { UserPopup } from '../user-popup/user-popup'
-import { clone } from 'ramda'
 import { CheckAuth } from 'authConfig'
 
 @customElement('user')
@@ -15,7 +14,6 @@ export class User {
   @bindable u
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
-    this.data = {}
     this.state = {}
     this.http = http
     this.style = styles
@@ -25,7 +23,6 @@ export class User {
   }
 
   attached() {
-    this.adminId = CheckAuth.adminId()
     this.reset()
     this.getUser(this.u._id)
   }
@@ -37,8 +34,7 @@ export class User {
     }
 
     const onSuccess = user => {
-      this.data.user = user
-      this.state.user = clone(this.data.user)
+      this.user = user
       this.errors['user'] = ''
       this.emitter.publish('loading-channel', false)
     }
@@ -48,20 +44,21 @@ export class User {
   }
 
   showUser(id) {
-    console.log(id)
-    this.modal.open( {viewModel: UserPopup, model: id }).whenClosed(response => {
-      if (!response.wasCancelled) {
-        console.log('updated')
-        this.data.user = response.output
-        this.state.user = clone(this.data.user)
-      } else {
-        console.log('not updated')
-      }
-    })
+    this.modal.open( {viewModel: UserPopup, model: id }).then(response => {
+         console.log(response);
+
+         if (!response.wasCancelled) {
+            console.log('OK');
+         } else {
+            console.log('cancelled');
+         }
+         console.log(response.output);
+      });
   }
 
 
   reset() {
+    this.adminId = CheckAuth.adminId()
   }
 
 }

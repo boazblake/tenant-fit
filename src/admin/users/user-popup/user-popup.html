@@ -1,63 +1,61 @@
 <template>
-  <require from="material-design-lite/material.css"></require>
+  <require from="./styles.css"></require>
+  <require from="valueConverters/index"></require>
 
-  <ai-dialog class="mdl-card mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-shadow--2dp" au-animate>
-    <figure class="mdl-card__media">
-      <img src="https://tfirdaus.github.io/mdl/images/laptop.jpg" alt="" />
-    </figure>
-    <ai-dialog-header class="mdl-card__title">
-      <h1 class="mdl-card__title-text">${user.name}</h1>
+  <ai-dialog class="hero" au-animate>
+      <ai-dialog-header class="box">
+        <div class="is-grouped is-small">
+          <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()"><i class=""></i></button>
+          <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()"><i class=""></i></button>
+          <i if.bind="!state.user.isAdmin" class="fa fa-flag" ></i>
+        </div>
+        <div class="field control title">
+          <strong><input class="input is-large title" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled"></strong >
+        </div>
     </ai-dialog-header>
-    <ai-dialog-body class="mdl-card__supporting-text">
+    <ai-dialog-body class="container">
+      <div class="box">
+        <div class="field-body">
+          <label class="label" for="email">Email</label>
+          <div class="control">
+            <input class="input is-expanded" type="text" name="email" value.two-way="state.user.email" disabled.bind="isDisabled">
+          </div>
+        </div>
 
-      <div class="mdl-textfield mdl-js-textfield">
-        <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="text" class="mdl-textfield__input" name="name" value.bind="state.user.name" style="outline: none; text-align:right;" disabled.bind="isDisabled">
-          <label class="mdl-textfield__label mdl-textfield--floating-label" for="name">NAME</label>
-          <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
-        </fieldset>
-      </div><div class="mdl-layout-spacer"></div>
-      <div class="mdl-textfield mdl-js-textfield">
-        <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="email" class="mdl-textfield__input" name="email" value.bind="state.user.email" style="outline: none; text-align:right;" disabled.bind="isDisabled">
-          <label class="mdl-textfield__label mdl-textfield--floating-label" for="email">EMAIL</label>
-          <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH EMAIL</span>
-        </fieldset>
-      </div><div class="mdl-layout-spacer"></div>
-      <div class="mdl-textfield mdl-js-textfield">
-        <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="${isPassword}" class="mdl-textfield__input" name="password" value.bind="state.user.password" style="outline: none; text-align:right;" disabled.bind="isDisabled">
-          <label class="mdl-textfield__label mdl-textfield--floating-label" for="password">PASSWORD</label>
-          <span class="mdl-textfield__error" show.bind="errors.password">ERROR WITH PASSWORD</span>
-          <span style="float:right;">
-            <checkbox show.bind="isPassword === 'password'" class="mdl-button mdl-button--icon mdl-button--colored" click.delegate="togglePassword()"><i class="material-icons">visibility</i></checkbox>
-            <checkbox show.bind="isPassword === 'text'" class="mdl-button mdl-button--icon mdl-button--colored" click.delegate="togglePassword()"><i class="material-icons">visibility_off</i></checkbox>
-          </span>
-        </fieldset>
-      </div><div class="mdl-layout-spacer"></div>
-      <div class="mdl-textfield mdl-js-textfield">
-        <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input type="number" class="mdl-textfield__input" name="celphone" value.bind="state.user.cellphone" style="outline: none; text-align:right;" disabled.bind="isDisabled">
-          <label class="mdl-textfield__label mdl-textfield--floating-label" for="cellphone">CELLPHONE</label>
-          <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH CELLPHONE</span>
-        </fieldset>
+        <div class="field-body has-addons">
+          <label class="label" for="password">Password</label>
+          <div class="control">
+            <input class="input is-expanded" type="${isPassword}" name="password" value.two-way="state.user.password" disabled.bind="isDisabled">
+          </div>
+          <div class="control">
+            <checkbox show.bind="isPassword === 'password' && isEditable" class="checkbox" click.delegate="togglePassword()"><i class="fa fa-eye"></i></checkbox>
+            <checkbox show.bind="isPassword === 'text' && isEditable" class="checkbox" click.delegate="togglePassword()"><i class="fa fa-eye-slash"></i></checkbox>
+          </div>
+        </div>
 
-    </ai-dialog-body>
-    <ai-dialog-footer class="mdl-card__actions mdl-card--border">
-      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "dController.ok(message)">
-        DISMISS
-      </button>
-      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.trigger = "updateUser()">
-        UPDATE
-      </button>
-    <ai-dialog-footer class="mdl-layout-spacer"></div>
-      <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-      <button show.bind="!isDisabled" class="mdl-button mdl-button--icon mdl-button--colored" click.delegate="editForm()"><i class="material-icons">lock_open</i></button>
-      <button show.bind="isDisabled" class="mdl-button mdl-button--icon mdl-button--colored" click.delegate="editForm()"><i class="material-icons">lock</i></button>
-    <ul class="mdl-menu mdl-menu--top-right mdl-js-menu" for="share-post-1">
-      <li class="mdl-menu__item">Facebook</li>
-      <li class="mdl-menu__item">Twitter</li>
-      <li class="mdl-menu__item">Pinterest</li>
-    </ul>
+        <div class="is-grouped">
+          <div class="field-body">
+            <label class="label" for="cellphone">CellPhone</label>
+            <div class="control">
+              <input class="input" type="text" name="cellphone" value.two-way="state.user.cellphone" disabled.bind="isDisabled">
+            </div>
+          </div>
+
+        <div class="field is-left">
+          <label class="field-label" for="comments">COMMENTS</label>
+          <div class="control">
+            <textarea class="textarea" type="text" name="comments" value.two-way="state.user.comments" disabled.bind="isDisabled"></textarea>
+          </div>
+        </div>
+      </div>
+
+      </div>
+      </ai-dialog-body>
+
+      <ai-dialog-footer class="box">
+        <button class="button is-danger" click.trigger="dController.cancel(message)">DISMISS</button>
+        <button show.bind="isEditable" class="button is-success" click.trigger="validateUser()">UPDATE</button>
+      </ai-dialog-footer>
+    </div>
   </ai-dialog>
 <template >

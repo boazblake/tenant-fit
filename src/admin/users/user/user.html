@@ -1,19 +1,49 @@
 <template>
-  <require from='material-design-icons'></require>
-  <require from='./styles.css'></require>
-
-  <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal-2">
-    <div class="mdl-card__title">
-      <i if.bind="user.isAdmin" class="material-icons userIcon">supervisor_account</i>
-      <h2 class="mdl-card__title-text">${user.name}</h2>
-    </div>
-    <div class="mdl-card__media">
-      <img src="http://placehold.it/112x112/DC143C/FFFFFF" alt="img">
-    </div>
-    <div class="mdl-card__supporting-text">
-    </div>
-    <div class="mdl-card__actions">
-      <button class="mdl-button mdl-button--compact mdl-button--theme-dark mdl-card__action mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="showUser(user._id)" data-upgraded=",MaterialButton,MaterialRipple">MORE DETAIL</button>
-    </div>
+  <div class="tile container is-fluid">
+    <article class="media box ">
+      <!-- <figure class="media-left">
+        <p class="image 32x32">
+          <img src="http://bulma.io/images/placeholders/32x32.png" alt="">
+        </p>
+      </figure> -->
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <div class="title">
+              <strong class="title">${state.user.name}</strong>
+            </div>
+            <div class="body">
+            <small>Property located at:<em>${state.user.propertyName}</em></small>
+            <h4>Expiration Date: ${state.user.leaseExpirationDate}</h4>
+            <h4>Notification Date: ${state.user.leaseNotificationDate}</h4>
+          </div>
+          </p>
+        </div>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <a class="level-item">
+              <span class="icon is-small">
+                <i class="fa fa-envelope"></i>
+              </span>
+            </a>
+            <a class="level-item">
+              <span class="icon is-small">
+                <i class="fa fa-phone"></i>
+              </span>
+            </a>
+          </div>
+          <div class="level-right">
+            <a class="level-item">
+              <span class="icon is-large">
+                <button class="button is-dark" click.delegate="showUser(state.user._id)">MORE DETAILS</button>
+              </span>
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div class="media-right">
+        <i if.bind="!user.isAdmin" class="fa fa-user fa-2x"></i>
+      </div>
+    </article>
   </div>
 <template >

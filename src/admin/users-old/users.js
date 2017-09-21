@@ -32,8 +32,8 @@ export class Users {
     const onError = error =>
       console.error(error);
 
-    const onSuccess = data => {
-      this.users = data
+    const onSuccess = users => {
+      this.users = users
       this.emitter.publish('loading-channel', false)
     }
 
@@ -53,6 +53,7 @@ export class Users {
 
     const onSuccess = user => {
       this.user = user
+      console.log('khgukyg')
       this.errors['user'] = ''
       this.openModal(id)
       this.emitter.publish('loading-channel', false)

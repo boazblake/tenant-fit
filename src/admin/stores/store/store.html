@@ -1,56 +1,54 @@
 <template>
-  <div class="tile is-ancestor">
-    <div class="tile container is-fluid">
-      <article class="media box ">
-        <!-- <figure class="media-left">
-          <p class="image 32x32">
-            <img src="http://bulma.io/images/placeholders/32x32.png" alt="">
-          </p>
-        </figure> -->
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <div class="title">
-                <strong class="title">${state.store.name}</strong>
-              </div>
-              <div class="body">
-              <small>Property located at:<em>${state.store.propertyName}</em></small>
-              <h4>Expiration Date: ${state.store.leaseExpirationDate}</h4>
-              <h4>Notification Date: ${state.store.leaseNotificationDate}</h4>
+  <div class="tile container is-fluid">
+    <article class="media box ">
+      <!-- <figure class="media-left">
+        <p class="image 32x32">
+          <img src="http://bulma.io/images/placeholders/32x32.png" alt="">
+        </p>
+      </figure> -->
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <div class="title">
+              <strong class="title">${state.store.name}</strong>
             </div>
-            </p>
+            <div class="body">
+            <small>Property located at:<em>${state.store.propertyName}</em></small>
+            <h4>Expiration Date: ${state.store.leaseExpirationDate}</h4>
+            <h4>Notification Date: ${state.store.leaseNotificationDate}</h4>
           </div>
-          <nav class="level is-mobile">
-            <div class="level-left">
-              <a class="level-item">
-                <span class="icon is-small">
-                  <i class="fa fa-envelope"></i>
-                </span>
-              </a>
-              <a class="level-item">
-                <span class="icon is-small">
-                  <i class="fa fa-phone"></i>
-                </span>
-              </a>
-            </div>
-            <div class="level-right">
-              <a class="level-item">
-                <span class="icon is-large">
-                  <button class="button is-dark" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
-                </span>
-              </a>
-            </div>
-          </nav>
+          </p>
         </div>
-        <div class="media-right">
-          <i if.bind="!store.isConfirmed" class="fa fa-flag fa-2x"></i>
-          <a class="level-item">
-            <span class="icon is-large">
-              <i class="fa fa-fire fa-2x"></i>
-            </span>
-          </a>
-        </div>
-      </article>
-    </div>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <a class="level-item">
+              <span class="icon is-small">
+                <i class="fa fa-envelope"></i>
+              </span>
+            </a>
+            <a class="level-item">
+              <span class="icon is-small">
+                <i class="fa fa-phone"></i>
+              </span>
+            </a>
+          </div>
+          <div class="level-right">
+            <a class="level-item">
+              <span class="icon is-large">
+                <button class="button is-dark" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
+              </span>
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div class="media-right">
+        <i if.bind="!store.isConfirmed" class="fa fa-flag fa-2x"></i>
+        <a class="level-item">
+          <span class="icon is-large">
+            <i class="fa fa-fire fa-2x"></i>
+          </span>
+        </a>
+      </div>
+    </article>
   </div>
 <template >

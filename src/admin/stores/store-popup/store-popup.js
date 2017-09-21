@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable, observable } from 'aurelia-fr
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask, updateStoreTask, dirtyState } from './model'
+import { getStoreTask, updateStoreTask } from './model'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 import { clone, equals } from 'ramda'

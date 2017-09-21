@@ -1,10 +1,7 @@
 <template >
-  <require from="material-design-lite/material.css"></require>
   <require from='./user/user'></require>
 
   <div class="users">
-    <div class="mdl-grid">
-      <user repeat.for="user of users" class="mdl-cell " u.bind="user"></user>
-    </div>
+    <user repeat.for="user of users" class="tile is-ancestor" u.bind="user"></user>
   </div>
 </template>
