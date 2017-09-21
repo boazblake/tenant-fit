@@ -18,6 +18,7 @@ export const toVm = Dto => {
     , cellphone: Dto.CellPhone
     , password: Dto.password
     , id: Dto._id
+    , isAdmin: Dto.IsAdmin
     // , comments: Dto.Comments
     // , tenantId: TenantId
     // , userId: ClientId

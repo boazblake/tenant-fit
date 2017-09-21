@@ -7,7 +7,7 @@
         <div class="is-grouped is-small">
           <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()"><i class=""></i></button>
           <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()"><i class=""></i></button>
-          <i if.bind="!state.user.isAdmin" class="fa fa-flag" ></i>
+          <i if.bind="state.user.isAdmin" class="fa fa-user "></i>
         </div>
         <div class="field control title">
           <strong><input class="input is-large title" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled"></strong >
@@ -28,8 +28,8 @@
             <input class="input is-expanded" type="${isPassword}" name="password" value.two-way="state.user.password" disabled.bind="isDisabled">
           </div>
           <div class="control">
-            <checkbox show.bind="isPassword === 'password' && isEditable" class="checkbox" click.delegate="togglePassword()"><i class="fa fa-eye"></i></checkbox>
-            <checkbox show.bind="isPassword === 'text' && isEditable" class="checkbox" click.delegate="togglePassword()"><i class="fa fa-eye-slash"></i></checkbox>
+            <button show.bind="isPassword === 'password' && isEditable" class="button" click.delegate="togglePassword()"><i class="fa fa-eye"></i></button>
+            <button show.bind="isPassword === 'text' && isEditable" class="button" click.delegate="togglePassword()"><i class="fa fa-eye-slash"></i></button>
           </div>
         </div>
 

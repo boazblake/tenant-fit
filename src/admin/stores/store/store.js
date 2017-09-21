@@ -21,10 +21,17 @@ export class Store {
     this.emitter = emitter
     this.errors = {}
     this.modal = modal
+    this.isList = false
+    this.listStyle = ''
   }
 
   attached() {
     this.reset()
+    const listHandler = msg => {
+        this.isList = msg
+        this.toggleListStyle()
+    }
+    this.emitter.subscribe('list-channel', listHandler)
     this.getStore(this.s._id)
   }
 
@@ -59,7 +66,15 @@ export class Store {
   }
 
 
+
+  toggleListStyle() {
+      this.isList
+        ? this.listStyle = 'list'
+        : this.listStyle = ''
+  }
+
   reset() {
+
   }
 
 }

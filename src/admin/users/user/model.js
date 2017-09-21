@@ -6,8 +6,8 @@ export const toVm = Dto => {
   let dto =
     { name: Dto.Name
     , _id: Dto._id
+    , isAdmin: Dto.IsAdmin
     }
-
   return dto
 }
 

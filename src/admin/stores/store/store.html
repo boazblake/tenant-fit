@@ -1,18 +1,18 @@
 <template>
-  <div class="tile container is-fluid">
-    <article class="media box ">
+  <div class="tile container is-fluid ${listStyle}">
+    <article class="media box ${listStyle}">
       <!-- <figure class="media-left">
         <p class="image 32x32">
           <img src="http://bulma.io/images/placeholders/32x32.png" alt="">
         </p>
       </figure> -->
-      <div class="media-content">
-        <div class="content">
+      <div class="media-content ${listStyle}">
+        <div class="content ${listStyle}">
           <p>
             <div class="title">
               <strong class="title">${state.store.name}</strong>
             </div>
-            <div class="body">
+            <div class="body ${listStyle}">
             <small>Property located at:<em>${state.store.propertyName}</em></small>
             <h4>Expiration Date: ${state.store.leaseExpirationDate}</h4>
             <h4>Notification Date: ${state.store.leaseNotificationDate}</h4>
@@ -41,7 +41,7 @@
           </div>
         </nav>
       </div>
-      <div class="media-right">
+      <div class="media-right ${listStyle}">
         <i if.bind="!store.isConfirmed" class="fa fa-flag fa-2x"></i>
         <a class="level-item">
           <span class="icon is-large">

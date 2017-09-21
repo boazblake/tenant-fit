@@ -5,7 +5,7 @@ import { HttpClient } from 'aurelia-http-client'
 import { getStoresTask } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
-import { style } from './style.css'
+import styles from './styles.css'
 
 @customElement('stores')
 @useView('./stores.html')
@@ -18,13 +18,14 @@ export class Stores {
     this.state = {}
     this.emitter = emitter
     this.http = http
-    this.style = 'style'
-    this.modal = modal
     this.errors=[]
-    this.style=style
+    this.styles = styles
+    this.isList = false
+    this.listStyle = 'list'
   }
 
   activate(params){
+    this.reset()
     this.userId = params.id
   }
 
@@ -60,6 +61,28 @@ export class Stores {
 
     this.emitter.publish('loading-channel', true)
     getStoreTask(this.http)(id).fork(onError, onSuccess)
+  }
+
+
+  toggleList() {
+    this.isList = !this.isList
+    this.emitter.publish('list-channel', true)
+    this.toggleListStyle()
+  }
+
+  toggleListStyle(){
+    this.isList
+    ? this.listStyle = 'list'
+    : this.listStyle = ''
+  }
+
+  listHandler(msg) {
+    this.isList = true
+    this.listStyle = msg
+  }
+
+  reset() {
+
   }
 
 }

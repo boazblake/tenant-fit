@@ -13,9 +13,7 @@
               <strong class="title">${state.user.name}</strong>
             </div>
             <div class="body">
-            <small>Property located at:<em>${state.user.propertyName}</em></small>
-            <h4>Expiration Date: ${state.user.leaseExpirationDate}</h4>
-            <h4>Notification Date: ${state.user.leaseNotificationDate}</h4>
+
           </div>
           </p>
         </div>
@@ -42,7 +40,9 @@
         </nav>
       </div>
       <div class="media-right">
-        <i if.bind="!user.isAdmin" class="fa fa-user fa-2x"></i>
+        <i if.bind="state.user.isAdmin" class="fa fa-user fa-2x"></i>
+        <abbr title="${state.user.cellphone}"><i class="fa fa-phone fa-2x"></i></abbr>
+        <abbr title="${state.user.email}"><i class="fa fa-envelope fa-2x"></i></abbr>
       </div>
     </article>
   </div>

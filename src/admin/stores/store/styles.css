@@ -1,3 +1,24 @@
+article.media.box {
+  display:inline-table;
+}
+
+article.media.box.list {
+  display: inline-flex;
+  width: 100%;
+}
+
+.tile.container.is-fluid.list {
+  display: flow-root;
+}
+
+  .body.list
+, .media-content.list
+, .media.right.list
+, .content.list {
+  display:flex;
+}
+//inline-flex?
+
 
 .box:hover {
   box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);

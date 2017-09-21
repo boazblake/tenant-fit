@@ -1,7 +1,13 @@
 <template >
   <require from='./store/store'></require>
 
-  <div class="stores">
+  <div class="stores ${listStyle}">
+
+    <div class="is-grouped">
+      <i show.bind="! isList"  class="button is-large fa fa-list" click.delegate="toggleList()"></i>
+      <i show.bind="isList" class="button is-large fa fa-table" click.delegate="toggleList()"></i>
+    </div>
+
     <store repeat.for="store of stores" class="tile is-ancestor" s.bind="store"></store>
   </div>
 </template>
