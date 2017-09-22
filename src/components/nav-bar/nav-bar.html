@@ -20,7 +20,7 @@
       <div class="authed" if.bind="state.authStatus">
         <ul class="nav navbar-nav">
           <li repeat.for="route of rtr.navigation" class="${route.isActive ? 'active' : ''} ">
-            <a class="mdl-list__item-primary-content" data-toggle="collapse"
+            <a class="" data-toggle="collapse"
             data-target="#skeleton-navigation-navbar-collapse.in" href.bind="route.href">${route.title}</a>
           </li>
         </ul>
@@ -29,7 +29,7 @@
     <div id="p2" show.bind="isLoading" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 
       <ul class="nav navbar-nav navbar-right">
-        <a if.bind="state.authStatus" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="logout()">LOGOUT</a>
+        <a if.bind="state.authStatus" class="" click.delegate="logout()">LOGOUT</a>
         <li class="loader" if.bind="router.isNavigating">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
         </li>

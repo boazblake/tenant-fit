@@ -11,6 +11,17 @@ article.media.box.list {
   display: flow-root;
 }
 
+.tile.container {
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  padding: 10px
+}
+
   .body.list
 , .media-content.list
 , .media.right.list

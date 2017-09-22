@@ -1,9 +1,9 @@
 <template >
   <require from='./store/store'></require>
 
-  <div class="stores ${listStyle}">
+  <div class="stores">
 
-    <div class="is-grouped">
+    <div class="is-grouped" au-animate>
       <i show.bind="! isList"  class="button is-large fa fa-list" click.delegate="toggleList()"></i>
       <i show.bind="isList" class="button is-large fa fa-table" click.delegate="toggleList()"></i>
     </div>

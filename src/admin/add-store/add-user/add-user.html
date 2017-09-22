@@ -1,60 +1,59 @@
 <template >
-  <require from="material-design-lite/material.css"></require>
   <require from="./styles.css"></require>
 
-  <div class="mdl-layout mdl-color--grey-100 mdl-card--horizontal">
+  <div class="">
     <div class=" add-user-group">
-      <div class="mdl-card mdl-shadow--6dp " css.bind="user-card">
-        <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text">SELECT A USER</h2>
+      <div class="user-card">
+        <div class="">
+          <h2 class="">SELECT A USER</h2>
         </div>
-        <div class="mdl-card__supporting-text">
-            <div class="mdl-textfield mdl-js-textfield">
+        <div class="">
+            <div class="">
               <div class="userDropdown">
-                <select class="userDropdown" name="userSelect" value.bind="state.user.addUser" style="width:100%;" change.delegate="DropDownChanged(state.user.addUser)" >
+                <select class="userDropdown" name="userSelect" value.bind="state.user.addUser"  change.delegate="DropDownChanged(state.user.addUser)" >
                   <option model.bind="null" >SELECT A USER</option>
                   <option repeat.for="user of data.users" model.bind="user" >${user.name}</option>
                 </select>
               </div>
               <div class="errors" repeat.for="error of errors">
-                <span style="color:red">${error.msg}</span>
+                <span style="">${error.msg}</span>
               </div>
             </div>
         </div>
-        <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="selectUser()">NEXT</button>
+        <div class="">
+          <button class="" click.delegate="selectUser()">NEXT</button>
         </div>
       </div>
 
-      <div class="mdl-card mdl-shadow--6dp " >
-        <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text">ADD A NEW USER</h2>
+      <div class=" " >
+        <div class="">
+          <h2 class="">ADD A NEW USER</h2>
         </div>
-        <div class="mdl-card__supporting-text">
-          <div class="mdl-textfield mdl-js-textfield">
-            <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="text" class="mdl-textfield__input" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;" >
-              <label class="mdl-textfield__label mdl-textfield--floating-label" for="name">NAME</label>
-              <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
+        <div class="">
+          <div class="">
+            <fieldset class=" ">
+              <input type="text" class="" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;" >
+              <label class=" " for="name">NAME</label>
+              <span class="" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
-          <div class="mdl-textfield mdl-js-textfield">
-            <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="email" class="mdl-textfield__input" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;" >
-              <label class="mdl-textfield__label mdl-textfield--floating-label" for="email">EMAIL</label>
-              <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH EMAIL</span>
+          <div class="">
+            <fieldset class=" ">
+              <input type="email" class="" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;" >
+              <label class=" " for="email">EMAIL</label>
+              <span class="" show.bind="errors.email">ERROR WITH EMAIL</span>
             </fieldset>
           </div>
-          <div class="mdl-textfield mdl-js-textfield">
-            <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="number" class="mdl-textfield__input" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;" >
-              <label class="mdl-textfield__label mdl-textfield--floating-label" for="cellphone">CELLPHONE</label>
-              <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH CELLPHONE</span>
+          <div class="">
+            <fieldset class=" ">
+              <input type="number" class="" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;" >
+              <label class=" " for="cellphone">CELLPHONE</label>
+              <span class="" show.bind="errors.email">ERROR WITH CELLPHONE</span>
             </fieldset>
           </div>
         </div>
-        <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="selectUser()">NEXT</button>
+        <div class="">
+          <button class="" click.delegate="selectUser()">NEXT</button>
         </div>
       </div>
     </div>

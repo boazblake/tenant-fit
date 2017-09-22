@@ -2,10 +2,8 @@
 import '../static/styles.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bulma'
 import 'babel-polyfill';
-import 'material-design-lite/material';
-import 'material-design-icons/index';
-import 'bulma/css/bulma.css'
 
 import * as Bluebird from 'bluebird';
 
@@ -24,7 +22,6 @@ export async function configure(aurelia) {
     .feature(PLATFORM.moduleName('utilities/index'))
     .feature(PLATFORM.moduleName('valueConverters/index'))
 
-    .plugin(PLATFORM.moduleName('aurelia-mdl-plugin'))
     .plugin(PLATFORM.moduleName('aurelia-dialog'))
     .plugin(PLATFORM.moduleName('aurelia-animator-css'))
     // .plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'))

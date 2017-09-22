@@ -1,58 +1,57 @@
 <template >
-  <require from="material-design-lite/material.css"></require>
   <require from="./styles.css"></require>
 
-  <div class="mdl-layout mdl-color--grey-100">
-    <div class="mdl-card mdl-shadow--6dp " >
-      <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-        <h2 class="mdl-card__title-text">ADD A NEW STORE</h2>
+  <div class="">
+    <div class="" >
+      <div class="">
+        <h2 class="">ADD A NEW STORE</h2>
       </div>
-      <div class="mdl-card__supporting-text">
-        <div class="mdl-textfield mdl-js-textfield">
-          <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input type="text" class="mdl-textfield__input" name="name" value.bind="state.store.name" style="outline: none; text-align:right;" >
-            <label class="mdl-textfield__label mdl-textfield--floating-label" for="name">NAME</label>
-            <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
+      <div class="">
+        <div class="">
+          <fieldset class="">
+            <input type="text" class="" name="name" value.bind="state.store.name" style="outline: none; text-align:right;" >
+            <label class="" for="name">NAME</label>
+            <span class="" show.bind="errors.email">ERROR WITH NAME</span>
           </fieldset>
         </div>
-        <div class="mdl-textfield mdl-js-textfield">
-          <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input type="text" class="mdl-textfield__input" name="landlordEntity" value.bind="state.store.landlordEntity" style="outline: none; text-align:right;" >
-            <label class="mdl-textfield__label mdl-textfield--floating-label" for="landlordEntity">LANDLORD</label>
-            <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH LANDLORD</span>
+        <div class="">
+          <fieldset class=" ">
+            <input type="text" class="" name="landlordEntity" value.bind="state.store.landlordEntity" style="outline: none; text-align:right;" >
+            <label class=" " for="landlordEntity">LANDLORD</label>
+            <span class="" show.bind="errors.email">ERROR WITH LANDLORD</span>
           </fieldset>
         </div>
-        <div class="mdl-textfield mdl-js-textfield">
-          <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input type="text" class="mdl-textfield__input" name="propertyName" value.bind="state.store.propertyName" style="outline: none; text-align:right;" >
-            <label class="mdl-textfield__label mdl-textfield--floating-label" for="propertyName">PROPERTY</label>
-            <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH PROPERTY</span>
+        <div class="">
+          <fieldset class=" ">
+            <input type="text" class="" name="propertyName" value.bind="state.store.propertyName" style="outline: none; text-align:right;" >
+            <label class=" " for="propertyName">PROPERTY</label>
+            <span class="" show.bind="errors.email">ERROR WITH PROPERTY</span>
           </fieldset>
         </div>
-        <div class="mdl-datefield mdl-js-datefield">
-          <fieldset class="mdl-datefield mdl-js-datefield mdl-datefield--floating-label">
-            <input type="date" class="mdl-datefield__input" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" >
-            <label class="mdl-datefield__label mdl-datefield--floating-label" for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
-            <span class="mdl-datefield__error" show.bind="errors.email">ERROR WITH LEASE EXPIRATION DATE</span>
+        <div class="">
+          <fieldset class=" ">
+            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" >
+            <label class=" " for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
+            <span class="" show.bind="errors.email">ERROR WITH LEASE EXPIRATION DATE</span>
           </fieldset>
         </div>
-        <div class="mdl-datefield mdl-js-datefield">
-          <fieldset class="mdl-datefield mdl-js-datefield mdl-datefield--floating-label">
-            <input type="date" class="mdl-datefield__input" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" >
-            <label class="mdl-datefield__label mdl-datefield--floating-label" for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
-            <span class="mdl-datefield__error" show.bind="errors.email">ERROR WITH LEASE NOTIFICATION DATE</span>
+        <div class="">
+          <fieldset class=" ">
+            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" >
+            <label class=" " for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
+            <span class="" show.bind="errors.email">ERROR WITH LEASE NOTIFICATION DATE</span>
           </fieldset>
         </div>
-        <div class="mdl-textfield mdl-js-textfield">
-          <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <textarea type="text" class="mdl-textfield__input" name="comments" value.bind="state.store.comments" style="outline: none; text-align:right;" ></textarea>
-            <label class="mdl-textfield__label mdl-textfield--floating-label" for="comments">COMMENTS</label>
-            <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
+        <div class="">
+          <fieldset class=" ">
+            <textarea type="text" class="" name="comments" value.bind="state.store.comments" style="outline: none; text-align:right;" ></textarea>
+            <label class=" " for="comments">COMMENTS</label>
+            <span class="" show.bind="errors.email">ERROR WITH NAME</span>
           </fieldset>
         </div>
       </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="createStoreDto()">SAVE STORE</button>
+      <div class="">
+        <button class="" click.delegate="createStoreDto()">SAVE STORE</button>
       </div>
     </div>
   </div>

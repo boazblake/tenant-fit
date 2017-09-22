@@ -10,4 +10,5 @@
 
 .stores.list {
   flex-direction: column;
+  display: inline-table;
 }

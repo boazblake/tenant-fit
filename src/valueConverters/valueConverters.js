@@ -24,3 +24,10 @@ export class LeaseDateFormatValueConverter {
     return moment(value).format('ll')
   }
 }
+
+export class TruncateTo50ValueConverter {
+  toView(value) {
+    console.log(value)
+    // return value.slice(0,5)
+  }
+}

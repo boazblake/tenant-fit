@@ -1,46 +1,45 @@
 <template >
-  <require from="material-design-lite/material.css"></require>
   <require from="./styles.css"></require>
 
-  <div class="mdl-layout mdl-color--grey-100">
+  <div class=" ">
     <div class=" add-tenant-group">
-      <div class="mdl-card mdl-shadow--6dp " css.bind="tenant-card">
-        <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text">SELECT A TENANT FOR CLIENT ${clientName}</h2>
+      <div class="tenant-card">
+        <div class="">
+          <h2 class="">SELECT A TENANT FOR CLIENT ${clientName}</h2>
         </div>
-        <div class="mdl-card__supporting-text">
-            <div class="mdl-textfield mdl-js-textfield">
+        <div class="">
+            <div class="">
               <div class="tenantDropdown">
-                <select class="tenantDropdown" name="tenantSelect" value.bind="state.tenant.addTenant" style="width:100%;" change.delegate="DropDownChanged(state.tenant.addTenant)" >
+                <select class="tenantDropdown" name="tenantSelect" value.bind="state.tenant.addTenant"  change.delegate="DropDownChanged(state.tenant.addTenant)" >
                   <option model.bind="null" >SELECT A TENANT</option>
                   <option repeat.for="tenant of data.tenants" model.bind="tenant" >${tenant.name}</option>
                 </select>
               </div>
               <div class="errors" repeat.for="error of errors">
-                <span style="color:red">${error.msg}</span>
+                <span class="">${error.msg}</span>
               </div>
             </div>
         </div>
-        <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="selectTenant()">NEXT</button>
+        <div class="">
+          <button class="" click.delegate="selectTenant()">NEXT</button>
         </div>
       </div>
 
-      <div class="mdl-card mdl-shadow--6dp " >
-        <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-          <h2 class="mdl-card__title-text">ADD A NEW TENANT</h2>
+      <div class="  " >
+        <div class="">
+          <h2 class="">ADD A NEW TENANT</h2>
         </div>
-        <div class="mdl-card__supporting-text">
-          <div class="mdl-textfield mdl-js-textfield">
-            <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input type="text" class="mdl-textfield__input" name="name" value.bind="state.tenant.addTenant.name" style="outline: none; text-align:right;" >
-              <label class="mdl-textfield__label mdl-textfield--floating-label" for="name">NAME</label>
-              <span class="mdl-textfield__error" show.bind="errors.email">ERROR WITH NAME</span>
+        <div class="">
+          <div class="">
+            <fieldset class=" ">
+              <input type="text" class="" name="name" value.bind="state.tenant.addTenant.name" >
+              <label class=" " for="name">NAME</label>
+              <span class="" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
         </div>
-        <div class="mdl-card__actions mdl-card--border">
-          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" click.delegate="selectTenant()">NEXT</button>
+        <div class="">
+          <button class="" click.delegate="selectTenant()">NEXT</button>
         </div>
       </div>
     </div>
