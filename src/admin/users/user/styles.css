@@ -1,17 +1,22 @@
-
-.box:hover {
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+/*.tile,
+.card.card-card{
+  max-width: 400px;
+  margin:auto;
 }
 
-.box > .title {
+.card:hover {
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, .14), 0 3px 7px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+}
+
+.card-header > .card-header-title {
   color: #fff;
   background: #03a9f4;
 }
 
-.box > .body {
+.card-content > .content {
   background: #ff9800;
 }
 
 .fa-user {
   color: #8e44ad;
-}
+}*/

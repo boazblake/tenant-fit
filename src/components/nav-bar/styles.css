@@ -11,3 +11,36 @@
 .nav-title {
   font=size: 25px;
 }
+
+.footer-global {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer-global p {
+  color: #888;
+  font-size: 13px;
+  letter-spacing: .4px;
+}
+
+.footer-global a {
+  color: #4a89dc;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.footer-global a:hover {
+  color: #666;
+  text-decoration: underline;
+}
+
+.footer-global img {
+  width: 80px;
+  transition: all .2s ease;
+}
+
+.footer-global img:hover { opacity: .83; }
+
+.footer-global img:focus , .footer-global a:focus { outline: none; }

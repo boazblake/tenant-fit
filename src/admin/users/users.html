@@ -1,7 +1,8 @@
 <template >
   <require from='./user/user'></require>
-
-  <div class="users">
-    <user repeat.for="user of users" class="tile is-ancestor" u.bind="user"></user>
+  <div class="container">
+    <div class="tile is-ancestor">
+      <user class="tile is-parent" repeat.for="user of users" u.bind="user"></user>
+    </div>
   </div>
 </template>

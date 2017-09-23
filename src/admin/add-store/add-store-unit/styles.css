@@ -1,4 +1,4 @@
-.progress-bar = {
+/*.progress-bar = {
   width:9000px;
   margin:auto;
 }
@@ -17,4 +17,4 @@
 .clear-user & hover {
   -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
-}
+}*/

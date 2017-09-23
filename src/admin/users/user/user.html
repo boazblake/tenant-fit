@@ -1,49 +1,22 @@
 <template>
-  <div class="tile container is-fluid">
-    <article class="media box ">
-      <!-- <figure class="media-left">
-        <p class="image 32x32">
-          <img src="http://bulma.io/images/placeholders/32x32.png" alt="">
-        </p>
-      </figure> -->
-      <div class="media-content">
-        <div class="content">
-          <p>
-            <div class="title">
-              <strong class="title">${state.user.name}</strong>
-            </div>
-            <div class="body">
+  <div class="tile is-child card card-card">
+    <div class="card-header">
+      <div class="card-header-title">
+        <p class="title is-small">${state.user.name}</p>
+      </div>
+      <div if.bind="state.user.isAdmin" class="card-header-icon">
+        <i  class="fa fa-user "></i>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="content">
 
-          </div>
-          </p>
-        </div>
-        <nav class="level is-mobile">
-          <div class="level-left">
-            <a class="level-item">
-              <span class="icon is-small">
-                <i class="fa fa-envelope"></i>
-              </span>
-            </a>
-            <a class="level-item">
-              <span class="icon is-small">
-                <i class="fa fa-phone"></i>
-              </span>
-            </a>
-          </div>
-          <div class="level-right">
-            <a class="level-item">
-              <span class="icon is-large">
-                <button class="button is-dark" click.delegate="showUser(state.user._id)">MORE DETAILS</button>
-              </span>
-            </a>
-          </div>
-        </nav>
       </div>
-      <div class="media-right">
-        <i if.bind="state.user.isAdmin" class="fa fa-user fa-2x"></i>
-        <abbr title="${state.user.cellphone}"><i class="fa fa-phone fa-2x"></i></abbr>
-        <abbr title="${state.user.email}"><i class="fa fa-envelope fa-2x"></i></abbr>
-      </div>
-    </article>
+    </div>
+    <footer class="card-footer">
+      <i class="button card-footer-item fa fa-phone"></i>
+      <i class="button card-footer-item fa fa-envelope"></i>
+      <i class="button card-footer-item fa fa-cog" click.delegate="showUser(state.user._id)"></i>
+    </footer>
   </div>
-<template >
+</template>

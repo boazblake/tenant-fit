@@ -1,8 +1,7 @@
-.users {
+user.tile.is-parent {
+  margin:auto;
+  flex-wrap:flex;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 20px;
+  padding-bottom: 20px;
   background: #fafafa;
-  position: relative;
 }

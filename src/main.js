@@ -2,7 +2,7 @@
 import '../static/styles.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bulma'
+import 'bulma/css/bulma.css'
 import 'babel-polyfill';
 
 import * as Bluebird from 'bluebird';

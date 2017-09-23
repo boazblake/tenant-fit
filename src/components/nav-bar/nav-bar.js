@@ -41,8 +41,8 @@ export class NavBar {
   }
 
   logout(){
+    sessionStorage.clear()
     Promise.resolve(this.http.get("http://localhost:8080/auth/logout")).then(() => {
-      sessionStorage.clear()
       if(! CheckAuth.auth() ) this.emitter.publish('auth-channel', false )
       this.router.navigateToRoute('tenantfit')
     })

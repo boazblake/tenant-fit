@@ -1,4 +1,4 @@
-.stores {
+/*.stores {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -11,4 +11,4 @@
 .stores.list {
   flex-direction: column;
   display: inline-table;
-}
+}*/
