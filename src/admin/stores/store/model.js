@@ -4,17 +4,14 @@ import { log } from 'utilities'
 import moment from 'moment'
 
 
-const parseDate = date =>
-  moment(date).format('ll')
-
 export const toVm = Dto => {
   let dto =
   { comments: Dto.Comments
   , isConfirmed: Dto.IsConfirmed
   , landlordEntity: Dto.LandlordEntity
-  , leaseExpirationDate: parseDate(Dto.LeaseExpirationDate)
+  , leaseExpirationDate: Dto.LeaseExpirationDate
   , leaseNotificationArray: Dto.LeaseNotificationArray
-  , leaseNotificationDate: parseDate(Dto.LeaseNotificationDate)
+  , leaseNotificationDate: Dto.LeaseNotificationDate
   , modifiedBy: Dto.ModifiedBy
   , name: Dto.Name
   , propertyName: Dto.PropertyName

@@ -4,7 +4,7 @@ import { log } from 'utilities'
 import moment from 'moment'
 
 export const parseDate = date =>
-  moment(date).format('ll')
+  moment.utc(date)
 
 export const dirtyState = oldStore => {
   console.log(oldStore)
@@ -12,13 +12,16 @@ export const dirtyState = oldStore => {
 
 
 export const toVm = Dto => {
+  console.log('DTO', Dto)
   let dto =
   { comments: Dto.Comments
+  , confirmedOn: Dto.ConfirmedOn
+  , emailOptIn: Dto.EmailOptIm
   , isConfirmed: Dto.IsConfirmed
   , landlordEntity: Dto.LandlordEntity
   , LeaseNotificationArray: Dto.LeaseNotificationArray
-  , leaseExpirationDate: Dto.LeaseExpirationDate
-  , leaseNotificationDate: Dto.LeaseNotificationDate
+  , leaseExpirationDate: parseDate(Dto.LeaseExpirationDate)
+  , leaseNotificationDate: parseDate(Dto.LeaseNotificationDate)
   , modifiedBy: Dto.ModifiedBy
   , name: Dto.Name
   , propertyName: Dto.PropertyName
@@ -34,17 +37,20 @@ export const toVm = Dto => {
 export const toDto = adminId => dto => {
   let Dto =
   { Comments: dto.comments
+  , ConfirmedOn: dto.confirmedOn
+  , EmailOptIm: dto.emailOptIn
   , IsConfirmed: dto.isConfirmed
   , LandlordEntity: dto.landlordEntity
   , LeaseExpirationDate: dto.leaseExpirationDate
+  , LeaseNotificationDate: dto.leaseNotificationDate
   , LeaseNotificationArray: dto.leaseNotificationArray
-  , LeaseExpirationDate: dto.leaseNotificationDate
   , ModifiedBy: adminId
   , Name: dto.name
   , PropertyName: dto.propertyName
   , TenantId: dto.tenantId
   , UserId: dto.userId
   , createdAt: dto.createdAt
+  , _id: dto._id
   }
 
   return Dto
@@ -63,7 +69,7 @@ export const getStoreTask = http =>
 
 
 
-// UPDATE STORE===============================================================================
+  // UPDATE STORE===============================================================================
 export const update = http => adminId => storeId => Dto =>
   http.put(`http://localhost:8080/admin/${adminId}/allstores/${storeId}`, Dto)
 
@@ -71,4 +77,4 @@ export const updateStore = http => adminId => storeId => Dto =>
   new Task((rej, res) => update(http)(adminId)(storeId)(Dto).then(res, rej))
 
 export const updateStoreTask = http => adminId => storeId =>
-  compose( map(toVm),  map(identity(Dto => JSON.parse(Dto.response))), updateStore(http)(adminId)(storeId),  toDto(adminId))
+  compose( map(toVm),  map(identity(Dto => JSON.parse(Dto.response))), updateStore(http)(adminId)(storeId), toDto(adminId))

@@ -30,7 +30,7 @@ export class StorePopup {
   }
 
   stateChanged(newValue, oldValue){
-    console.log(newValue, oldValue)
+    //console.log(newValue, oldValue)
   }
 
 
@@ -66,6 +66,7 @@ export class StorePopup {
     }
 
     const onSuccess = store => {
+      console.log('store',store)
       this.data.store = store
       this.state.store = clone(this.data.store)
       this.emitter.publish('notify-success', `${store.name} was successfuly updated`)
@@ -74,7 +75,6 @@ export class StorePopup {
 
     updateStoreTask(this.http)(this.adminId)(storeId)(this.state.store).fork(onError, onSuccess)
   }
-
 
 
 }

@@ -33,7 +33,7 @@
           <div class="field-body">
             <label class="label" for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
             <div class="control">
-              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.two-way="state.store.leaseExpirationDate" disabled.bind="isDisabled">
+              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" disabled.bind="isDisabled" max="${state.store.leaseNotificationDate}">
               <p><span if.bind="isEditable" >previous date:</span>  ${state.store.leaseExpirationDate | leaseDateFormat}  </p>
             </div>
           </div>
@@ -41,9 +41,23 @@
           <div class="field-body">
             <label class="label" for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
             <div class="control">
-              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.two-way="state.store.leaseNotificationDate"  disabled.bind="isDisabled">
+              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate"  disabled.bind="isDisabled"  min="${state.store.leaseExpirationDate}">
               <p><span if.bind="isEditable" >previous date:</span> ${state.store.leaseNotificationDate | leaseDateFormat} </p>
             </div>
+          </div>
+        </div>
+
+        <div class="field is-left">
+          <label class="field-label" for="isConfirmed">CONFIRMATION</label>
+          <div class="control">
+            <input class="checkbox" type="checkbox" name="isConfirmed" checked.bind="state.store.isConfirmed"  disabled.bind="isDisabled">
+          </div>
+        </div>
+
+        <div class="field is-left">
+          <label class="field-label" for="emailOptIn">Subscribe to Email Notifications</label>
+          <div class="control">
+            <input class="checkbox" type="checkbox" name="emailOptIn" checked.bind="state.store.emailOptIn"  disabled.bind="isDisabled">
           </div>
         </div>
 

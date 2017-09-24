@@ -36,3 +36,6 @@ export const addTask = http => data =>
 
 export const addStoreTask = http  =>
   compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), addTask(http))
+
+export const validateStoreTask = dto =>
+  Task.of(map(log('data')),map(toVm),dto)

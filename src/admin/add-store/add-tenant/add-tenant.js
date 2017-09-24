@@ -107,8 +107,12 @@ export class addTenant {
 
   DropDownChanged(tenant) {
     console.log(tenant)
-    tenant !== null
-      ? this.isDisabled = true
-      : this.isDisabled = false
+    tenant === null
+      ? this.isDisabled = false
+      : this.isDisabled = true
+  }
+
+  toUser() {
+    this.emitter.publish('show-channel', {user: true, tenant: false})
   }
  }

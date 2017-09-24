@@ -3,10 +3,12 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { Router } from 'aurelia-router'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { toStoreDto, addStoreTask } from './model'
+import { toStoreDto, addStoreTask, } from './model'
+import { validateStoreTask } from './validations'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 import { log } from 'utilities'
+import { clone } from 'ramda'
 
 
 @customElement('add-store-unit')
@@ -43,7 +45,21 @@ export class addStoreUnit {
     this.state.store = null
   }
 
-  createStoreDto() {
+  saveStore() {
+    const onError = error => {
+      console.error(error)
+      this.emitter.publish('notify-error', error)
+    }
+
+    const onSuccess = validStore => {
+      this.state.validatedStore = validStore
+      this.createStoreDto(clone(this.state.validatedStore))
+    }
+
+    validateStoreTask(this.state.store).fork(onError, onSuccess)
+  }
+
+  createStoreDto(store) {
     const onSuccess = storeDto => {
       this.storeDto = storeDto
       this.registerStore(storeDto)
@@ -54,8 +70,8 @@ export class addStoreUnit {
       this.emitter.publish('notify-error', error)
     }
 
-    log('this.state.store')(this.state.store)
-    toStoreDto(this.clientId)(this.tenantId)(this.adminId)(this.state.store).fork(onError, onSuccess)
+    log('updates to store')(store)
+    toStoreDto(this.clientId)(this.tenantId)(this.adminId)(store).fork(onError, onSuccess)
   }
 
   registerStore(store) {
@@ -89,5 +105,9 @@ export class addStoreUnit {
     store !== null
       ? this.isDisabled = true
       : this.isDisabled = false
+  }
+
+  toTenant() {
+    this.emitter.publish('show-channel', {tenant: true, storeUnit:false})
   }
  }

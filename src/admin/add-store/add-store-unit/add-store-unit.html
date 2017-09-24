@@ -9,49 +9,50 @@
       <div class="">
         <div class="">
           <fieldset class="">
-            <input type="text" class="" name="name" value.bind="state.store.name" style="outline: none; text-align:right;" >
             <label class="" for="name">NAME</label>
+            <input type="text" class="" name="name" value.bind="state.store.name" style="outline: none; text-align:right;" >
             <span class="" show.bind="errors.email">ERROR WITH NAME</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
-            <input type="text" class="" name="landlordEntity" value.bind="state.store.landlordEntity" style="outline: none; text-align:right;" >
             <label class=" " for="landlordEntity">LANDLORD</label>
+            <input type="text" class="" name="landlordEntity" value.bind="state.store.landlordEntity" style="outline: none; text-align:right;" >
             <span class="" show.bind="errors.email">ERROR WITH LANDLORD</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
-            <input type="text" class="" name="propertyName" value.bind="state.store.propertyName" style="outline: none; text-align:right;" >
             <label class=" " for="propertyName">PROPERTY</label>
+            <input type="text" class="" name="propertyName" value.bind="state.store.propertyName" style="outline: none; text-align:right;" >
             <span class="" show.bind="errors.email">ERROR WITH PROPERTY</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
-            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" >
             <label class=" " for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
+            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" max="${state.store.leaseNotificationDate}">
             <span class="" show.bind="errors.email">ERROR WITH LEASE EXPIRATION DATE</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
-            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" >
             <label class=" " for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
+            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" min="${state.store.leaseExpirationDate}">
             <span class="" show.bind="errors.email">ERROR WITH LEASE NOTIFICATION DATE</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
-            <textarea type="text" class="" name="comments" value.bind="state.store.comments" style="outline: none; text-align:right;" ></textarea>
             <label class=" " for="comments">COMMENTS</label>
+            <textarea type="text" class="" name="comments" value.bind="state.store.comments" style="outline: none; text-align:right;" ></textarea>
             <span class="" show.bind="errors.email">ERROR WITH NAME</span>
           </fieldset>
         </div>
       </div>
       <div class="">
-        <button class="" click.delegate="createStoreDto()">SAVE STORE</button>
+        <button class="" click.delegate="saveStore()">SAVE STORE</button>
+        <button class="" click.delegate="toTenant()">BACK</button>
       </div>
     </div>
   </div>

@@ -56,11 +56,11 @@ export class Store {
     console.log(id)
     this.modal.open( {viewModel: StorePopup, model: id }).whenClosed(response => {
       if (!response.wasCancelled) {
-        console.log('updated')
+        console.log('updated', response)
         this.data.store = response.output
         this.state.store = clone(this.data.store)
       } else {
-        console.log('not updated')
+        console.log('not updated', response)
       }
     })
   }

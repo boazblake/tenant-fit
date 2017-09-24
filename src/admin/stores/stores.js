@@ -2,11 +2,11 @@ import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoresTask, sortStores } from './model'
+import { getStoresTask, sortStores, filterStores } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import styles from './styles.css'
-import { clone } from 'ramda'
+import { clone, isEmpty } from 'ramda'
 
 @customElement('stores')
 @useView('./stores.html')
@@ -18,6 +18,7 @@ export class Stores {
     this.userId = null
     this.data = {}
     this.state = {
+      filterable:'',
       sortType: 'name',
       listStyle: 'list',
       isList: false
@@ -83,10 +84,24 @@ export class Stores {
   }
 
   sortBy(sortType) {
+    this.filterBy() 
     this.state.stores = sortStores(sortType)(this.stores)
     this.state.sortType = sortType
-    console.log(this.state.sortType)
+    console.log('sorty type', this.state.sortType)
   }
+
+  filterBy(filterable) {
+    isEmpty(this.state.filterable)
+      ? this.state.filterable = filterable
+      : this.state.filterable = ''
+    this.toggleFilter(filterable)
+  }
+
+  toggleFilter(filterable) {
+    console.log(this.state)
+      this.state.stores = filterStores(filterable)(this.stores)
+  }
+
 
   listHandler(msg) {
     this.state.isList = true

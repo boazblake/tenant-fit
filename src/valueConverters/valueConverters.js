@@ -21,7 +21,7 @@ export class BlobToUrlValueConverter {
 
 export class LeaseDateFormatValueConverter {
   toView(value) {
-    return moment(value).format('ll')
+    return moment.utc(value).format('ll')
   }
 }
 

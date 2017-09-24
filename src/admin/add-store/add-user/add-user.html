@@ -32,22 +32,22 @@
         <div class="">
           <div class="">
             <fieldset class=" ">
-              <input type="text" class="" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;" >
               <label class=" " for="name">NAME</label>
+              <input type="text" class="" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
           <div class="">
             <fieldset class=" ">
-              <input type="email" class="" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;" >
               <label class=" " for="email">EMAIL</label>
+              <input type="email" class="" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH EMAIL</span>
             </fieldset>
           </div>
           <div class="">
             <fieldset class=" ">
-              <input type="number" class="" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;" >
               <label class=" " for="cellphone">CELLPHONE</label>
+              <input type="number" class="" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH CELLPHONE</span>
             </fieldset>
           </div>

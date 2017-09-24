@@ -1,20 +1,21 @@
 <template>
   <require from="valueConverters/index"></require>
+  <require from="valueConverters/index"></require>
 
     <div class="card card-card" >
       <div class="card-header">
         <div class="card-header-title">
           <p class="title is-small">${state.store.name}</p>
         </div>
-        <div if.bind="state.user.isAdmin" class="card-header-icon">
-          <i  class="fa fa-user "></i>
+        <div if.bind="! state.store.isConfirmed" class="card-header-icon">
+          <i  class="fa fa-flag "></i>
         </div>
       </div>
       <div class="card-content">
         <div class="content">
           <small>Property located at:<em>${state.store.propertyName}</em></small>
-          <h4>Expiration Date: ${state.store.leaseExpirationDate}</h4>
-          <h4>Notification Date: ${state.store.leaseNotificationDate}</h4>
+          <h4>Expiration Date: ${state.store.leaseExpirationDate | leaseDateFormat}</h4>
+          <h4>Notification Date: ${state.store.leaseNotificationDate | leaseDateFormat}</h4>
         </div>
       </div>
       <footer class="card-footer">

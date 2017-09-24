@@ -32,14 +32,15 @@
         <div class="">
           <div class="">
             <fieldset class=" ">
-              <input type="text" class="" name="name" value.bind="state.tenant.addTenant.name" >
               <label class=" " for="name">NAME</label>
+              <input type="text" class="" name="name" value.bind="state.tenant.addTenant.name" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
         </div>
         <div class="">
           <button class="" click.delegate="selectTenant()">NEXT</button>
+          <button class="" click.delegate="toUser()">BACK</button>
         </div>
       </div>
     </div>

@@ -53,7 +53,11 @@ export class AddStore {
   }
 
   clearUser() {
+    console.log('clearing user');
     sessionStorage.setItem('clientId', '')
+    this._user = {}
+    this.isDisabled = false
+    console.log('user', this._user);
   }
 
   validateUser() {
@@ -87,7 +91,7 @@ export class AddStore {
       this.storeUser(user)
     }
 
-    console.log(_user)
+    console.log('savinf this user',_user)
     registerTask(this.http)(this.adminId)(_user).fork(onError, onSuccess)
   }
 
@@ -99,8 +103,8 @@ export class AddStore {
   }
 
   DropDownChanged(user) {
-    if (user === null) {
-      this.clearUser()
+    user === null
+      ? this.clearUser()
+      : this.isDisabled = true
     }
-  }
  }
