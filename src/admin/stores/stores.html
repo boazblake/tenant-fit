@@ -29,8 +29,10 @@
         </ul>
       </nav>
     </div>
-    <div class="tile is-ancestor" style="max-width:800px;">
-      <store repeat.for="store of state.stores" class=" tile is-parent" s.bind="store"></store>
+    <div class="hero">
+      <div class="columns is-multiline">
+        <store repeat.for="store of state.stores" class="column tile is-parent" s.bind="store" style="width:400px;";></store>
+      </div>
     </div>
   </div>
 
