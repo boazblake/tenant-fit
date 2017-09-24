@@ -12,3 +12,11 @@
   flex-direction: column;
   display: inline-table;
 }*/
+
+store.card {
+  margin:auto;
+  flex-wrap:flex;
+  display: flex;
+  padding: 20px;
+  background: #fafafa;
+}

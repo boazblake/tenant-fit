@@ -2,10 +2,11 @@ import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoresTask } from './model'
+import { getStoresTask, sortStores } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import styles from './styles.css'
+import { clone } from 'ramda'
 
 @customElement('stores')
 @useView('./stores.html')
@@ -15,13 +16,16 @@ export class Stores {
     this.disposables = new Set()
     this.stores = []
     this.userId = null
-    this.state = {}
+    this.data = {}
+    this.state = {
+      sortType: 'name',
+      listStyle: 'list',
+      isList: false
+    }
     this.emitter = emitter
     this.http = http
     this.errors=[]
     this.styles = styles
-    this.isList = false
-    this.listStyle = 'list'
   }
 
   activate(params){
@@ -33,8 +37,10 @@ export class Stores {
     const onError = error =>
       console.error(error);
 
-    const onSuccess = data => {
-      this.stores = data
+    const onSuccess = stores => {
+      this.data.stores = stores
+      this.stores = clone(this.data.stores)
+      this.state.stores = sortStores(this.state.sortType)(this.stores)
       this.emitter.publish('loading-channel', false)
     }
 
@@ -65,20 +71,26 @@ export class Stores {
 
 
   toggleList() {
-    this.isList = !this.isList
+    this.state.isList = !this.state.isList
     this.emitter.publish('list-channel', true)
-    this.toggleListStyle()
+    this.toggleListIcon()
   }
 
-  toggleListStyle(){
-    this.isList
-    ? this.listStyle = 'list'
-    : this.listStyle = ''
+  toggleListIcon(){
+    this.state.isList
+    ? this.state.listStyle = 'list'
+    : this.state.listStyle = ''
+  }
+
+  sortBy(sortType) {
+    this.state.stores = sortStores(sortType)(this.stores)
+    this.state.sortType = sortType
+    console.log(this.state.sortType)
   }
 
   listHandler(msg) {
-    this.isList = true
-    this.listStyle = msg
+    this.state.isList = true
+    this.state.listStyle = msg
   }
 
   reset() {

@@ -1,13 +1,37 @@
 <template >
   <require from='./store/store'></require>
-
-  <div class="">
-
-    <div class="" au-animate>
-      <i show.bind="! isList"  class=" fa fa-list" click.delegate="toggleList()"></i>
-      <i show.bind="isList" class=" fa fa-table" click.delegate="toggleList()"></i>
+    <div class="container" >
+    <div class="level ">
+      <div class="is-grouped  ">
+        <i show.bind="! state.isList"  class="button fa fa-list" click.delegate="toggleList()"></i>
+        <i show.bind="state.isList" class="button fa fa-table" click.delegate="toggleList()"></i>
+      </div>
+      <nav class="is-grouped">
+        <ul class="tabs">
+          <li class=" ${state.sortType === 'name' ? 'is-active' : ''}">
+            <a click.delegate="sortBy('name')">
+              <span class="icon is-small"><i  class="fa fa-sort-alpha-asc" ></i></span>
+              </span>name<span>
+            </a>
+          </li>
+          <li class="${state.sortType === 'leaseExpDate' ? 'is-active' : '' }">
+            <a click.delegate="sortBy('leaseExpDate')">
+              <span><i class="fa fa-sort-numeric-asc" ></i></span>
+              <span>leaseExpDate</span>
+            </a>
+          </li>
+          <li class="${state.sortType === 'leaseNotifDate' ? 'is-active' : '' }">
+            <a click.delegate="sortBy('leaseNotifDate')">
+              <span><i  class=" fa fa-sort-numeric-asc" ></i></span>
+              <span>leaseNotifDate</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
-
-    <store repeat.for="store of stores" class="" s.bind="store"></store>
+    <div class="tile is-ancestor" style="max-width:800px;">
+      <store repeat.for="store of state.stores" class=" tile is-parent" s.bind="store"></store>
+    </div>
   </div>
-</template>
+
+</template >
