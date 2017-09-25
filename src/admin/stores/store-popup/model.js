@@ -14,22 +14,22 @@ export const dirtyState = oldStore => {
 export const toVm = Dto => {
   console.log('DTO', Dto)
   let dto =
-  { comments: Dto.Comments
-  , confirmedOn: Dto.ConfirmedOn
-  , emailOptIn: Dto.EmailOptIm
-  , isConfirmed: Dto.IsConfirmed
-  , landlordEntity: Dto.LandlordEntity
-  , LeaseNotificationArray: Dto.LeaseNotificationArray
-  , leaseExpirationDate: parseDate(Dto.LeaseExpirationDate)
-  , leaseNotificationDate: parseDate(Dto.LeaseNotificationDate)
-  , modifiedBy: Dto.ModifiedBy
-  , name: Dto.Name
-  , propertyName: Dto.PropertyName
-  , tenantId: Dto.TenantId
-  , userId: Dto.UserId
-  , createdAt: Dto.createdAt
-  , _id: Dto._id
-  }
+    { comments: Dto.Comments
+    , confirmedOn: Dto.ConfirmedOn
+    , emailOptIn: Dto.EmailOptIm
+    , isConfirmed: Dto.IsConfirmed
+    , landlordEntity: Dto.LandlordEntity
+    , LeaseNotificationArray: Dto.LeaseNotificationArray
+    , leaseExpirationDate: parseDate(Dto.LeaseExpirationDate)
+    , leaseNotificationDate: parseDate(Dto.LeaseNotificationDate)
+    , modifiedBy: Dto.ModifiedBy
+    , name: Dto.Name
+    , propertyName: Dto.PropertyName
+    , tenantId: Dto.TenantId
+    , userId: Dto.UserId
+    , createdAt: Dto.createdAt
+    , _id: Dto._id
+    }
 
   return dto
 }

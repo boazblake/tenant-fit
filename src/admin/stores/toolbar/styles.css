@@ -1,0 +1,14 @@
+/*.stores {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px;
+  background: #fafafa;
+  position: relative;
+  margin:auto;
+}
+
+.stores.list {
+  flex-direction: column;
+  display: inline-table;
+}*/

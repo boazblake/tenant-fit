@@ -20,7 +20,6 @@ export class Stores {
     this.state = {
       filterable:'',
       sortType: 'name',
-      listStyle: 'list',
       isList: false
     }
     this.emitter = emitter
@@ -34,7 +33,12 @@ export class Stores {
     this.userId = params.id
   }
 
-  attached(params) {
+  attached() {
+    this.emitterSetup()
+    this.getStores()
+  }
+
+  getStores() {
     const onError = error =>
       console.error(error);
 
@@ -71,20 +75,8 @@ export class Stores {
   }
 
 
-  toggleList() {
-    this.state.isList = !this.state.isList
-    this.emitter.publish('list-channel', true)
-    this.toggleListIcon()
-  }
-
-  toggleListIcon(){
-    this.state.isList
-    ? this.state.listStyle = 'list'
-    : this.state.listStyle = ''
-  }
-
-  sortBy(sortType) {
-    this.filterBy() 
+  sortTypeChanged(sortType) {
+    this.filterBy()
     this.state.stores = sortStores(sortType)(this.stores)
     this.state.sortType = sortType
     console.log('sorty type', this.state.sortType)
@@ -94,11 +86,10 @@ export class Stores {
     isEmpty(this.state.filterable)
       ? this.state.filterable = filterable
       : this.state.filterable = ''
-    this.toggleFilter(filterable)
+    this.filterChanged(filterable)
   }
 
-  toggleFilter(filterable) {
-    console.log(this.state)
+  filterChanged(filterable) {
       this.state.stores = filterStores(filterable)(this.stores)
   }
 
@@ -108,8 +99,28 @@ export class Stores {
     this.state.listStyle = msg
   }
 
-  reset() {
 
+  emitterSetup() {
+    const filterHandler = x => {
+      this.state[x.title] = x.msg
+      this.filterChanged(this.state.filterable)
+    }
+
+    const sortHandler = x => {
+      this.state[x.title] = x.msg
+      this.sortTypeChanged(this.state.sortType)
+    }
+
+    this.emitter.subscribe('sort-channel', sortHandler)
+    this.emitter.subscribe('filter-channel', filterHandler)
+  }
+
+  reset() {
+    this.removeDisposables()
+  }
+
+  removeDisposables() {
+    this.disposables = new Set();
   }
 
 }

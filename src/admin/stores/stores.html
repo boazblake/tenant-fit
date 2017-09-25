@@ -1,42 +1,9 @@
 <template >
   <require from='./store/store'></require>
+  <require from='./toolbar/toolbar'></require>
+
     <div class="container" >
-    <div class="level ">
-      <div class="is-grouped  ">
-        <i show.bind="! state.isList"  class="button fa fa-list" click.delegate="toggleList()"></i>
-        <i show.bind="state.isList" class="button fa fa-table" click.delegate="toggleList()"></i>
-      </div>
-        <ul class="tabs">
-          <div class="is-grouped-left">
-            <li class=" ${state.filterable === 'isConfirmed' ? 'is-active' : ''}">
-              <a click.delegate="filterBy('isConfirmed')">
-                <span class="icon is-small"><i  class="fa fa-flag" ></i></span>
-              <span class="tag">Un Confirmed Stores</span>
-              </a>
-            </li>
-          </div>
-          <div class="is-grouped-right">
-            <li class=" ${state.sortType === 'name' ? 'is-active' : ''}">
-              <a click.delegate="sortBy('name')">
-                <span class="icon is-small"><i  class="fa fa-sort-alpha-asc" ></i></span>
-                <span class="tag">name</span>
-              </a>
-            </li>
-            <li class="${state.sortType === 'leaseExpDate' ? 'is-active' : '' }">
-              <a click.delegate="sortBy('leaseExpDate')">
-                <span class="icon is-small"><i class="fa fa-sort-numeric-asc" ></i></span>
-                <span class="tag">leaseExpDate</span>
-              </a>
-            </li>
-            <li class="${state.sortType === 'leaseNotifDate' ? 'is-active' : '' }">
-              <a click.delegate="sortBy('leaseNotifDate')">
-                <span class="icon is-small"><i  class=" fa fa-sort-numeric-asc" ></i></span>
-                <span class="tag">leaseNotifDate</span>
-              </a>
-            </li>
-          </div>
-        </ul>
-    </div>
+      <toolbar></toolbar>
     <div class="hero">
       <div class="columns is-multiline">
         <store repeat.for="store of state.stores" class="column tile is-parent" s.bind="store" style="min-width:400px;";></store>

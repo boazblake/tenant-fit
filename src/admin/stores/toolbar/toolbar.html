@@ -1,0 +1,21 @@
+<template >
+  <div class="level ">
+    <div class="is-grouped  ">
+      <i show.bind="! state.isList"  class="button fa fa-list" click.delegate="toggleList()"></i>
+      <i show.bind="state.isList" class="button fa fa-table" click.delegate="toggleList()"></i>
+    </div>
+      <div class="filterDropDown">
+        <select class="filterDropDown" name="filterSelect" value.bind="state.filter"  change.delegate="filterChanged(state.filter)" >
+          <option repeat.for="filter of filters" model.bind="filter" class="icon is-small">
+            <span >
+              <i  class="fa fa-flag" >${filter.name}</i>
+          </span>
+        </select>
+      </div>
+      <div class="sorterDropdown">
+        <select class="sorterDropDown" name="sortTypeSelect" value.bind="state.sorter"  change.delegate="sortTypeChanged(state.sorter)" >
+          <option repeat.for="sorter of sorters" model.bind="sorter" >${sorter.name}</option>
+        </select>
+      </div>
+  </div>
+</template>
