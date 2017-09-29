@@ -1,0 +1,10 @@
+<template>
+  <div class="filterDropDown level-item">
+    <select class="filterDropDown" name="filterSelect" value.bind="state.filter"  change.delegate="filterChanged(state.filter)" >
+      <option repeat.for="filter of filters" model.bind="filter" class="icon is-small">
+        <span >
+          <i  class="fa fa-flag" >${filter.name}</i>
+      </span></option>
+    </select>
+  </div>
+</template>

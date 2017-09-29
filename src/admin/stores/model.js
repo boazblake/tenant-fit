@@ -1,5 +1,5 @@
 import Task from 'data.task'
-import { compose, map, identity, prop, toLower, sortBy, filter } from 'ramda'
+import { compose, map, identity, prop, toLower, sortBy, filter, test } from 'ramda'
 import { log } from 'utilities'
 
 export const toVm = Dto => {
@@ -41,3 +41,10 @@ export const filtered = filterable => stores =>
 
 export const filterStores = filterable => stores =>
   filtered(filterable)(stores)
+
+  // ==========================================================================//
+export const byTerms = query =>
+  compose(test(new RegExp(query, 'i')), prop('name'))
+
+export const searchTask = query =>
+  compose(Task.of, filter(byTerms(query)))

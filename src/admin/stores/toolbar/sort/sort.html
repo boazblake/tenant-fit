@@ -1,0 +1,7 @@
+<template>
+  <div class="sorterDropdown">
+    <select class="sorterDropDown" name="sortTypeSelect" value.bind="state.sorter"  change.delegate="sortTypeChanged(state.sorter)" >
+      <option repeat.for="sorter of sorters" model.bind="sorter" >${sorter.name}</option>
+    </select>
+  </div>
+</template>

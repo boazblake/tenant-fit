@@ -30,7 +30,7 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
     extensions: ['.js'],
     modules: [srcDir, 'node_modules'],
     alias: {
-      'components$':path.resolve('src/components/index.js'),
+      'components$': path.resolve('src/components/index.js'),
       'authConfig': path.resolve(__dirname, 'src/authConfig/index.js'),
       'utilities$': path.resolve(__dirname, 'src/utilities/index.js'),
       'valueConverters$': path.resolve(__dirname, 'src/valueConverters/index.js'),

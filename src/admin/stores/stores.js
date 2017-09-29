@@ -2,7 +2,7 @@ import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoresTask, sortStores, filterStores } from './model'
+import { getStoresTask, sortStores, filterStores, searchTask } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import styles from './styles.css'
@@ -18,13 +18,13 @@ export class Stores {
     this.userId = null
     this.data = {}
     this.state = {
-      filterable:'',
+      filterable: '',
       sortType: 'name',
       isList: false
     }
     this.emitter = emitter
     this.http = http
-    this.errors=[]
+    this.errors = []
     this.styles = styles
   }
 
@@ -90,7 +90,7 @@ export class Stores {
   }
 
   filterChanged(filterable) {
-      this.state.stores = filterStores(filterable)(this.stores)
+    this.state.stores = filterStores(filterable)(this.stores)
   }
 
 
@@ -98,7 +98,6 @@ export class Stores {
     this.state.isList = true
     this.state.listStyle = msg
   }
-
 
   emitterSetup() {
     const filterHandler = x => {
@@ -111,8 +110,19 @@ export class Stores {
       this.sortTypeChanged(this.state.sortType)
     }
 
+    const searchHandler = msg => {
+      const onError = x => console.log(x)
+
+      const onSuccess = results =>
+        this.state.stores = results
+
+      this.state.query = msg
+      searchTask(this.state.query)(this.stores).fork(onError, onSuccess)
+    }
+
     this.emitter.subscribe('sort-channel', sortHandler)
     this.emitter.subscribe('filter-channel', filterHandler)
+    this.emitter.subscribe('search-channel', searchHandler)
   }
 
   reset() {
