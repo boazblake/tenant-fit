@@ -90,17 +90,15 @@ export class Stores {
     const onError = _ => {}
 
     const onSuccess = c => results => {
-      console.log('after filtering',results)
       c.state.stores = results
     }
 
     const handler = c => msg => {
-      console.log('before filtering',msg, c.data.stores, c.state.stores)
       c.state.filterBy = msg
 
       filterTask(c.state.filterBy)(c.data.stores)
       .chain(sortTask(c.state.sortBy))
-        .chain(directionTask(c.state.direction)).chain(x => {log('mid filt')(x);return Task.of(x)})
+        .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
 
@@ -112,11 +110,9 @@ export class Stores {
 
     const onSuccess = c => results => {
       c.state.stores = results
-      // console.log(c.data.stores, c.state.stores, c.stores)
     }
 
     const handler = c => msg => {
-      // console.log(msg, c.state.stores)
       c.state.direction = msg
 
       sortTask(c.state.sortBy)(c.state.stores)

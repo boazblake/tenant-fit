@@ -45,7 +45,6 @@ export const directionTask = dir =>
   // ==========================================================================//
 export const filterUnConfirmed = filterable => x =>{
   if (toString(filterable) === '') {
-    console.log(x)
     return x
   }
   return x[filterable] !== true
@@ -56,6 +55,3 @@ export const filtered = filterable => stores =>
 
 export const filterTask = filterable =>
   compose(Task.of, filtered(filterable))
-  // compose(Task.of, filterBy(compose(toLower, toString, prop(p))))
-
-  // ==========================================================================//
