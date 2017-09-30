@@ -2,7 +2,6 @@ import Either from 'data.either'
 import Task from 'data.task'
 import { compose, prop } from 'ramda'
 
-
 export class ParseError extends Error {}
 
 export const log = msg => x => {

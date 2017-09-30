@@ -1,9 +1,9 @@
 <template>
   <div class="filterDropDown level-item">
-    <select class="filterDropDown" name="filterSelect" value.bind="state.filter"  change.delegate="filterChanged(state.filter)" >
+    <select class="filterDropDown" name="filterSelect" value.bind="filter"  change.delegate="pub()" aria-label="filter stores by Option">
       <option repeat.for="filter of filters" model.bind="filter" class="icon is-small">
         <span >
-          <i  class="fa fa-flag" >${filter.name}</i>
+          <i  class="fa fa-flag" >${filter.key}</i>
       </span></option>
     </select>
   </div>

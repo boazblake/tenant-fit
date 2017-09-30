@@ -8,8 +8,10 @@ export class Filter {
     this.emitter = emitter
   }
 
-  filterChanged(filterable) {
-    this.emitter.publish('filter-channel', {title:'filterable', msg:filterable.type})
+  pub(filterable) {
+    const msg = this.filter.value
+
+    this.emitter.publish('filter-channel', msg)
   }
 
 }

@@ -8,7 +8,8 @@ export class Sort {
     this.emitter = emitter
   }
 
-  sortTypeChanged(sortType) {
-    this.emitter.publish('sort-channel', {title:'sortType', msg:sortType.type})
+  pub() {
+    const msg = this.sorter.value
+    this.emitter.publish('sort-channel', msg)
   }
 }

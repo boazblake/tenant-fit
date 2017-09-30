@@ -1,17 +1,16 @@
 import { inject } from 'aurelia-framework'
-import { HttpClient } from 'aurelia-http-client'
 import { EventAggregator } from 'aurelia-event-aggregator'
 
-@inject(HttpClient, EventAggregator)
+@inject(EventAggregator)
 export class Direction {
-  constructor(http, emitter) {
-    this.isAscending = true
+  constructor(emitter) {
+    this.isAscending = false
     this.emitter = emitter
   }
 
   pub() {
     this.isAscending = !this.isAscending
-    const msg = this.isAscending ? 'asc' : 'desc'
+    const msg = this.isAscending ? 'asc' : 'dsc'
     this.emitter.publish('direction-channel', msg)
   }
 }
