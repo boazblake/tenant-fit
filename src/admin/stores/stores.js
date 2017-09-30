@@ -28,15 +28,15 @@ export class Stores {
   }
 
   activate(params){
-    this.reset()
     this.userId = params.id
-  }
-
-  attached() {
+    this.reset()
     this.direction()
     this.sort()
     this.filter()
     this.search()
+  }
+
+  attached() {
     this.load()
   }
 
@@ -52,8 +52,11 @@ export class Stores {
 
     const onSuccess = c => stores => {
       c.data.stores = stores
+      c.stores = clone(stores)
       c.state.stores = clone(stores)
-      c.emitter.publish('sort-channel', 'name')
+      c.emitter.publish('filter-channel', c.state.filterBy)
+      c.emitter.publish('sort-channel', c.state.sortBy)
+      c.emitter.publish('direction-channel', c.state.direction)
       c.emitter.publish('loading-channel', false)
     }
 
@@ -68,12 +71,13 @@ export class Stores {
 
     const onSuccess = c => results =>{
       c.state.stores = results
-      console.log(c.state)
+      // console.log(c.state)
     }
 
     const handler = c => msg => {
-      console.log('sorting', c.state.sortBy, c.state.stores)
+      console.log('sort recived', msg)
       c.state.sortBy = msg
+      // console.log('sorting', c.state.sortBy, c.state.stores)
 
       sortTask(c.state.sortBy)(c.state.stores)
         .chain(directionTask(c.state.direction))
@@ -84,16 +88,16 @@ export class Stores {
   }
 
   filter() {
-    const onError = _ => {console.log(_)}
+    const onError = _ => {}
 
     const onSuccess = c => results => {
-      // c.state.stores = results
+      c.state.stores = results
       console.log(results)
     }
 
     const handler = c => msg => {
+      // console.log('filtering', c.state.filterBy, c.state.stores)
       c.state.filterBy = msg
-      console.log('msg', c.state.stores);
 
       filterTask(c.state.filterBy)(c.state.stores)
         .chain(directionTask(c.state.direction))
@@ -109,13 +113,15 @@ export class Stores {
     const onSuccess = c => results => {
       c.data.stores = results
       c.state.stores = results
+      console.log(c.data.stores, c.state.stores, c.stores)
     }
 
     const handler = c => msg => {
-      console.log(msg)
+      console.log(msg, c.state.stores)
       c.state.direction = msg
 
       sortTask(c.state.sortBy)(c.state.stores)
+      .chain(filterTask(c.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
@@ -164,16 +170,17 @@ export class Stores {
     this.state.props.sorters = [
       { key: 'Name', value: 'name' },
       { key: 'Lease Notification Date', value: 'leaseNotifDate' },
-      { key: 'Lease Expiration Date', value: 'leaseExpDate' },
+      { key: 'Lease Expiration Date', value: 'leaseExpDate' }
     ]
 
     this.state.props.filters = [
       {key: 'Choose a Filter', value: ''},
-      {key: 'confirmed Stores', value: 'isConfirmed'}
+      {key: 'Unconfirmed Stores', value: 'isConfirmed'}
     ]
-    this.data.stores = []
+    this.data = {}
     this.state.stores = []
     this.state.sortBy = 'name'
+    this.state.filterBy = ''
     this.state.direction = 'asc'
     this.state.query = ''
   }

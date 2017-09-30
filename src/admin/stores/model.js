@@ -34,27 +34,23 @@ export const loadTask = http =>
   // ==========================================================================//
 
 export const sortTask = p =>
-  compose(Task.of,
-      sortBy(compose(toLower, toString, prop(p)))
-    )
+  compose(Task.of, sortBy(compose(toLower, toString, prop(p))))
 
 export const searchTask = query =>
   compose(Task.of, filter(byTerms(query)))
 
 export const directionTask = dir =>
-  compose(Task.of, dir == 'asc' ? identity : reverse, log('dir'))
-
-export const filterTask = p =>
-    compose(Task.of, log('porps??'), filterBy(compose(toLower, toString, prop(p))), log('???'))
+  compose(Task.of, dir === 'asc' ? identity : reverse)
 
   // ==========================================================================//
-export const filterConfirmed = filterable => x =>
+export const filterUnConfirmed = filterable => x =>
   x[filterable] !== true
 
 export const filtered = filterable => stores =>
-  filter(filterConfirmed(filterable), stores)
+  filter(filterUnConfirmed(filterable), stores)
 
-export const filterStores = filterable => stores =>
-  filtered(filterable)(stores)
+export const filterTask = filterable =>
+  compose(Task.of, filtered(filterable))
+  // compose(Task.of, filterBy(compose(toLower, toString, prop(p))))
 
   // ==========================================================================//
