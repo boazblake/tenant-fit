@@ -3,7 +3,7 @@
   <require from='./toolbar/toolbar'></require>
 
     <div class="container" >
-      <toolbar></toolbar>
+      <toolbar props.bind="state.props"></toolbar>
     <div class="hero">
       <div class="columns is-multiline">
         <store repeat.for="store of state.stores" class="column tile is-parent" s.bind="store" style="min-width:400px;";></store>

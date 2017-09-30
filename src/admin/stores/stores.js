@@ -2,7 +2,7 @@ import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoresTask, sortStores, filterStores, searchTask } from './model'
+import { loadTask, sortTask, directionTask, filterStores, searchTask } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import styles from './styles.css'
@@ -19,7 +19,6 @@ export class Stores {
     this.data = {}
     this.state = {
       filterable: '',
-      sortType: 'name',
       isList: false
     }
     this.emitter = emitter
@@ -34,23 +33,86 @@ export class Stores {
   }
 
   attached() {
-    this.emitterSetup()
-    this.getStores()
+    // this.emitterSetup()
+    this.load()
+    this.direction()
+    this.sort()
+    this.search()
   }
 
-  getStores() {
+  detached() {
+    this.disposables.forEach(x => x.dispose())
+  }
+
+  load() {
     const onError = error =>
       console.error(error);
 
     const onSuccess = stores => {
       this.data.stores = stores
-      this.stores = clone(this.data.stores)
-      this.state.stores = sortStores(this.state.sortType)(this.stores)
+      this.state.stores = clone(stores)
+
+      this.emitter.publish('sort-channel', 'name')
       this.emitter.publish('loading-channel', false)
     }
 
-    getStoresTask(this.http)(this.userId).fork(onError, onSuccess)
+    const handler = c => _ =>
+      loadTask(c.http)(c.userId).fork(onError, onSuccess)
+
+    handler(this)()
   }
+
+  sort() {
+    const onError = _ => {}
+
+    const onSuccess = c => results => (c.state.stores = results)
+
+    const handler = c => msg => {
+      c.state.sortBy = msg
+
+      sortTask(c.state.sortBy)(c.state.stores)
+        .chain(directionTask(c.state.direction))
+        .fork(onError, onSuccess)
+    }
+
+    this.disposables.add(this.emitter.subscribe('sort-channel', handler(this)))
+  }
+
+  direction() {
+    const onError = _ => {}
+
+    const onSuccess = c => results => {
+      c.state.stores = results
+      c.data.stores = results
+    }
+
+    const handler = c => msg => {
+      c.state.direction = msg
+
+      sortTask(c.state.prop)(c.state.stores)
+        .chain(directionTask(c.state.direction))
+        .fork(onError, onSuccess(c))
+    }
+
+    this.disposables.add(this.emitter.subscribe('direction-channel', handler(this)))
+  }
+
+  search() {
+    const onError = _ => {}
+
+    const onSuccess = c => results => (c.state.stores  = results)
+
+    const handler = c => msg => {
+      c.state.query = msg
+
+      searchTask(c.state.query)(c.data.stores)
+        .chain(sortTask(c.state.prop))
+        .chain(directionTask(c.state.direction))
+        .fork(onError, onSuccess(c))
+    }
+    this.disposables.add(this.emitter.subscribe('search-channel', handler(this)))
+  }
+
 
   showStore(id) {
     this.getStore(id)
@@ -74,56 +136,56 @@ export class Stores {
     getStoreTask(this.http)(id).fork(onError, onSuccess)
   }
 
-
-  sortTypeChanged(sortType) {
-    this.filterBy()
-    this.state.stores = sortStores(sortType)(this.stores)
-    this.state.sortType = sortType
-    console.log('sorty type', this.state.sortType)
-  }
-
-  filterBy(filterable) {
-    isEmpty(this.state.filterable)
-      ? this.state.filterable = filterable
-      : this.state.filterable = ''
-    this.filterChanged(filterable)
-  }
-
-  filterChanged(filterable) {
-    this.state.stores = filterStores(filterable)(this.stores)
-  }
-
-
-  listHandler(msg) {
-    this.state.isList = true
-    this.state.listStyle = msg
-  }
-
-  emitterSetup() {
-    const filterHandler = x => {
-      this.state[x.title] = x.msg
-      this.filterChanged(this.state.filterable)
-    }
-
-    const sortHandler = x => {
-      this.state[x.title] = x.msg
-      this.sortTypeChanged(this.state.sortType)
-    }
-
-    const searchHandler = msg => {
-      const onError = x => console.log(x)
-
-      const onSuccess = results =>
-        this.state.stores = results
-
-      this.state.query = msg
-      searchTask(this.state.query)(this.stores).fork(onError, onSuccess)
-    }
-
-    this.emitter.subscribe('sort-channel', sortHandler)
-    this.emitter.subscribe('filter-channel', filterHandler)
-    this.emitter.subscribe('search-channel', searchHandler)
-  }
+  //
+  // sortTypeChanged(sortType) {
+  //   this.filterBy()
+  //   this.state.stores = sortStores(sortType)(this.stores)
+  //   this.state.sortType = sortType
+  //   console.log('sorty type', this.state.sortType)
+  // }
+  //
+  // filterBy(filterable) {
+  //   isEmpty(this.state.filterable)
+  //     ? this.state.filterable = filterable
+  //     : this.state.filterable = ''
+  //   this.filterChanged(filterable)
+  // }
+  //
+  // filterChanged(filterable) {
+  //   this.state.stores = filterStores(filterable)(this.stores)
+  // }
+  //
+  //
+  // listHandler(msg) {
+  //   this.state.isList = true
+  //   this.state.listStyle = msg
+  // }
+  //
+  // emitterSetup() {
+  //   const filterHandler = x => {
+  //     this.state[x.title] = x.msg
+  //     this.filterChanged(this.state.filterable)
+  //   }
+  //
+  //   const sortHandler = x => {
+  //     this.state[x.title] = x.msg
+  //     this.sortTypeChanged(this.state.sortType)
+  //   }
+  //
+  //   const searchHandler = msg => {
+  //     const onError = x => console.log(x)
+  //
+  //     const onSuccess = results =>
+  //       this.state.stores = results
+  //
+  //     this.state.query = msg
+  //     searchTask(this.state.query)(this.stores).fork(onError, onSuccess)
+  //   }
+  //
+  //   this.emitter.subscribe('sort-channel', sortHandler)
+  //   this.emitter.subscribe('filter-channel', filterHandler)
+  //   this.emitter.subscribe('search-channel', searchHandler)
+  // }
 
   reset() {
     this.removeDisposables()

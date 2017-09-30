@@ -37,7 +37,7 @@ export const toVm = Dto => {
 export const toDto = adminId => dto => {
   let Dto =
   { Comments: dto.comments
-  , ConfirmedOn: dto.confirmedOn
+  , ConfirmedOn: dto.isConfirmed ? moment() : ''
   , EmailOptIm: dto.emailOptIn
   , IsConfirmed: dto.isConfirmed
   , LandlordEntity: dto.landlordEntity

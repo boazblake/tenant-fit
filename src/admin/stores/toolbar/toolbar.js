@@ -1,24 +1,11 @@
-import { useView, inject, bindable } from 'aurelia-framework'
-import { HttpClient } from 'aurelia-http-client'
-import { CheckAuth } from 'authConfig'
+import { inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { clone } from 'ramda'
 
-@inject(HttpClient, EventAggregator)
+@inject(EventAggregator)
 export class Toolbar {
-  constructor(http, emitter) {
-    this.query = ''
+  constructor(emitter) {
     this.emitter = emitter
-    this.filters = [{name:'SELECT A FILTER', type:null}, {name:'Un Confirmed Stores', type:'isConfirmed'}]
-    this.sorters = [{name:'SORT BY', type:'name'}, {name:'name', type:'name'}, {name:'Expiration Date',type:'leaseExpDate'},{name:'Notification Date',type:'leaseNotifDate'} ]
-    this.state = {
-      filter:{},
-      sorter:{},
-      listStyle: 'list',
-      isList: false
-    }
-    this.http = http
-    this.isLoading = true
   }
 
   filterChanged(filterable) {
