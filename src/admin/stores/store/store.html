@@ -41,7 +41,7 @@
       </footer>
     </div>
 
-    <siv if.bind="! state.isCard">
+    <table class="table is-striped" if.bind="! state.isCard">
       <tr>
         <td>${state.store.name}</td>
         <td>${state.store.propertyName}</td>
@@ -54,6 +54,6 @@
           <button class="" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
         </td>
       </tr>
-    </siv>
+    </table>
 
 <template >
