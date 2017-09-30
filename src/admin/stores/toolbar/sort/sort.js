@@ -11,6 +11,5 @@ export class Sort {
   pub() {
     const msg = this.sorter.value
     this.emitter.publish('sort-channel', msg)
-    console.log('sorter sent', msg)
   }
 }

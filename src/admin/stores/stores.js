@@ -9,6 +9,8 @@ import styles from './styles.css'
 import { clone, isEmpty } from 'ramda'
 import { log } from 'utilities'
 
+import Task from 'data.task'
+
 @customElement('stores')
 @useView('./stores.html')
 @inject(EventAggregator, HttpClient, DialogService)
@@ -71,17 +73,14 @@ export class Stores {
 
     const onSuccess = c => results =>{
       c.state.stores = results
-      // console.log(c.state)
     }
 
     const handler = c => msg => {
-      console.log('sort recived', msg)
       c.state.sortBy = msg
-      // console.log('sorting', c.state.sortBy, c.state.stores)
 
       sortTask(c.state.sortBy)(c.state.stores)
         .chain(directionTask(c.state.direction))
-        .fork(onError, onSuccess)
+        .fork(onError, onSuccess(c))
     }
 
     this.disposables.add(this.emitter.subscribe('sort-channel', handler(this)))
@@ -91,17 +90,18 @@ export class Stores {
     const onError = _ => {}
 
     const onSuccess = c => results => {
+      console.log('after filtering',results)
       c.state.stores = results
-      console.log(results)
     }
 
     const handler = c => msg => {
-      // console.log('filtering', c.state.filterBy, c.state.stores)
+      console.log('before filtering',msg, c.data.stores, c.state.stores)
       c.state.filterBy = msg
 
-      filterTask(c.state.filterBy)(c.state.stores)
-        .chain(directionTask(c.state.direction))
-        .fork(onError, onSuccess)
+      filterTask(c.state.filterBy)(c.data.stores)
+      .chain(sortTask(c.state.sortBy))
+        .chain(directionTask(c.state.direction)).chain(x => {log('mid filt')(x);return Task.of(x)})
+        .fork(onError, onSuccess(c))
     }
 
     this.disposables.add(this.emitter.subscribe('filter-channel', handler(this)))
@@ -111,13 +111,12 @@ export class Stores {
     const onError = _ => {}
 
     const onSuccess = c => results => {
-      c.data.stores = results
       c.state.stores = results
-      console.log(c.data.stores, c.state.stores, c.stores)
+      // console.log(c.data.stores, c.state.stores, c.stores)
     }
 
     const handler = c => msg => {
-      console.log(msg, c.state.stores)
+      // console.log(msg, c.state.stores)
       c.state.direction = msg
 
       sortTask(c.state.sortBy)(c.state.stores)

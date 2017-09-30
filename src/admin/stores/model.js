@@ -43,8 +43,13 @@ export const directionTask = dir =>
   compose(Task.of, dir === 'asc' ? identity : reverse)
 
   // ==========================================================================//
-export const filterUnConfirmed = filterable => x =>
-  x[filterable] !== true
+export const filterUnConfirmed = filterable => x =>{
+  if (toString(filterable) === '') {
+    console.log(x)
+    return x
+  }
+  return x[filterable] !== true
+}
 
 export const filtered = filterable => stores =>
   filter(filterUnConfirmed(filterable), stores)

@@ -10,7 +10,6 @@ export class Direction {
 
   pub() {
     const msg = this.isAscending ? 'dsc' : 'asc'
-    console.log('pub dir', msg)
     this.emitter.publish('direction-channel', msg)
     this.isAscending = !this.isAscending
   }
