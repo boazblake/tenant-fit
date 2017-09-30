@@ -1,12 +1,12 @@
 import Task from 'data.task'
-import { compose, map, identity } from 'ramda'
-import { log } from 'utilities'
+import { compose, chain, identity, map } from 'ramda'
+import { eitherToTask, log, parse } from 'utilities'
 import moment from 'moment'
 
 export const parseDate = date =>
   moment.utc(date)
 
-export const toVm = Dto => {
+export const toViewModel = Dto => {
   let dto =
     { comments: Dto.Comments
     , isConfirmed: Dto.IsConfirmed
@@ -26,11 +26,12 @@ export const toVm = Dto => {
   return dto
 }
 
-export const get = http => id =>
+export const getStore = http => id =>
   http.get(`http://localhost:8080/stores/${id}`)
 
-export const getTask = http => id =>
-  new Task((rej, res) => get(http)(id).then(res, rej))
+export const getStoreTask = http => id =>
+  new Task((rej, res) => getStore(http)(id).then(res, rej))
 
-export const getStoreTask = id =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), getTask(id))
+
+export const loadTask = http =>
+  compose(map(toViewModel),chain(eitherToTask), map(parse), getStoreTask(http))

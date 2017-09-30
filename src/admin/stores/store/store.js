@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask } from './model.js'
+import { loadTask } from './model.js'
 import { styles } from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 import { clone } from 'ramda'
@@ -27,29 +27,41 @@ export class Store {
 
   attached() {
     this.reset()
-    const listHandler = msg => {
-        this.isList = msg
-        this.toggleListStyle()
-    }
-    this.emitter.subscribe('list-channel', listHandler)
-    this.getStore(this.s._id)
+    this.orientation()
+    this.load()
   }
 
-  getStore(id) {
-    const onError = error => {
-      console.error(error);
-      this.emitter.publish('notify-error', error.response)
+  orientation() {
+    const onError = _ => {}
+
+    const onSuccess = c => msg => {
+      c.state.isCard = msg
     }
 
-    const onSuccess = store => {
-      this.data.store = store
-      this.state.store = clone(this.data.store)
-      this.errors['store'] = ''
-      this.emitter.publish('loading-channel', false)
+    const handler = c => msg => {
+      c.state.isCard = msg
+    }
+
+    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
+  }
+
+  load() {
+    const onError = c => error => {
+      console.error(error);
+      c.emitter.publish('notify-error', error.response)
+    }
+
+    const onSuccess = c =>  store => {
+      c.data.store = store
+      c.state.store = clone(c.data.store)
+      c.errors['store'] = ''
+      c.emitter.publish('loading-channel', false)
+      c.emitter.publish('store-isCard-channel', c.state.isCard)
+
     }
 
     this.emitter.publish('loading-channel', true)
-    getStoreTask(this.http)(id).fork(onError, onSuccess)
+    loadTask(this.http)(this.s._id).fork(onError(this), onSuccess(this))
   }
 
   showStore(id) {
@@ -65,16 +77,12 @@ export class Store {
     })
   }
 
-
-
-  toggleListStyle() {
-      this.isList
-        ? this.listStyle = 'list'
-        : this.listStyle = ''
+  reset() {
+    this.state.isCard = true
   }
 
-  reset() {
-
+  removeDisposables() {
+    this.disposables = new Set();
   }
 
 }

@@ -2,7 +2,7 @@
   <require from="valueConverters/index"></require>
   <require from="valueConverters/index"></require>
 
-    <div class="card card-card" >
+    <div if.bind="state.isCard" class="card card-card" >
       <div class="card-header">
         <div class="card-header-title">
           <p class="title is-small">${state.store.name}</p>
@@ -40,4 +40,20 @@
         </div>
       </footer>
     </div>
+
+    <siv if.bind="! state.isCard">
+      <tr>
+        <td>${state.store.name}</td>
+        <td>${state.store.propertyName}</td>
+        <td>${state.store.leaseExpirationDate | leaseDateFormat}</td>
+        <td>${state.store.leaseNotificationDate | leaseDateFormat}</td>
+        <td>
+          <i if.bind="! state.store.isConfirmed"  class="fa fa-flag "></i>
+        </td>
+        <td>
+          <button class="" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
+        </td>
+      </tr>
+    </siv>
+
 <template >

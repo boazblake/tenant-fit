@@ -9,10 +9,6 @@ import styles from './styles.css'
 import { clone, isEmpty } from 'ramda'
 import { log } from 'utilities'
 
-import Task from 'data.task'
-
-@customElement('stores')
-@useView('./stores.html')
 @inject(EventAggregator, HttpClient, DialogService)
 export class Stores {
   constructor( emitter, http, modal ) {
@@ -29,6 +25,20 @@ export class Stores {
     this.styles = styles
   }
 
+  orientation() {
+    const onError = _ => {}
+
+    const onSuccess = c => msg => {
+      c.state.isCard = msg
+    }
+
+    const handler = c => msg => {
+      c.state.isCard = msg
+    }
+
+    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
+  }
+
   activate(params){
     this.userId = params.id
     this.reset()
@@ -36,6 +46,7 @@ export class Stores {
     this.sort()
     this.filter()
     this.search()
+    this.orientation()
   }
 
   attached() {
@@ -59,6 +70,7 @@ export class Stores {
       c.emitter.publish('filter-channel', c.state.filterBy)
       c.emitter.publish('sort-channel', c.state.sortBy)
       c.emitter.publish('direction-channel', c.state.direction)
+      c.emitter.publish('store-isCard-channel', c.state.isCard)
       c.emitter.publish('loading-channel', false)
     }
 
@@ -133,7 +145,7 @@ export class Stores {
       c.state.query = msg
 
       searchTask(c.state.query)(c.data.stores)
-        .chain(sortTask(c.state.prop))
+        .chain(sortTask(c.state.sortBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
@@ -145,20 +157,20 @@ export class Stores {
   }
 
   getStore(id) {
-    const onError = error => {
+    const onError = c => error => {
       console.error(error);
-      this.errors.push({type:'stores', msg: 'error with getting stores'})
+      c.errors.push({type:'stores', msg: 'error with getting stores'})
     }
 
-    const onSuccess = store => {
-      this.store = store
-      this.errors['store'] = ''
-      this.openModal(id)
-      this.emitter.publish('loading-channel', false)
+    const onSuccess = c => store => {
+      c.store = store
+      c.errors['store'] = ''
+      c.openModal(id)
+      c.emitter.publish('loading-channel', false)
     }
 
     this.emitter.publish('loading-channel', true)
-    getStoreTask(this.http)(id).fork(onError, onSuccess)
+    getStoreTask(this.http)(id).fork(onError(this), onSuccess(this))
   }
 
   reset() {
@@ -178,6 +190,7 @@ export class Stores {
     this.state.filterBy = ''
     this.state.direction = 'asc'
     this.state.query = ''
+    this.state.isCard = 'true'
   }
 
 

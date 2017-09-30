@@ -2,13 +2,32 @@
   <require from='./store/store'></require>
   <require from='./toolbar/toolbar'></require>
 
-    <div class="container" >
-      <toolbar props.bind="state.props"></toolbar>
-      <div class="hero">
-        <div class="columns is-multiline">
-          <store repeat.for="store of state.stores" class="column tile is-parent" s.bind="store" style="min-width:400px;";></store>
-        </div>
+  <div class="container" >
+    <toolbar props.bind="state.props"></toolbar>
+    <div class="section">
+      <div show.bind="state.isCard" class="columns is-multiline">
+        <store repeat.for="store of state.stores" class="column" s.bind="store"></store>
       </div>
+    </div>
+
+
+    <div show.bind="!state.isCard" class="section">
+      <table  class="table is-striped">
+        <thead>
+          <tr>
+            <th>STORE NAME</th>
+            <th>PROPERTY LOCATED AT</th>
+            <th>LEASE NOTIFICATION DATE</th>
+            <th>LEASE EXPIRATION DATE</th>
+            <th>INFO</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <store repeat.for="store of state.stores"  s.bind="store"></store>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </template >

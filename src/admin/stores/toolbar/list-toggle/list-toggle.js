@@ -5,13 +5,13 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 @inject(HttpClient, EventAggregator)
 export class ListToggle {
   constructor(http, emitter) {
-    this.isList = true
+    this.isCard = true
     this.emitter = emitter
   }
 
   pub() {
-    this.isList = !this.isList
-    const msg = this.isList ? 'asc' : 'desd'
-    this.emitter.publish('list-channel', msg)
+    const msg = !this.isCard
+    this.isCard = msg
+    this.emitter.publish('store-isCard-channel', msg)
   }
 }

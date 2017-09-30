@@ -1,4 +1,4 @@
-/*article.media.box {
+article.media.box {
   display:inline-table;
 }
 
@@ -28,7 +28,6 @@ article.media.box.list {
 , .content.list {
   display:flex;
 }
-//inline-flex?
 
 
 .box:hover {
@@ -47,4 +46,4 @@ article.media.box.list {
 .fa-flag,
 .fa-fire {
   color: red;
-}*/
+}
