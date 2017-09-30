@@ -9,8 +9,8 @@ import { log } from 'utilities'
 import { map } from 'ramda'
 import { styles } from './styles.css'
 
-@customElement('landing')
-@useView('./landing.html')
+@customElement('loading')
+@useView('./loading.html')
 @inject(HttpClient, EventAggregator, Router)
 export class Landing {
   constructor(http, emitter, router) {
