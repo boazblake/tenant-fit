@@ -3,9 +3,12 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
 import { loadTask } from './model.js'
-import { styles } from './styles.css'
+import styles from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 import { clone } from 'ramda'
+import moment from 'moment'
+import {test} from test
+
 
 @customElement('store')
 @useView('./store.html')
@@ -17,7 +20,7 @@ export class Store {
     this.data = {}
     this.state = {}
     this.http = http
-    this.style = styles
+    this.styles = styles
     this.emitter = emitter
     this.errors = {}
     this.modal = modal
@@ -28,13 +31,7 @@ export class Store {
     this.orientation()
     this.multiSelect()
     this.load()
-  }
-
-  orientation() {
-    const handler = c => msg =>
-      c.state.isCard = msg
-
-    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
+    this.background()
   }
 
   load() {
@@ -54,6 +51,19 @@ export class Store {
 
     this.emitter.publish('loading-channel', true)
     loadTask(this.http)(this.s._id).fork(onError(this), onSuccess(this))
+  }
+
+  background() {
+    this.styles.background = 'red'
+
+    console.log(moment.now())
+  }
+
+  orientation() {
+    const handler = c => msg =>
+      c.state.isCard = msg
+
+    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
   }
 
   showStore(id) {

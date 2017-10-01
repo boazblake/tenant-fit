@@ -18,7 +18,7 @@
           <h4>Notification Date: ${state.store.leaseNotificationDate | leaseDateFormat}</h4>
         </div>
       </div>
-      <footer class="card-footer">
+      <footer class="card-footer" style="background-color:${styles.background};">
         <div class="card-footer-item">
           <a class="left">
             <span class="button">
@@ -33,7 +33,7 @@
         </div>
         <div class="card-footer-item">
           <a class="">
-            <span class="">
+            <span >
               <button class="" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
             </span>
           </a>
