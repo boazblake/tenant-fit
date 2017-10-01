@@ -21,26 +21,18 @@ export class Store {
     this.emitter = emitter
     this.errors = {}
     this.modal = modal
-    this.isList = false
-    this.listStyle = ''
   }
 
   attached() {
     this.reset()
     this.orientation()
+    this.multiSelect()
     this.load()
   }
 
   orientation() {
-    const onError = _ => {}
-
-    const onSuccess = c => msg => {
+    const handler = c => msg =>
       c.state.isCard = msg
-    }
-
-    const handler = c => msg => {
-      c.state.isCard = msg
-    }
 
     this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
   }
@@ -77,8 +69,23 @@ export class Store {
     })
   }
 
+  multiSelect() {
+    const handler = c => msg =>
+      c.isSelectable = msg
+
+    this.disposables.add(this.emitter.subscribe('multiSelect-channel', handler(this)))
+  }
+
+  selected() {
+    if (this.isSelectable) {
+      return this.isSelected = ! this.isSelected
+    }
+  }
+
   reset() {
     this.state.isCard = true
+    this.isSelectable = false
+    this.isSelected = false
   }
 
   removeDisposables() {

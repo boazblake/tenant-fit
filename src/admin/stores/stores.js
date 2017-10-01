@@ -26,12 +26,6 @@ export class Stores {
   }
 
   orientation() {
-    const onError = _ => {}
-
-    const onSuccess = c => msg => {
-      c.state.isCard = msg
-    }
-
     const handler = c => msg => {
       c.state.isCard = msg
     }

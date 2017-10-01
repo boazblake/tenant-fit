@@ -41,19 +41,17 @@
       </footer>
     </div>
 
-    <table class="table is-striped" if.bind="! state.isCard">
-      <tr>
-        <td>${state.store.name}</td>
-        <td>${state.store.propertyName}</td>
-        <td>${state.store.leaseExpirationDate | leaseDateFormat}</td>
-        <td>${state.store.leaseNotificationDate | leaseDateFormat}</td>
-        <td>
-          <i if.bind="! state.store.isConfirmed"  class="fa fa-flag "></i>
-        </td>
-        <td>
-          <button class="" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
-        </td>
-      </tr>
-    </table>
+    <template  if.bind="! state.isCard" class="${isSelected ? 'is-selected' : '' }" click.delegate="selected()" >
+      <td>${state.store.name}</td>
+      <td>${state.store.propertyName}</td>
+      <td>${state.store.leaseExpirationDate | leaseDateFormat}</td>
+      <td>${state.store.leaseNotificationDate | leaseDateFormat}</td>
+      <td>
+        <i if.bind="! state.store.isConfirmed"  class="fa fa-flag "></i>
+      </td>
+      <td>
+        <button class="" click.delegate="showStore(state.store._id)">MORE DETAILS</button>
+      </td>
+    </template>
 
-<template >
+</template >

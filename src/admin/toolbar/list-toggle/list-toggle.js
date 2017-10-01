@@ -1,10 +1,9 @@
 import { inject } from 'aurelia-framework'
-import { HttpClient } from 'aurelia-http-client'
 import { EventAggregator } from 'aurelia-event-aggregator'
 
-@inject(HttpClient, EventAggregator)
+@inject(EventAggregator)
 export class ListToggle {
-  constructor(http, emitter) {
+  constructor(emitter) {
     this.isCard = true
     this.emitter = emitter
   }

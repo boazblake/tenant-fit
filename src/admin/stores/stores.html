@@ -4,8 +4,8 @@
 
   <div class="container" >
     <toolbar props.bind="state.props"></toolbar>
-    <div class="section">
-      <div show.bind="state.isCard" class="columns is-multiline">
+    <div show.bind="state.isCard" class="section">
+      <div class="columns is-multiline">
         <store repeat.for="store of state.stores" class="column" s.bind="store"></store>
       </div>
     </div>
@@ -23,9 +23,7 @@
             <th>ACTIONS</th>
           </tr>
         </thead>
-        <tbody>
-          <store repeat.for="store of state.stores"  s.bind="store"></store>
-        </tbody>
+          <tbody as-element="store" repeat.for="store of state.stores" s.bind="store"></tbody>
       </table>
     </div>
   </div>
