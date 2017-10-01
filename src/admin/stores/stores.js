@@ -97,10 +97,12 @@ export class Stores {
 
     const onSuccess = c => results => {
       c.state.stores = results
+      c.state.isCard = c.state.orientation
     }
 
     const handler = c => msg => {
       c.state.filterBy = msg
+      c.state.orientation = c.state.isCard
 
       filterTask(c.state.filterBy)(c.data.stores)
       .chain(sortTask(c.state.sortBy))
