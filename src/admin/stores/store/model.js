@@ -1,5 +1,5 @@
 import Task from 'data.task'
-import { compose, chain, identity, map } from 'ramda'
+import { compose, chain, identity, map, range, values } from 'ramda'
 import { eitherToTask, log, parse } from 'utilities'
 import moment from 'moment'
 
@@ -35,3 +35,27 @@ export const getStoreTask = http => id =>
 
 export const loadTask = http =>
   compose(map(toViewModel),chain(eitherToTask), map(parse), getStoreTask(http))
+
+
+
+const ranges =
+  { 'rgba(52, 152, 219,1.0)': range(1,6)
+  , 'rgba(39, 174, 96,1.0)': range(6, 11)
+  , 'rgba(230, 126, 34,1.0)': range(11, 31)
+  , 'rgba(211, 84, 0,1.0)': range(31, 61)
+  , 'rgba(192, 57, 43,1.0)': range(61, 91)
+  }
+
+const findDate = day => collection => {
+  log('collection')(collection)
+  log('day')(day)
+}
+
+
+const compareDates = collection => day =>
+  compose(log('info?????'), findDate(day), values)(collection)
+
+
+  export const findColor = day => {
+    compareDates(ranges)(day)
+  }

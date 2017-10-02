@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { loadTask } from './model.js'
+import { loadTask, findColor } from './model.js'
 import styles from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 import { clone } from 'ramda'
@@ -29,7 +29,6 @@ export class Store {
     this.orientation()
     this.multiSelect()
     this.load()
-    this.background()
   }
 
   load() {
@@ -44,7 +43,7 @@ export class Store {
       c.errors['store'] = ''
       c.emitter.publish('loading-channel', false)
       c.emitter.publish('store-isCard-channel', c.state.isCard)
-
+      c.background()
     }
 
     this.emitter.publish('loading-channel', true)
@@ -52,7 +51,13 @@ export class Store {
   }
 
   background() {
-    console.log('test?', this.state)
+    const today = moment()
+    const daysToNotif = moment(this.state.store.leaseNotificationDate).diff(today, 'days')
+
+    const todaysColor = findColor(daysToNotif)
+
+    console.log('todaysColor', todaysColor)
+
     // this.styles.background = 'red'
 
     // console.log(moment.now())
