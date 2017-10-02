@@ -11,6 +11,8 @@ export class ListToggle {
   pub() {
     const msg = !this.isCard
     this.isCard = msg
+    sessionStorage.setItem('isCard', msg)
     this.emitter.publish('store-isCard-channel', msg)
   }
+
 }

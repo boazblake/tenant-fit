@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { Router } from 'aurelia-router'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { toStoreDto, addStoreTask, } from './model'
+import { toStoreDto, toSaveStoreTask, } from './model'
 import { validateStoreTask } from './validations'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
@@ -87,7 +87,7 @@ export class addStoreUnit {
       this.cookiStore(store)
     }
 
-    addStoreTask(this.http)(store).fork(onError, onSuccess)
+    toSaveStoreTask(this.http)(store).fork(onError, onSuccess)
   }
 
   cookiStore(store) {

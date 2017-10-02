@@ -52,6 +52,7 @@ export class Store {
   }
 
   background() {
+    console.log('test?', this.state)
     // this.styles.background = 'red'
 
     // console.log(moment.now())
@@ -91,7 +92,7 @@ export class Store {
   }
 
   reset() {
-    this.state.isCard = true
+    this.state.isCard = sessionStorage.getItem('isCard') === null ? true : sessionStorage.getItem('isCard')
     this.isSelectable = false
     this.isSelected = false
   }

@@ -86,6 +86,7 @@ export class Stores {
       c.state.sortBy = msg
 
       sortTask(c.state.sortBy)(c.state.stores)
+      .chain(filterTask(this.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
@@ -124,7 +125,7 @@ export class Stores {
     const handler = c => msg => {
       c.state.direction = msg
 
-      sortTask(c.state.sortBy)(c.state.stores)
+      sortTask(c.state.sortBy)(c.data.stores)
       .chain(filterTask(c.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
@@ -143,6 +144,7 @@ export class Stores {
 
       searchTask(c.state.query)(c.data.stores)
         .chain(sortTask(c.state.sortBy))
+        .chain(filterTask(c.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
@@ -187,7 +189,7 @@ export class Stores {
     this.state.filterBy = ''
     this.state.direction = 'asc'
     this.state.query = ''
-    this.state.isCard = 'true'
+    this.state.isCard = sessionStorage.getItem('isCard') === null ? true : sessionStorage.getItem('isCard')
   }
 
 

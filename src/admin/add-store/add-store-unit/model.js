@@ -1,8 +1,26 @@
 import Task from 'data.task'
-import { compose, map, identity } from 'ramda'
-import { log } from 'utilities'
+import { chain, compose, map, identity, toString } from 'ramda'
+import { log, dateToIso, eitherToTask, parse } from 'utilities'
+import moment from 'moment'
 
-export const toVm = Dto => {
+
+export const toLeaseNotificationArray = notifyDate => {
+  const toTimeStampDiff = diffNum => date => {
+    return moment(date).subtract(diffNum, 'days')
+  }
+
+  const notifyArray =
+    [ toTimeStampDiff(90)(notifyDate)
+    , toTimeStampDiff(60)(notifyDate)
+    , toTimeStampDiff(30)(notifyDate)
+    , toTimeStampDiff(10)(notifyDate)
+    , toTimeStampDiff(5)(notifyDate)
+    ]
+
+  return notifyArray
+}
+
+export const toViewModel = Dto => {
     let dto =
       { name: Dto.Name }
 
@@ -14,8 +32,9 @@ export const storeDto = clientId => tenantId => adminId => dto => {
     { Name: dto.name
     , LandlordEntity: dto.landlordEntity
     , PropertyName: dto.propertyName
-    , LeaseExpirationDate: dto.leaseExpirationDate
-    , LeaseNotificationDate: dto.leaseNotificationDate
+    , LeaseExpirationDate: dateToIso(dto.leaseExpirationDate)
+    , LeaseNotificationDate: dateToIso(dto.leaseNotificationDate)
+    , LeaseNotificationArray: toLeaseNotificationArray(dateToIso(dto.leaseNotificationDate))
     , Comments: dto.comments
     , TenantId: tenantId
     , UserId: clientId
@@ -25,17 +44,17 @@ export const storeDto = clientId => tenantId => adminId => dto => {
   return Task.of(Dto)
 }
 
-export const toStoreDto = clientId => tenantId => adminId => store =>
-  storeDto(clientId)(tenantId)(adminId)(store)
+export const toStoreDto = clientId => tenantId => adminId =>
+  storeDto(clientId)(tenantId)(adminId)
 
-export const add = http => data =>
+export const saveStore = http => data =>
   http.post(`http://localhost:8080/stores/add`, data)
 
-export const addTask = http => data =>
-  new Task( (rej, res) => add(http)(data).then(res, rej))
+export const saveStoreTask = http => data =>
+  new Task( (rej, res) => saveStore(http)(data).then(res, rej))
 
-export const addStoreTask = http  =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), addTask(http))
+export const toSaveStoreTask = http  =>
+  compose(map(toViewModel), chain(eitherToTask), map(parse),  saveStoreTask(http))
 
-export const validateStoreTask = dto =>
-  Task.of(map(log('data')),map(toVm),dto)
+// export const validateStoreTask = dto =>
+//   Task.of(map(log('data')),map(toVm),dto)

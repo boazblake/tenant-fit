@@ -30,16 +30,16 @@
         </div>
         <div class="">
           <fieldset class=" ">
-            <label class=" " for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
-            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" max="${state.store.leaseNotificationDate}">
-            <span class="" show.bind="errors.email">ERROR WITH LEASE EXPIRATION DATE</span>
+            <label class=" " for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
+            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" max="${state.store.leaseExpirationDate}">
+            <span class="" show.bind="errors.email">ERROR WITH LEASE NOTIFICATION DATE</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
-            <label class=" " for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
-            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" min="${state.store.leaseExpirationDate}">
-            <span class="" show.bind="errors.email">ERROR WITH LEASE NOTIFICATION DATE</span>
+            <label class=" " for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
+            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" min="${state.store.leaseNotificationDate}">
+            <span class="" show.bind="errors.email">ERROR WITH LEASE EXPIRATION DATE</span>
           </fieldset>
         </div>
         <div class="">

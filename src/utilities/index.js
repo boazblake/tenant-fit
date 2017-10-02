@@ -1,6 +1,7 @@
 import Either from 'data.either'
 import Task from 'data.task'
 import { compose, prop } from 'ramda'
+import moment from 'moment'
 
 export class ParseError extends Error {}
 
@@ -16,3 +17,6 @@ export const eitherToTask = x =>
 
 export const parse =
   Either.try(compose(JSON.parse, prop('response')))
+
+export const dateToIso = date =>
+  moment(date).toISOString()
