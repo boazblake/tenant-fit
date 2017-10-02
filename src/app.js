@@ -8,7 +8,7 @@ import { style } from './style.css'
 const routes =
   [ { route: ['', 'tenantfit']
     , name: 'tenantfit'
-    , moduleId: PLATFORM.moduleName('./loading/loading')
+    , moduleId: PLATFORM.moduleName('./login/login')
     , nav: false
     , title: 'TENANT FIT LOGIN'
     , settings: { roles: [] }
@@ -44,7 +44,7 @@ export class App {
     config.exportToRouter(router)
     config.map(routes)
 
-    config.mapUnknownRoutes(() => PLATFORM.moduleName('./loading/loading'))
+    config.mapUnknownRoutes(() => PLATFORM.moduleName('./login/login'))
 
     this.router = router
   }

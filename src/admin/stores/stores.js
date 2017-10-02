@@ -6,8 +6,9 @@ import { loadTask, sortTask, directionTask, filterTask, searchTask } from './mod
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import styles from './styles.css'
-import { clone, isEmpty } from 'ramda'
+import { clone } from 'ramda'
 import { log } from 'utilities'
+
 
 @inject(EventAggregator, HttpClient, DialogService)
 export class Stores {

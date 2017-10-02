@@ -7,11 +7,9 @@ import styles from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 import { clone } from 'ramda'
 import moment from 'moment'
-import {test} from test
+// import {test} from test
 
 
-@customElement('store')
-@useView('./store.html')
 @inject(HttpClient, DialogService, EventAggregator, StorePopup)
 export class Store {
   @bindable s
@@ -54,9 +52,9 @@ export class Store {
   }
 
   background() {
-    this.styles.background = 'red'
+    // this.styles.background = 'red'
 
-    console.log(moment.now())
+    // console.log(moment.now())
   }
 
   orientation() {

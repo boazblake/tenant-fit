@@ -9,10 +9,10 @@ import { log } from 'utilities'
 import { map } from 'ramda'
 import { styles } from './styles.css'
 
-@customElement('loading')
-@useView('./loading.html')
+@customElement('login')
+@useView('./login.html')
 @inject(HttpClient, EventAggregator, Router)
-export class Landing {
+export class Login {
   constructor(http, emitter, router) {
     this.disposables = new Set()
     this._user = {}
