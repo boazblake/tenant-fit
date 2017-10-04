@@ -13,6 +13,7 @@ import moment from 'moment'
 @inject(HttpClient, DialogService, EventAggregator, StorePopup)
 export class Store {
   @bindable s
+  @bindable isCard
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
     this.data = {}
@@ -26,7 +27,6 @@ export class Store {
 
   attached() {
     this.reset()
-    this.orientation()
     this.multiSelect()
     this.load()
   }
@@ -42,13 +42,13 @@ export class Store {
       c.state.store = clone(c.data.store)
       c.errors['store'] = ''
       c.emitter.publish('loading-channel', false)
-      c.emitter.publish('store-isCard-channel', c.state.isCard)
       c.background()
     }
 
     this.emitter.publish('loading-channel', true)
     loadTask(this.http)(this.s._id).fork(onError(this), onSuccess(this))
   }
+
 
   background() {
     const today = moment()
@@ -58,16 +58,9 @@ export class Store {
 
     console.log('todaysColor', todaysColor)
 
-    // this.styles.background = 'red'
+    this.background = todaysColor
 
     // console.log(moment.now())
-  }
-
-  orientation() {
-    const handler = c => msg =>
-      c.state.isCard = msg
-
-    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
   }
 
   showStore(id) {
@@ -97,9 +90,9 @@ export class Store {
   }
 
   reset() {
-    this.state.isCard = sessionStorage.getItem('isCard') === null ? true : sessionStorage.getItem('isCard')
     this.isSelectable = false
     this.isSelected = false
+    // this.isCard = this.isCard === undefined ? true : this.isCard
   }
 
   removeDisposables() {

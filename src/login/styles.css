@@ -1,14 +1,14 @@
-.hero {
+.login.hero {
   padding-top: 40px;
   background-image: url('../../static/houston.jpg');
 }
 
-.hero-title {
+.login.hero-title {
   margin-top: 40px;
   background-color: rgba(236, 240, 241,.5);
 }
 
-.container {
+.login.container {
   min-width: 100%;
   padding-top: 3%;
   background-color: rgba(236, 240, 241,.5);

@@ -6,7 +6,7 @@
     <toolbar props.bind="state.props"></toolbar>
     <div show.bind="state.isCard" class="section">
       <div class="columns is-multiline">
-        <store repeat.for="store of state.stores" class="column" s.bind="store"></store>
+        <store repeat.for="store of state.stores" class="column" s.bind="store" is-card.bind="state.isCard"></store>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
             <th>ACTIONS</th>
           </tr>
         </thead>
-          <tbody as-element="store" repeat.for="store of state.stores" s.bind="store"></tbody>
+          <tbody as-element="store" repeat.for="store of state.stores" s.bind="store"  is-card.bind="state.isCard"></tbody>
       </table>
     </div>
   </div>

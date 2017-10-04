@@ -26,26 +26,25 @@ export class Stores {
     this.styles = styles
   }
 
-  orientation() {
-    const handler = c => msg => {
-      c.state.isCard = msg
-    }
-
-    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
-  }
-
   activate(params){
     this.userId = params.id
     this.reset()
+    this.orientation()
     this.direction()
     this.sort()
     this.filter()
     this.search()
-    this.orientation()
   }
 
   attached() {
     this.load()
+  }
+
+  orientation() {
+    const handler = c => msg =>
+      c.state.isCard = msg
+
+    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
   }
 
   detached() {
@@ -65,7 +64,6 @@ export class Stores {
       c.emitter.publish('filter-channel', c.state.filterBy)
       c.emitter.publish('sort-channel', c.state.sortBy)
       c.emitter.publish('direction-channel', c.state.direction)
-      c.emitter.publish('store-isCard-channel', c.state.isCard)
       c.emitter.publish('loading-channel', false)
     }
 
@@ -97,14 +95,11 @@ export class Stores {
   filter() {
     const onError = _ => {}
 
-    const onSuccess = c => results => {
+    const onSuccess = c => results =>
       c.state.stores = results
-      c.state.isCard = c.state.orientation
-    }
 
     const handler = c => msg => {
       c.state.filterBy = msg
-      c.state.orientation = c.state.isCard
 
       filterTask(c.state.filterBy)(c.data.stores)
       .chain(sortTask(c.state.sortBy))
@@ -189,9 +184,8 @@ export class Stores {
     this.state.filterBy = ''
     this.state.direction = 'asc'
     this.state.query = ''
-    this.state.isCard = sessionStorage.getItem('isCard') === null ? true : sessionStorage.getItem('isCard')
+    this.state.isCard = sessionStorage.getItem('isCard')
   }
-
 
   removeDisposables() {
     this.disposables = new Set();

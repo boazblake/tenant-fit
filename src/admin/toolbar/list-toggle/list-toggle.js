@@ -8,6 +8,10 @@ export class ListToggle {
     this.emitter = emitter
   }
 
+  attached() {
+      sessionStorage.setItem('isCard', true)
+  }
+
   pub() {
     const msg = !this.isCard
     this.isCard = msg
