@@ -7,6 +7,7 @@ export const toViewModel = Dto => {
     { name: Dto.Name
     , leaseExpDate: Dto.LeaseExpirationDate
     , leaseNotifDate: Dto.LeaseNotificationDate
+    , propertyName: Dto.PropertyName
     , isConfirmed: Dto.IsConfirmed
     , _id: Dto._id
     }

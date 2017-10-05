@@ -168,10 +168,11 @@ export class Stores {
   }
 
   reset() {
-    this.state.props.sorters = [
-      { key: 'Name', value: 'name' },
-      { key: 'Lease Notification Date', value: 'leaseNotifDate' },
-      { key: 'Lease Expiration Date', value: 'leaseExpDate' }
+    this.state.props.sorters =
+    [ { key: 'Name', value: 'name' }
+    , { key: 'Lease Notification Date', value: 'leaseNotifDate' }
+    , { key: 'Lease Expiration Date', value: 'leaseExpDate' }
+    , { key: 'Property Location', value: 'propertyName' }
     ]
 
     this.state.props.filters = [

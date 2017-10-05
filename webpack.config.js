@@ -76,6 +76,16 @@ module.exports = ({production, server, extractCss, coverage} = {}) => ({
         // because Aurelia would try to require it again in runtime
         use: cssRules,
       },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        issuer: /\.[tj]s$/i
+      },
+      {
+        test: /\.scss$/,
+        use: ['css-loader', 'sass-loader'],
+        issuer: /\.html?$/i
+      },
       { test: /\.html$/i, loader: 'html-loader' },
       { test: /\.js$/i, loader: 'babel-loader', exclude: nodeModulesDir,
         options: coverage ? { sourceMap: 'inline', plugins: [ 'istanbul' ] } : {},

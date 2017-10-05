@@ -25,9 +25,6 @@
           </li>
         </ul>
       </div>
-      <!-- MDL Progress Bar with Indeterminate Progress -->
-    <div id="p2" show.bind="isLoading" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-
       <ul class="nav navbar-nav navbar-right">
         <a if.bind="state.authStatus" class="" click.delegate="logout()">LOGOUT</a>
         <li class="loader" if.bind="router.isNavigating">
@@ -39,5 +36,5 @@
   </nav>
 
 
-  
+
 </template>

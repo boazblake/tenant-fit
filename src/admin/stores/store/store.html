@@ -18,7 +18,7 @@
           <h4>Notification Date: ${state.store.leaseNotificationDate | leaseDateFormat}</h4>
         </div>
       </div>
-      <footer class="card-footer" css="background-color:${background};">
+      <footer class="card-footer" css="border-color:${background}; border-width:2px;">
         <div class="card-footer-item">
           <a class="left">
             <span class="button">
@@ -41,9 +41,9 @@
       </footer>
     </div>
 
-    <template  if.bind="! isCard">
+    <template if.bind="!isCard">
       <tr class="${isSelected ? 'is-selected' : '' }" click.delegate="selected()" >
-        <td css="background-color:${background};">${state.store.name}</td>
+        <td css="border-color:${background};">${state.store.name}</td>
         <td>${state.store.propertyName}</td>
         <td>${state.store.leaseNotificationDate | leaseDateFormat}</td>
         <td>${state.store.leaseExpirationDate | leaseDateFormat}</td>

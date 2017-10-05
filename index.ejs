@@ -7,7 +7,7 @@
     <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
     <!-- imported CSS are concatenated and added automatically -->
   </head>
-  <body aurelia-app="main" class="">
+  <body aurelia-app="main" class="Site">
     <div class="splash">
       <div class="message"><%- htmlWebpackPlugin.options.metadata.title %></div>
       <i class="fa fa-spinner fa-spin"></i>
@@ -22,6 +22,7 @@
     <script src="/webpack-dev-server.js"></script>
     <% } %>
     <style media="screen">
+
     .splash {
       text-align: center;
       margin: 10% 0 0 0;

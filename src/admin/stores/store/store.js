@@ -49,18 +49,11 @@ export class Store {
     loadTask(this.http)(this.s._id).fork(onError(this), onSuccess(this))
   }
 
-
   background() {
     const today = moment()
     const daysToNotif = moment(this.state.store.leaseNotificationDate).diff(today, 'days')
-
     const todaysColor = findColor(daysToNotif)
-
-    console.log('todaysColor', todaysColor)
-
     this.background = todaysColor
-
-    // console.log(moment.now())
   }
 
   showStore(id) {

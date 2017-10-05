@@ -21,3 +21,7 @@
 .flex-grid-thirds .col {
   width: 32%;
 }*/
+
+.page-host {
+  flex: 1;
+}
