@@ -47,3 +47,13 @@ article.media.box.list {
 .fa-fire {
   color: red;
 }
+
+
+.listView {
+  border-width: 4px;
+}
+
+
+.cardView {
+  border-width: 2px;
+}
