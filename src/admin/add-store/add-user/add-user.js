@@ -52,9 +52,11 @@ export class AddStore {
   }
 
   clearUser() {
+    console.log('before',this.isDisabled)
     sessionStorage.setItem('clientId', '')
     this._user = {}
     this.isDisabled = false
+    console.log('after',this.isDisabled)
   }
 
   validateUser() {
@@ -99,7 +101,7 @@ export class AddStore {
 
   DropDownChanged(user) {
     console.log('dd changed', user)
-    user === null
+    user.name === ""
       ? this.clearUser()
       : this.isDisabled = true
     }
