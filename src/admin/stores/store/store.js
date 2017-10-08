@@ -87,7 +87,6 @@ export class Store {
   reset() {
     this.isSelectable = false
     this.isSelected = false
-    this.isCard = this.isCard === undefined ? true : this.isCard
   }
 
   removeDisposables() {

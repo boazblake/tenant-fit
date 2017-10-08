@@ -185,7 +185,7 @@ export class Stores {
     this.state.filterBy = ''
     this.state.direction = 'asc'
     this.state.query = ''
-    this.state.isCard = sessionStorage.getItem('isCard')
+    this.state.isCard = true
   }
 
   removeDisposables() {
