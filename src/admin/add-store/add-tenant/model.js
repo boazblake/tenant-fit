@@ -1,15 +1,11 @@
 import Task from 'data.task'
-import { compose, map, identity } from 'ramda'
-import { log } from 'utilities'
+import { compose, chain, identity, map } from 'ramda'
+import { eitherToTask, log, parse } from 'utilities'
 
-export const tenantModel = dto =>
-  dto
-
-export const toVm = dto =>
+export const toViewModel = dto =>
   ({ id: dto._id
   , name: dto.Name
   })
-
 
 export const toRequest = userId => tenantUserId => dto =>{
   console.log(tenantUserId)
@@ -18,9 +14,6 @@ export const toRequest = userId => tenantUserId => dto =>{
   , ModifiedBy: userId
   })
 }
-export const toUserVm = dto =>
-  ({ name: dto.name
-  })
 
 export const tentants = http => id =>
   http.get(`http://localhost:8080/tenants/userId/${id}`)
@@ -28,8 +21,8 @@ export const tentants = http => id =>
 export const getTenants = http => id =>
   new Task((rej, res) => tentants(http)(id).then(res, rej))
 
-export const getTenantsTask = id =>
-  compose(map(map(toVm)), map(identity(dto => JSON.parse(dto.response))),  getTenants(id))
+export const loadTask = http =>
+  compose(map(map(toViewModel)),chain(eitherToTask), map(parse), getTenants(http))
 
 // ===VALIDATE Tenant============================================================
 export const validate = dto => {
@@ -55,6 +48,7 @@ export const validateTenantTask =
 
 
   // ===ADD TENANT============================================================
+
 export const add = http => data =>
   http.post(`http://localhost:8080/tenants/add`, data)
 
@@ -62,5 +56,5 @@ export const addTask = http => data =>
   new Task( (rej, res) => add(http)(data).then(res, rej))
 
 export const addTenantTask = http => userId => tenantUserId =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), addTask(http),log('dto to create tenant'), toRequest(userId)(tenantUserId))
-  // compose(console.log('type', type, 'http', http, 'id', id, 'data',data))
+  // compose(map(toViewModel), map(identity(dto => JSON.parse(dto.response))), addTask(http), toRequest(userId)(tenantUserId))
+  compose(map(map(toViewModel)),map(log('dto to create tenant')),chain(eitherToTask), map(parse), addTask(http), toRequest(userId)(tenantUserId))

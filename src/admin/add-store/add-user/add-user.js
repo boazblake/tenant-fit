@@ -1,19 +1,18 @@
-import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { bindable, inject, customElement, useView } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getUsersTask, validateUserTask, userModel, registerTask } from './model'
+import { loadTask, validateUserTask, registerTask } from './model'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
-import { log } from 'utilities'
 
 
 @customElement('add-user')
 @useView('./add-user.html')
-@inject(HttpClient, DialogService, EventAggregator)
+@inject(DialogService, EventAggregator, HttpClient)
 export class AddStore {
   @bindable storeModel
-  constructor( http, modal, emitter ) {
+  constructor( modal, emitter, http ) {
     this.disposables = new Set()
     this.adminId = null
     this.data ={
@@ -31,10 +30,10 @@ export class AddStore {
   attached(){
     this.adminId = CheckAuth.adminId()
     this.emitter.publish('loading-channel', false)
-    this.getUsers()
+    this.load()
   }
 
-  getUsers(){
+  load(){
     const onSuccess = users => {
       this.data.users = users
     }
@@ -44,7 +43,7 @@ export class AddStore {
       this.emitter.publish('notify-error', error.response)
     }
 
-    getUsersTask(this.http)(this.adminId).fork(onError, onSuccess)
+    loadTask(this.http)(this.adminId).fork(onError, onSuccess)
   }
 
 
@@ -53,17 +52,14 @@ export class AddStore {
   }
 
   clearUser() {
-    console.log('clearing user');
     sessionStorage.setItem('clientId', '')
     this._user = {}
     this.isDisabled = false
-    console.log('user', this._user);
   }
 
   validateUser() {
     const onSuccess = validatedUser => {
       this.validatedUser = validatedUser
-      log('user')(validatedUser)
 
       validatedUser.id
         ? this.storeUser(validatedUser)
@@ -85,17 +81,16 @@ export class AddStore {
     }
 
     const onSuccess = user => {
-      log('success')(user)
       this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
       this.isDisabled = true
       this.storeUser(user)
     }
 
-    console.log('savinf this user',_user)
     registerTask(this.http)(this.adminId)(_user).fork(onError, onSuccess)
   }
 
   storeUser(user) {
+    console.log('store user', user)
     sessionStorage.setItem('clientName', JSON.stringify(user.name))
     sessionStorage.setItem('clientId', JSON.stringify(user.id))
     // this.emitter.publish('show-channel', {user: false})
@@ -103,6 +98,7 @@ export class AddStore {
   }
 
   DropDownChanged(user) {
+    console.log('dd changed', user)
     user === null
       ? this.clearUser()
       : this.isDisabled = true

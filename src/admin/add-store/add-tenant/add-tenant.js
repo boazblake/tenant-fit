@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getTenantsTask, validateTenantTask, tenantModel, addTenantTask } from './model'
+import { loadTask, validateTenantTask, addTenantTask } from './model'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 import { log } from 'utilities'
@@ -35,10 +35,10 @@ export class addTenant {
     this.clientId = CheckAuth.clientId()
     this.adminId = CheckAuth.adminId()
     this.clientName = CheckAuth.clientName()
-    this.getTenants()
+    this.load()
   }
 
-  getTenants(){
+  load(){
     const onSuccess = tenants => {
       this.data.tenants = tenants
       log('TENANTS')(this.data.tenants)
@@ -50,7 +50,7 @@ export class addTenant {
     }
 
     console.log(this)
-    getTenantsTask(this.http)(this.clientId).fork(onError, onSuccess)
+    loadTask(this.http)(this.clientId).fork(onError, onSuccess)
   }
 
 

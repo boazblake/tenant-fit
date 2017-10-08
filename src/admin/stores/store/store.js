@@ -7,7 +7,7 @@ import styles from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 import { clone } from 'ramda'
 import moment from 'moment'
-// import {test} from test
+import css from './css.js'
 
 
 @inject(HttpClient, DialogService, EventAggregator, StorePopup)
@@ -20,6 +20,7 @@ export class Store {
     this.state = {}
     this.http = http
     this.styles = styles
+    this.css = css
     this.emitter = emitter
     this.errors = {}
     this.modal = modal
@@ -54,6 +55,7 @@ export class Store {
     const daysToNotif = moment(this.state.store.leaseNotificationDate).diff(today, 'days')
     const todaysColor = findColor(daysToNotif)
     this.background = todaysColor
+
   }
 
   showStore(id) {
@@ -85,7 +87,7 @@ export class Store {
   reset() {
     this.isSelectable = false
     this.isSelected = false
-    // this.isCard = this.isCard === undefined ? true : this.isCard
+    this.isCard = this.isCard === undefined ? true : this.isCard
   }
 
   removeDisposables() {

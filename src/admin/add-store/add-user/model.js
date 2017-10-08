@@ -1,17 +1,13 @@
 import Task from 'data.task'
-import { compose, map, identity } from 'ramda'
-import { log } from 'utilities'
+import { chain, compose, identity, map } from 'ramda'
+import { eitherToTask, parse } from 'utilities'
 
-export const userModel = dto =>
-  dto
-
-export const toVm = dto =>
+export const toViewModel = dto =>
   ({ id: dto._id
   , name: dto.Name
   , email:  dto.email
   , cellphone:  parseInt(dto.CellPhone)
   })
-
 
 export const toRequest = userId => dto =>
   ({ Name: dto.name
@@ -20,20 +16,14 @@ export const toRequest = userId => dto =>
   , ModifiedBy: userId
   })
 
-export const toUserVm = dto =>
-  ({ name: dto.name
-  , email:  dto.email
-  , cellphone:  dto.cellphone
-  })
-
 export const users = http => id =>
   http.get(`http://localhost:8080/admin/${id}/allusers`)
 
-export const getUsers = http => id =>
+export const usersTask = http => id =>
   new Task((rej, res) => users(http)(id).then(res, rej))
 
-export const getUsersTask = id =>
-  compose(map(map(toVm)), map(identity(dto => JSON.parse(dto.response))), getUsers(id))
+export const loadTask = http =>
+  compose(map(map(toViewModel)),chain(eitherToTask), map(parse), usersTask(http))
 
 // ===VALIDATE USER============================================================
 export const validate = dto => {
@@ -66,5 +56,4 @@ export const addTask = http => data =>
   new Task( (rej, res) => add(http)(data).then(res, rej))
 
 export const registerTask = http => userId =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), addTask(http), toRequest(userId))
-  // compose(console.log('type', type, 'http', http, 'id', id, 'data',data))
+     compose( map(toViewModel), chain(eitherToTask), map(parse), addTask(http), toRequest(userId))
