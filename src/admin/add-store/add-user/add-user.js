@@ -2,7 +2,8 @@ import { bindable, inject, customElement, useView } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { loadTask, validateUserTask, registerTask } from './model'
+import { loadTask, registerTask } from './model'
+import { validateUserTask } from './validations'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 
@@ -46,17 +47,15 @@ export class AddStore {
     loadTask(this.http)(this.adminId).fork(onError, onSuccess)
   }
 
-
   selectUser() {
     this.validateUser()
   }
 
   clearUser() {
-    console.log('before',this.isDisabled)
-    sessionStorage.setItem('clientId', '')
-    this._user = {}
+    sessionStorage.removeItem('clientId')
+    sessionStorage.removeItem('clientName')
+    this.state.user = {}
     this.isDisabled = false
-    console.log('after',this.isDisabled)
   }
 
   validateUser() {
@@ -92,7 +91,6 @@ export class AddStore {
   }
 
   storeUser(user) {
-    console.log('store user', user)
     sessionStorage.setItem('clientName', JSON.stringify(user.name))
     sessionStorage.setItem('clientId', JSON.stringify(user.id))
     // this.emitter.publish('show-channel', {user: false})
@@ -100,7 +98,6 @@ export class AddStore {
   }
 
   DropDownChanged(user) {
-    console.log('dd changed', user)
     user.name === ""
       ? this.clearUser()
       : this.isDisabled = true

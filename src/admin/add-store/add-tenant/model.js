@@ -24,31 +24,6 @@ export const getTenants = http => id =>
 export const loadTask = http =>
   compose(map(map(toViewModel)),chain(eitherToTask), map(parse), getTenants(http))
 
-// ===VALIDATE Tenant============================================================
-export const validate = dto => {
-  let validation =
-  dto.selectedTenant
-    ? (dto.addTenant && dto.addTenant.name)
-      ? {msg: 'please select one and leave the other blank'}
-      : dto.selectedTenant
-    : dto.addTenant
-      ? dto.addTenant
-      : {msg: 'please select a user'}
-
-  return validation
-}
-
-export const toTask = dto =>
-  dto.msg
-    ? Task.rejected(dto.msg)
-    : Task.of(dto)
-
-export const validateTenantTask =
-  compose(map(log('state')), toTask, validate )
-
-
-  // ===ADD TENANT============================================================
-
 export const add = http => data =>
   http.post(`http://localhost:8080/tenants/add`, data)
 
@@ -57,4 +32,4 @@ export const addTask = http => data =>
 
 export const addTenantTask = http => userId => tenantUserId =>
   // compose(map(toViewModel), map(identity(dto => JSON.parse(dto.response))), addTask(http), toRequest(userId)(tenantUserId))
-  compose(map(map(toViewModel)),map(log('dto to create tenant')),chain(eitherToTask), map(parse), addTask(http), toRequest(userId)(tenantUserId))
+  compose(map(toViewModel),map(log('dto to create tenant')),chain(eitherToTask), map(parse), addTask(http), toRequest(userId)(tenantUserId))

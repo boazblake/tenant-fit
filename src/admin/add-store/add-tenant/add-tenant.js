@@ -2,7 +2,8 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { loadTask, validateTenantTask, addTenantTask } from './model'
+import { loadTask, addTenantTask } from './model'
+import { validateTenantTask } from './validations'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 import { log } from 'utilities'
@@ -41,7 +42,6 @@ export class addTenant {
   load(){
     const onSuccess = tenants => {
       this.data.tenants = tenants
-      log('TENANTS')(this.data.tenants)
     }
 
     const onError = error => {
@@ -49,7 +49,6 @@ export class addTenant {
       this.emitter.publish('notify-error', error.response)
     }
 
-    console.log(this)
     loadTask(this.http)(this.clientId).fork(onError, onSuccess)
   }
 
@@ -59,13 +58,16 @@ export class addTenant {
   }
 
   clearTenant() {
-    this.state.tenant.addTenant = null
+    sessionStorage.removeItem('tenantId')
+    sessionStorage.removeItem('tenantName')
+    this.state.tenant = null
+    this.isDisabled = false
+    log('this.state.tenant cleared')(this.state.tenant)
   }
 
   validateTenant() {
     const onSuccess = validatedTenant => {
       this.validatedTenant = validatedTenant
-      log('tenant')(validatedTenant)
 
       validatedTenant.id
         ? this.storeTenant(validatedTenant)
@@ -77,7 +79,6 @@ export class addTenant {
       this.emitter.publish('notify-error', error)
     }
 
-    log('this.state.tenant')(this.state.tenant)
     validateTenantTask(this.state.tenant).fork(onError, onSuccess)
   }
 
@@ -106,9 +107,9 @@ export class addTenant {
   }
 
   DropDownChanged(tenant) {
-    console.log(tenant)
-    tenant === null
-      ? this.isDisabled = false
+    console.log('dd changed',tenant)
+    tenant.name === undefined || tenant.name === ""
+      ? this.clearTenant()
       : this.isDisabled = true
   }
 

@@ -1,5 +1,5 @@
 import Task from 'data.task'
-import { chain, compose, identity, map } from 'ramda'
+import { chain, compose, map } from 'ramda'
 import { eitherToTask, parse } from 'utilities'
 
 export const toViewModel = dto =>
@@ -24,29 +24,6 @@ export const usersTask = http => id =>
 
 export const loadTask = http =>
   compose(map(map(toViewModel)),chain(eitherToTask), map(parse), usersTask(http))
-
-// ===VALIDATE USER============================================================
-export const validate = dto => {
-  let validation =
-  dto.selectedUser
-    ? (dto.addUser && dto.addUser.name)
-      ? {msg: 'please select one and leave the other blank'}
-      : dto.selectedUser
-    : dto.addUser
-      ? dto.addUser
-      : {msg: 'please select a user'}
-
-  return validation
-}
-
-export const toTask = dto =>
-  dto.msg
-    ? Task.rejected(dto.msg)
-    : Task.of(dto)
-
-export const validateUserTask =
-  compose(toTask, validate )
-
 
   // ===REGISTER USER============================================================
 export const add = http => data =>

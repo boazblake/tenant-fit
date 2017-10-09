@@ -10,7 +10,7 @@
         <div class="">
             <div class="">
               <div class="userDropdown">
-                <select class="userDropdown" name="userSelect" value.bind="state.user.addUser"  change.delegate="DropDownChanged(state.user.addUser)" >
+                <select class="userDropdown" name="userSelect" value.bind="state.user"  change.delegate="DropDownChanged(state.user)" >
                   <option model.bind="null" >SELECT A USER</option>
                   <option repeat.for="user of data.users" model.bind="user" >${user.name}</option>
                 </select>
@@ -30,21 +30,21 @@
           <div class="">
             <fieldset class=" ">
               <label class=" " for="name">NAME</label>
-              <input type="text" class="" name="name" value.bind="state.user.addUser.name" style="outline: none; text-align:right;" disabled.bind="isDisabled">
+              <input type="text" class="" name="name" value.bind="state.user.name" style="outline: none; text-align:right;" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
           <div class="">
             <fieldset class=" ">
               <label class=" " for="email">EMAIL</label>
-              <input type="email" class="" name="email" value.bind="state.user.addUser.email" style="outline: none; text-align:right;" disabled.bind="isDisabled">
+              <input type="email" class="" name="email" value.bind="state.user.email" style="outline: none; text-align:right;" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH EMAIL</span>
             </fieldset>
           </div>
           <div class="">
             <fieldset class=" ">
               <label class=" " for="cellphone">CELLPHONE</label>
-              <input type="number" class="" name="celphone" value.bind="state.user.addUser.cellphone" style="outline: none; text-align:right;" disabled.bind="isDisabled">
+              <input type="number" class="" name="celphone" value.bind="state.user.cellphone" style="outline: none; text-align:right;" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH CELLPHONE</span>
             </fieldset>
           </div>

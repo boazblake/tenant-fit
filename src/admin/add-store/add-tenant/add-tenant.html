@@ -10,7 +10,7 @@
         <div class="">
             <div class="">
               <div class="tenantDropdown">
-                <select class="tenantDropdown" name="tenantSelect" value.bind="state.tenant.addTenant"  change.delegate="DropDownChanged(state.tenant.addTenant)" >
+                <select class="tenantDropdown" name="tenantSelect" value.bind="state.tenant"  change.delegate="DropDownChanged(state.tenant)" >
                   <option model.bind="null" >SELECT A TENANT</option>
                   <option repeat.for="tenant of data.tenants" model.bind="tenant" >${tenant.name}</option>
                 </select>
@@ -19,9 +19,6 @@
                 <span class="">${error.msg}</span>
               </div>
             </div>
-        </div>
-        <div class="">
-          <button class="" click.delegate="selectTenant()">NEXT</button>
         </div>
       </div>
 
@@ -33,14 +30,14 @@
           <div class="">
             <fieldset class=" ">
               <label class=" " for="name">NAME</label>
-              <input type="text" class="" name="name" value.bind="state.tenant.addTenant.name" disabled.bind="isDisabled">
+              <input type="text" class="" name="name" value.bind="state.tenant.name" disabled.bind="isDisabled">
               <span class="" show.bind="errors.email">ERROR WITH NAME</span>
             </fieldset>
           </div>
         </div>
         <div class="">
-          <button class="" click.delegate="selectTenant()">NEXT</button>
           <button class="" click.delegate="toUser()">BACK</button>
+          <button class="" click.delegate="selectTenant()">NEXT</button>
         </div>
       </div>
     </div>
