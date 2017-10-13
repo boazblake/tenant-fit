@@ -31,3 +31,9 @@ export class TruncateTo50ValueConverter {
     // return value.slice(0,5)
   }
 }
+
+export class TrimSearchValueConverter {
+  toView(value){
+    value.split(' ').join()
+  }
+}

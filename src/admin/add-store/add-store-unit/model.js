@@ -5,16 +5,16 @@ import moment from 'moment'
 
 
 export const toLeaseNotificationArray = notifyDate => {
-  const toTimeStampDiff = diffNum => date => {
+  const toTimeStamp = diffNum => date => {
     return moment(date).subtract(diffNum, 'days')
   }
 
   const notifyArray =
-    [ toTimeStampDiff(90)(notifyDate)
-    , toTimeStampDiff(60)(notifyDate)
-    , toTimeStampDiff(30)(notifyDate)
-    , toTimeStampDiff(10)(notifyDate)
-    , toTimeStampDiff(5)(notifyDate)
+    [ toTimeStamp(90)(notifyDate)
+    , toTimeStamp(60)(notifyDate)
+    , toTimeStamp(30)(notifyDate)
+    , toTimeStamp(10)(notifyDate)
+    , toTimeStamp(5)(notifyDate)
     ]
 
   return notifyArray
@@ -55,6 +55,3 @@ export const saveStoreTask = http => data =>
 
 export const toSaveStoreTask = http  =>
   compose(map(toViewModel), chain(eitherToTask), map(parse),  saveStoreTask(http))
-
-// export const validateStoreTask = dto =>
-//   Task.of(map(log('data')),map(toVm),dto)

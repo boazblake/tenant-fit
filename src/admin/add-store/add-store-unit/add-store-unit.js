@@ -84,13 +84,13 @@ export class addStoreUnit {
       log('success')(store)
       this.emitter.publish('notify-success', `${store.name} was sucessfully added to the database`)
       this.isDisabled = true
-      this.cookiStore(store)
+      this.clearStoreSession(store)
     }
 
     toSaveStoreTask(this.http)(store).fork(onError, onSuccess)
   }
 
-  cookiStore(store) {
+  clearStoreSession(store) {
     sessionStorage.removeItem('storeId')
     sessionStorage.removeItem('storeName')
     sessionStorage.removeItem('clientId')

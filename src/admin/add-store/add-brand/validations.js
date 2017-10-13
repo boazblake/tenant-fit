@@ -5,7 +5,7 @@ export const validate = dto => {
   let validation =
   dto
     ? dto
-    : {msg: 'please select or add a tenant'}
+    : {msg: 'please select or add a brand'}
 
   return validation
 }
@@ -15,5 +15,5 @@ export const toTask = dto =>
     ? Task.rejected(dto.msg)
     : Task.of(dto)
 
-export const validateTenantTask =
+export const validateBrandTask =
   compose(toTask, validate )

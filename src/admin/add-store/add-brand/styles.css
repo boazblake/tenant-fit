@@ -1,0 +1,20 @@
+.progress-bar = {
+  width:9000px;
+  margin:auto;
+}
+
+.user-card = {
+  width: 512px;
+  margin:0 auto;
+  height: 176px;
+}
+
+.clear-user  {
+  font-size:2em;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+          transition:         transform .8s ease-in-out;
+}
+.clear-user & hover {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
