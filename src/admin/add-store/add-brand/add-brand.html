@@ -12,17 +12,16 @@
               <div class="brandDropdown">
                 <select class="brandDropdown" name="brandSelect" value.bind="state.brand"  change.delegate="DropDownChanged(state.brand)" >
                   <option model.bind="null" >SELECT A BRAND</option>
-                  <option repeat.for="brand of data.brands" model.bind="brand" >${brand.name}</option>
+                  <option repeat.for="brand of data.brands" model.bind="brand" >${brand.name} </option> ${state.brand}
                 </select>
               </div>
               <div class="errors" repeat.for="error of errors">
                 <span class="">${error.msg}</span>
               </div>
             </div>
+            <img if.bind="state.brand.logo" src="${state.brand.logo}" alt="logo">
         </div>
-      </div>
 
-      <div class="  " >
         <div class="">
           <h2 class="">ADD A NEW BRAND</h2>
         </div>
@@ -36,8 +35,8 @@
           </div>
         </div>
         <div class="">
-          <button class="" click.delegate="toUser()">BACK</button>
-          <button class="" click.delegate="selectBrand()">NEXT</button>
+          <button class="" click.delegate="back()">BACK</button>
+          <button class="" click.delegate="next()">NEXT</button>
         </div>
       </div>
 

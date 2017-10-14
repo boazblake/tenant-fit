@@ -1,4 +1,4 @@
-import { customElement, inject, useView } from 'aurelia-framework'
+import { inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
@@ -7,8 +7,6 @@ import styles from './styles.css'
 import { log } from 'utilities'
 
 
-@customElement('add-store')
-@useView('./add-store.html')
 @inject(HttpClient, DialogService, EventAggregator)
 export class AddStore {
   constructor( http, modal, emitter ) {
@@ -24,23 +22,29 @@ export class AddStore {
     this.show = {
       user: true,
       tenant: false,
+      brand: false,
       storeUnit: false
     }
   }
 
-  attached(){
+  bind() {
     this.adminId = CheckAuth.userId()
-    this.emitter.publish('loading-channel', false)
+    this.clientId = CheckAuth.clientId()
+    this.clientName = CheckAuth.clientName()
+    this.tenantId = CheckAuth.tenantId()
+    this.tenantName = CheckAuth.tenantName()
+  }
+
+  attached(){
     this.load()
+    this.emitter.publish('loading-channel', false)
   }
 
   load() {
-    const handler = msg => {
-      console.log(msg)
-      this.show = msg
-    }
+    const handler = c => msg =>
+      c.show = msg
 
-    this.emitter.subscribe('show-channel', handler)
+    this.emitter.subscribe('show-channel', handler(this))
   }
 
 

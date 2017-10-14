@@ -1,4 +1,4 @@
-import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
@@ -9,10 +9,12 @@ import styles from './styles.css'
 import { log } from 'utilities'
 
 
-@customElement('add-tenant')
-@useView('./add-tenant.html')
 @inject(HttpClient, DialogService, EventAggregator)
 export class addTenant {
+  @bindable adminId
+  @bindable clientId
+  @bindable clientName
+
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
     this.tenantId = ''
@@ -30,30 +32,26 @@ export class addTenant {
     this.isDisabled = false
   }
 
-
-  attached(){
-    this.emitter.publish('loading-channel', false)
-    this.clientId = CheckAuth.clientId()
-    this.adminId = CheckAuth.adminId()
-    this.clientName = CheckAuth.clientName()
+  attached() {
     this.load()
+    this.emitter.publish('loading-channel', false)
   }
 
   load(){
-    const onSuccess = tenants => {
+    const onSuccess = c => tenants => {
       this.data.tenants = tenants
     }
 
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
-    loadTask(this.http)(this.clientId).fork(onError, onSuccess)
+    loadTask(this.http)(this.clientId).fork(onError(this), onSuccess(this))
   }
 
 
-  selectTenant() {
+  next() {
     this.validateTenant()
   }
 
@@ -62,11 +60,10 @@ export class addTenant {
     sessionStorage.removeItem('tenantName')
     this.state.tenant = null
     this.isDisabled = false
-    log('this.state.tenant cleared')(this.state.tenant)
   }
 
   validateTenant() {
-    const onSuccess = validatedTenant => {
+    const onSuccess = c => validatedTenant => {
       this.validatedTenant = validatedTenant
 
       validatedTenant.id
@@ -74,21 +71,21 @@ export class addTenant {
         : this.registerTenant(validatedTenant)
     }
 
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error)
     }
 
-    validateTenantTask(this.state.tenant).fork(onError, onSuccess)
+    validateTenantTask(this.state.tenant).fork(onError(this), onSuccess(this))
   }
 
   registerTenant(tenant) {
-    const onError = error =>{
+    const onError = c => error =>{
       console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = tenant => {
+    const onSuccess = c => tenant => {
       log('success')(tenant)
       this.emitter.publish('notify-success', `${tenant.name} was sucessfully added to the database`)
       this.isDisabled = true
@@ -96,14 +93,13 @@ export class addTenant {
     }
 
     console.log(tenant)
-    addTenantTask(this.http)(this.adminId)(this.clientId)(tenant).fork(onError, onSuccess)
+    addTenantTask(this.http)(this.adminId)(this.clientId)(tenant).fork(onError(this), onSuccess(this))
   }
 
   storeTenant(tenant) {
     sessionStorage.setItem('tenantName', JSON.stringify(tenant.name))
     sessionStorage.setItem('tenantId', JSON.stringify(tenant.id))
-    // this.emitter.publish('show-channel', {tenant:false})
-    this.emitter.publish('show-channel', {storeUnit:true})
+    this.emitter.publish('show-channel', {brand:true})
   }
 
   DropDownChanged(tenant) {
@@ -113,7 +109,7 @@ export class addTenant {
       : this.isDisabled = true
   }
 
-  toUser() {
+  back() {
     this.emitter.publish('show-channel', {user: true, tenant: false})
   }
  }

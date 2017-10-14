@@ -55,3 +55,20 @@ export const saveStoreTask = http => data =>
 
 export const toSaveStoreTask = http  =>
   compose(map(toViewModel), chain(eitherToTask), map(parse),  saveStoreTask(http))
+
+export const toBrandViewModel = Dto => {
+    let dto =
+      { logo: Dto.Logo
+      , name: Dto.Name
+      }
+    return dto
+}
+
+export const fetchBrand = http => adminId => logoId =>
+  http.get(`http://localhost:8080/admin/${adminId}/allBrands/${logoId}`)
+
+export const fetchBrandTask = http => adminId => logoId =>
+  new Task((rej, res) => fetchBrand(http)(adminId)(logoId).then(res, rej))
+
+export const loadTask = http => adminId =>
+  compose(map(toBrandViewModel), chain(eitherToTask), map(parse), fetchBrandTask(http)(adminId))

@@ -2,10 +2,29 @@
   <require from="./add-user/add-user"></require>
   <require from="./add-tenant/add-tenant"></require>
   <require from="./add-store-unit/add-store-unit"></require>
+  <require from="./add-brand/add-brand"></require>
 
-  <main class="mdl-layout__content">
-    <add-user show.bind="show.user"></add-user>
-    <add-tenant if.bind="show.tenant"></add-tenant>
-    <add-store-unit if.bind="show.storeUnit"></add-store-unit>
+  <main class="">
+    <add-user show.bind="show.user"
+              admin-id.bind="adminId"></add-user>
+
+
+    <add-tenant if.bind="show.tenant"
+                admin-id.bind="adminId"
+                client-id.bind="clientId"
+                client-name.bind="clientName"></add-tenant>
+
+
+    <add-brand if.bind="show.brand"
+               admin-id.bind="adminId"></add-brand>
+
+
+    <add-store-unit if.bind="show.storeUnit"
+                    admin-id.bind="adminId"
+                    client-id.bind="clientId"
+                    client-name.bind="clientName"
+                    tentant-id.bind="tenantId"
+                    tentant-name.bind="tenantName"></add-store-unit>
+
   </main>
 </template>

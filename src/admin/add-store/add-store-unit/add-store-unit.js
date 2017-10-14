@@ -1,9 +1,9 @@
-import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { Router } from 'aurelia-router'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { toStoreDto, toSaveStoreTask, } from './model'
+import { loadTask, toStoreDto, toSaveStoreTask, } from './model'
 import { validateStoreTask } from './validations'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
@@ -11,10 +11,14 @@ import { log } from 'utilities'
 import { clone } from 'ramda'
 
 
-@customElement('add-store-unit')
-@useView('./add-store-unit.html')
 @inject(HttpClient, DialogService, EventAggregator, Router)
 export class addStoreUnit {
+  @bindable adminId
+  @bindable clientId
+  @bindable clientName
+  @bindable tenantId
+  @bindable tenantName
+
   constructor( http, modal, emitter, router ) {
     this.disposables = new Set()
     this.router = router
@@ -30,15 +34,27 @@ export class addStoreUnit {
     this.isDisabled = false
   }
 
+  bind() {
+    this.brandId = JSON.parse(sessionStorage.getItem('brandId'))
+    console.log(this.brandId);
+  }
 
   attached(){
+    this.load()
     this.emitter.publish('loading-channel', false)
     this.emitter.publish('show-channel', {storeUnit: true})
-    this.adminId = CheckAuth.adminId()
-    this.clientId = CheckAuth.clientId()
-    this.clientName = CheckAuth.clientName()
-    this.tenantId = CheckAuth.tenantId()
-    this.tenantName = CheckAuth.tenantName()
+  }
+
+  load() {
+    const onError = c => error => {
+      console.error(error)
+      this.emitter.publish('notify-error', error)
+    }
+
+    const onSuccess = c => data =>
+      c.state.store.brand = data
+
+    loadTask(this.http)(this.adminId)(this.brandId).fork(onError(this), onSuccess(this))
   }
 
   clearStore() {
@@ -46,48 +62,48 @@ export class addStoreUnit {
   }
 
   saveStore() {
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error)
     }
 
-    const onSuccess = validStore => {
+    const onSuccess = c => validStore => {
       this.state.validatedStore = validStore
       this.createStoreDto(clone(this.state.validatedStore))
     }
 
-    validateStoreTask(this.state.store).fork(onError, onSuccess)
+    validateStoreTask(this.state.store).fork(onError(this), onSuccess(this))
   }
 
   createStoreDto(store) {
-    const onSuccess = storeDto => {
+    const onSuccess = c => storeDto => {
       this.storeDto = storeDto
       this.registerStore(storeDto)
     }
 
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error)
     }
 
     log('updates to store')(store)
-    toStoreDto(this.clientId)(this.tenantId)(this.adminId)(store).fork(onError, onSuccess)
+    toStoreDto(this.clientId)(this.tenantId)(this.adminId)(store).fork(onError(this), onSuccess(this))
   }
 
   registerStore(store) {
-    const onError = error =>{
+    const onError = c => error =>{
       console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = store => {
+    const onSuccess = c => store => {
       log('success')(store)
       this.emitter.publish('notify-success', `${store.name} was sucessfully added to the database`)
       this.isDisabled = true
       this.clearStoreSession(store)
     }
 
-    toSaveStoreTask(this.http)(store).fork(onError, onSuccess)
+    toSaveStoreTask(this.http)(store).fork(onError(this), onSuccess(this))
   }
 
   clearStoreSession(store) {
@@ -97,6 +113,7 @@ export class addStoreUnit {
     sessionStorage.removeItem('clientName')
     sessionStorage.removeItem('tenantId')
     sessionStorage.removeItem('tenantName')
+    sessionStorage.removeItem('brandId')
     this.router.navigateToRoute('stores')
   }
 
@@ -107,7 +124,7 @@ export class addStoreUnit {
       : this.isDisabled = false
   }
 
-  toTenant() {
-    this.emitter.publish('show-channel', {tenant: true, storeUnit:false})
+  back() {
+    this.emitter.publish('show-channel', {brand: true, storeUnit:false})
   }
  }

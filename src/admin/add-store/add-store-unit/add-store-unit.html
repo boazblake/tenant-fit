@@ -4,7 +4,8 @@
   <div class="">
     <div class="" >
       <div class="">
-        <h2 class="">ADD A NEW STORE</h2>
+        <h2 class="">ADD A NEW ${state.store.brand.name} STORE</h2>
+        <img src="${state.store.brand.logo}" alt="">
       </div>
       <div class="">
         <div class="">
@@ -51,7 +52,7 @@
         </div>
       </div>
       <div class="">
-        <button class="" click.delegate="toTenant()">BACK</button>
+        <button class="" click.delegate="back()">BACK</button>
         <button class="" click.delegate="saveStore()">SAVE STORE</button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
@@ -9,11 +9,10 @@ import styles from './styles.css'
 import { log } from 'utilities'
 
 
-@customElement('add-brand')
-@useView('./add-brand.html')
 @inject(HttpClient, DialogService, EventAggregator)
 export class addBrand {
   @bindable adminId
+
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
     this.brandId = ''
@@ -32,10 +31,9 @@ export class addBrand {
     this.isDisabled = false
   }
 
-
   attached(){
-    this.emitter.publish('loading-channel', false)
     this.load()
+    this.emitter.publish('loading-channel', false)
   }
 
   load(){
@@ -48,11 +46,11 @@ export class addBrand {
       c.emitter.publish('notify-error', error.response)
     }
 
-    loadTask(this.http)(this.clientId).fork(onError(this), onSuccess(this))
+    loadTask(this.http)(this.adminId).fork(onError(this), onSuccess(this))
   }
 
 
-  selectBrand() {
+  next() {
     this.validateBrand()
   }
 
@@ -99,7 +97,6 @@ export class addBrand {
   }
 
   storeBrand(brand) {
-    sessionStorage.setItem('brandName', JSON.stringify(brand.name))
     sessionStorage.setItem('brandId', JSON.stringify(brand.id))
     // this.emitter.publish('show-channel', {brand:false})
     this.emitter.publish('show-channel', {storeUnit:true})
@@ -107,7 +104,7 @@ export class addBrand {
 
   DropDownChanged(brand) {
     console.log('dd changed',brand)
-    brand.name === undefined || brand.name === ""
+    !brand || brand.name === undefined || brand.name === ""
       ? this.clearBrand()
       : this.isDisabled = true
   }
@@ -130,7 +127,7 @@ export class addBrand {
     this.validateBrand()
   }
 
-  toUser() {
+  back() {
     this.emitter.publish('show-channel', {user: true, brand: false})
   }
  }

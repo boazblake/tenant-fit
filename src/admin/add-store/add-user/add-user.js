@@ -1,4 +1,4 @@
-import { bindable, inject, customElement, useView } from 'aurelia-framework'
+import { bindable, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
@@ -8,11 +8,10 @@ import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 
 
-@customElement('add-user')
-@useView('./add-user.html')
 @inject(DialogService, EventAggregator, HttpClient)
-export class AddStore {
-  @bindable storeModel
+export class addUser {
+  @bindable adminId
+
   constructor( modal, emitter, http ) {
     this.disposables = new Set()
     this.adminId = null
@@ -29,25 +28,24 @@ export class AddStore {
   }
 
   attached(){
-    this.adminId = CheckAuth.adminId()
     this.emitter.publish('loading-channel', false)
     this.load()
   }
 
   load(){
-    const onSuccess = users => {
+    const onSuccess = c => users => {
       this.data.users = users
     }
 
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
-    loadTask(this.http)(this.adminId).fork(onError, onSuccess)
+    loadTask(this.http)(this.adminId).fork(onError(this), onSuccess(this))
   }
 
-  selectUser() {
+  next() {
     this.validateUser()
   }
 
@@ -59,7 +57,7 @@ export class AddStore {
   }
 
   validateUser() {
-    const onSuccess = validatedUser => {
+    const onSuccess = c => validatedUser => {
       this.validatedUser = validatedUser
 
       validatedUser.id
@@ -67,27 +65,27 @@ export class AddStore {
         : this.registerUser(validatedUser)
     }
 
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error)
     }
 
-    validateUserTask(this.state.user).fork(onError, onSuccess)
+    validateUserTask(this.state.user).fork(onError(this), onSuccess(this))
   }
 
   registerUser(_user) {
-    const onError = error =>{
+    const onError = c => error =>{
       console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = user => {
+    const onSuccess = c => user => {
       this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
       this.isDisabled = true
       this.storeUser(user)
     }
 
-    registerTask(this.http)(this.adminId)(_user).fork(onError, onSuccess)
+    registerTask(this.http)(this.adminId)(_user).fork(onError(this), onSuccess(this))
   }
 
   storeUser(user) {
