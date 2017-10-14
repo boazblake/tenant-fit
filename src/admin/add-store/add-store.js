@@ -29,10 +29,6 @@ export class AddStore {
 
   bind() {
     this.adminId = CheckAuth.userId()
-    this.clientId = CheckAuth.clientId()
-    this.clientName = CheckAuth.clientName()
-    this.tenantId = CheckAuth.tenantId()
-    this.tenantName = CheckAuth.tenantName()
   }
 
   attached(){

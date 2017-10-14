@@ -12,8 +12,6 @@ import { log } from 'utilities'
 @inject(HttpClient, DialogService, EventAggregator)
 export class addTenant {
   @bindable adminId
-  @bindable clientId
-  @bindable clientName
 
   constructor( http, modal, emitter ) {
     this.disposables = new Set()
@@ -32,19 +30,24 @@ export class addTenant {
     this.isDisabled = false
   }
 
+  bind() {
+    this.clientId = JSON.parse(sessionStorage.clientId)
+    this.clientName = JSON.parse(sessionStorage.clientName)
+  }
+
   attached() {
     this.load()
     this.emitter.publish('loading-channel', false)
   }
 
   load(){
-    const onSuccess = c => tenants => {
-      this.data.tenants = tenants
-    }
-
     const onError = c => error => {
       console.error(error)
       this.emitter.publish('notify-error', error.response)
+    }
+
+    const onSuccess = c => tenants => {
+      this.data.tenants = tenants
     }
 
     loadTask(this.http)(this.clientId).fork(onError(this), onSuccess(this))

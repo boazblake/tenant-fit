@@ -24,7 +24,7 @@ export class NavBar {
     // this.el.querySelector('#p2').style.width = "100%"
 
     const handler = authStatus => {
-      this.state.currentUser = CheckAuth.userName()
+      this.state.currentUser = JSON.parse(sessionStorage.userName)
       this.state.authStatus = CheckAuth.auth()
       this.state.adminStatus = CheckAuth.isAdmin()
     }

@@ -17,8 +17,8 @@ export class addBrand {
     this.disposables = new Set()
     this.brandId = ''
     this.data ={
-      brands:[],
-      newBrands:[]
+      brands:[]
+      // newBrands:[]
     }
     this.state = {
       brand: {}
@@ -128,6 +128,6 @@ export class addBrand {
   }
 
   back() {
-    this.emitter.publish('show-channel', {user: true, brand: false})
+    this.emitter.publish('show-channel', {tenant: true, brand: false})
   }
  }

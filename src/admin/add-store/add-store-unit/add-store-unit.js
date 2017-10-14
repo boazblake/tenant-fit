@@ -14,10 +14,6 @@ import { clone } from 'ramda'
 @inject(HttpClient, DialogService, EventAggregator, Router)
 export class addStoreUnit {
   @bindable adminId
-  @bindable clientId
-  @bindable clientName
-  @bindable tenantId
-  @bindable tenantName
 
   constructor( http, modal, emitter, router ) {
     this.disposables = new Set()
@@ -35,7 +31,7 @@ export class addStoreUnit {
   }
 
   bind() {
-    this.brandId = JSON.parse(sessionStorage.getItem('brandId'))
+    this.brandId = JSON.parse(sessionStorage.brandId)
     console.log(this.brandId);
   }
 
