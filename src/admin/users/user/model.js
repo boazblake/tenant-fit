@@ -12,7 +12,7 @@ export const toVm = Dto => {
 }
 
 export const get = http => adminId => id =>
-  http.get(`http://localhost:8080/admin/${adminId}/allusers/${id}`)
+  http.get(`http://localhost:8080/users/${id}`)
 
 export const getTask = http => adminId => id =>
   new Task((rej, res) => get(http)(adminId)(id).then(res, rej))

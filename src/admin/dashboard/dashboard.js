@@ -1,10 +1,8 @@
-import { customElement, useView, inject } from 'aurelia-framework'
 import { DialogService } from 'aurelia-dialog'
-import { Router } from 'aurelia-router'
 import { EventAggregator } from 'aurelia-event-aggregator'
+import { customElement, useView, inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
-import { getTenantsTask, addTypeTask} from './model'
-import { getStoresTask } from '../stores/model'
+import { Router } from 'aurelia-router'
 import { style } from './styles.css'
 import { CheckAuth } from 'authConfig'
 
@@ -38,8 +36,6 @@ const routes =
 
 
 
-@customElement('dashboard')
-@useView('./dashboard.html')
 @inject(HttpClient, DialogService, EventAggregator)
 export class Dashboard {
   constructor( http, modal, emitter) {
@@ -65,36 +61,6 @@ export class Dashboard {
 
   attached(params) {
   }
-
-  // addTenant(){
-  //   const onError = error => {
-  //     console.error(error);
-  //     this.errors.push({type:'tenant', msg: 'error with addign a tenant'})
-  //   }
-  //
-  //   const onSuccess = s => {
-  //     console.log('success', s)
-  //     this.errors['admin'] = ''
-  //   }
-  //   this.tenant.userId = this.userId
-  //   addTypeTask('admin')(this.http)(this.userId)(this.tenant).fork(onError, onSuccess)
-  // }
-  //
-  // addStore(){
-  //   const onError = error => {
-  //     console.error(error);
-  //     this.errors.push({type:'store', msg: 'error with adding a store'})
-  //   }
-  //
-  //   const onSuccess = s => {
-  //     console.log('success', s)
-  //     this.errors['stores'] = ''
-  //   }
-  //
-  //   addTypeTask('stores')(this.http)(this.userId)(this.store).fork(onError, onSuccess)
-  // }
-
-
 
   openModal() {
       this.modal.open( {viewModel: '', model: 'Are you sure?' }).then(response => {

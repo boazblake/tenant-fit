@@ -1,5 +1,5 @@
+import { inject, useView } from 'aurelia-framework'
 import {PLATFORM} from 'aurelia-pal';
-import { useView, inject } from 'aurelia-framework'
 import {Router} from 'aurelia-router'
 import { CheckAuth } from 'authConfig'
 
@@ -18,7 +18,6 @@ const routes =
   ]
 
 @inject(Router)
-@useView('./admin.html')
 export class Admin {
   constructor(router) {
     this.style = 'style'

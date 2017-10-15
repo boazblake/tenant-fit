@@ -5,7 +5,6 @@ import { log } from 'utilities'
 
 export const get = http => id =>
   http.get(`http://localhost:8080/stores/userId/${id}`, id)
-  // http.get(`http://localhost:8080/admin/${id}/allStores`)
 
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))

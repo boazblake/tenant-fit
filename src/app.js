@@ -1,6 +1,6 @@
 import { inject } from 'aurelia-framework';
-import {PLATFORM} from 'aurelia-pal';
 import {Redirect, NavigationInstruction, RouterConfiguration, Router, Next} from 'aurelia-router'
+import {PLATFORM} from 'aurelia-pal';
 import { CheckAuth } from 'authConfig'
 import { Notify } from './components/notify/notify'
 import { style } from './style.css'

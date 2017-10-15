@@ -27,6 +27,7 @@ export const toStoreModel = Dto => {
   return dto
 }
 
+// =================================GET STORE==========================================================
 export const getStore = http => id =>
   http.get(`http://localhost:8080/stores/${id}`)
 
@@ -35,9 +36,8 @@ export const getStoreTask = http => id =>
 
 export const loadTask = http =>
   compose(map(toStoreModel),chain(eitherToTask), map(parse), getStoreTask(http))
-
-//============================================================================
-
+ 
+// =================================GET BRAND==========================================================
 const toBrand = dto => {
   const brand = {logo:prop('Logo', dto), name:prop('Name', dto)}
   return brand
@@ -57,28 +57,7 @@ export const getLogoTask = http => store =>
 export const getBrandTask = http => storeDto =>
   compose(map(toViewModel(storeDto)), chain(eitherToTask), map(parse), getLogoTask(http))(storeDto)
 
-
-//
-//
-// const colorRange =
-//   { 'rgba(52, 152, 219,1.0)': range(61, 91)
-//   , 'rgba(39, 174, 96,1.0)': range(31, 61)
-//   , 'rgba(230, 126, 34,1.0)': range(11, 31)
-//   , 'rgba(211, 84, 0,1.0)': range(6, 11)
-//   , 'rgba(192, 57, 43,1.0)': range(1,6)
-//   }
-//
-// const findDate = day => dateRange =>{
-//     log('dateRange')(dateRange)
-//     log('day')(day)
-//     log('colorRange')(colorRange)
-//     const array = dateRange.map(x => x.includes(day))
-//     log('array')(array)
-// }
-//
-// const compareDates = dateRange => day =>
-//   compose(log('info?????'), findDate(day), values)(dateRange)
-
+// =================================GET COLOR==========================================================
 export const findColor = day => {
   if (day >= 61) {return 'rgba(52, 152, 219,0.5)'}
   if (day <= 6) {return 'rgba(192, 57, 43,0.5)'}

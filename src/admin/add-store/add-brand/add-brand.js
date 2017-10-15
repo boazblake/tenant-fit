@@ -18,7 +18,6 @@ export class addBrand {
     this.brandId = ''
     this.data ={
       brands:[]
-      // newBrands:[]
     }
     this.state = {
       brand: {}
@@ -98,7 +97,6 @@ export class addBrand {
 
   storeBrand(brand) {
     sessionStorage.setItem('brandId', JSON.stringify(brand.id))
-    // this.emitter.publish('show-channel', {brand:false})
     this.emitter.publish('show-channel', {storeUnit:true})
   }
 

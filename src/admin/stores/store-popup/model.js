@@ -80,7 +80,7 @@ export const updateStore = http => adminId => storeId => Dto =>
 export const updateStoreTask = http => adminId => storeId =>
   compose( map(toVm),  map(identity(Dto => JSON.parse(Dto.response))), updateStore(http)(adminId)(storeId), toDto(adminId))
 
-//GET BRAND
+// =================================GET BRAND==========================================================
 const toBrand = dto => {
   const brand = {logo:prop('Logo', dto), name:prop('Name', dto)}
   return brand

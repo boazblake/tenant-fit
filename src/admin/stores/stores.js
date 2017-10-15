@@ -1,12 +1,12 @@
-import { customElement, useView, inject } from 'aurelia-framework'
-import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
+import { EventAggregator } from 'aurelia-event-aggregator'
+import { customElement, useView, inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
+import { clone } from 'ramda'
 import { loadTask, sortTask, directionTask, filterTask, searchTask } from './model'
 import { getStoreTask } from './store/model'
 import { StorePopup } from './store-popup/store-popup'
 import styles from './styles.css'
-import { clone } from 'ramda'
 import { log } from 'utilities'
 
 @inject(EventAggregator, HttpClient, DialogService)
