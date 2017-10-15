@@ -2,13 +2,13 @@ import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { loadTask, findColor } from './model.js'
+import { loadTask, findColor, getBrandTask } from './model.js'
 import styles from './styles.css'
 import { StorePopup } from '../store-popup/store-popup'
 import { clone } from 'ramda'
 import moment from 'moment'
 import css from './css.js'
-
+import { log } from 'utilities'
 
 @inject(HttpClient, DialogService, EventAggregator, StorePopup)
 export class Store {
@@ -40,6 +40,7 @@ export class Store {
 
     const onSuccess = c =>  store => {
       c.data.store = store
+
       c.state.store = clone(c.data.store)
       c.errors['store'] = ''
       c.emitter.publish('loading-channel', false)
@@ -47,7 +48,9 @@ export class Store {
     }
 
     this.emitter.publish('loading-channel', true)
-    loadTask(this.http)(this.s._id).fork(onError(this), onSuccess(this))
+    loadTask(this.http)(this.s._id)
+      .chain(getBrandTask(this.http))
+      .fork(onError(this), onSuccess(this))
   }
 
   background() {

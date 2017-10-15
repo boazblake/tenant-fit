@@ -83,7 +83,7 @@ export class addStoreUnit {
     }
 
     log('updates to store')(store)
-    toStoreDto(this.clientId)(this.tenantId)(this.adminId)(store).fork(onError(this), onSuccess(this))
+    toStoreDto(this.clientId)(this.tenantId)(this.brandId)(this.adminId)(store).fork(onError(this), onSuccess(this))
   }
 
   registerStore(store) {

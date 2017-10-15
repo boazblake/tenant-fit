@@ -1,12 +1,12 @@
 import Task from 'data.task'
-import { compose, clone, chain, identity, map, range, values } from 'ramda'
+import { assoc, compose, clone, chain, identity, map, prop, props, range, values } from 'ramda'
 import { eitherToTask, log, parse } from 'utilities'
 import moment from 'moment'
 
 export const parseDate = date =>
   moment.utc(date)
 
-export const toViewModel = Dto => {
+export const toStoreModel = Dto => {
   let dto =
     { comments: Dto.Comments
     , isConfirmed: Dto.IsConfirmed
@@ -18,6 +18,7 @@ export const toViewModel = Dto => {
     , name: Dto.Name
     , propertyName: Dto.PropertyName
     , tenantId: Dto.TenantId
+    , brandId: Dto.BrandId
     , userId: Dto.UserId
     , createdAt: Dto.createdAt
     , _id: Dto._id
@@ -32,9 +33,31 @@ export const getStore = http => id =>
 export const getStoreTask = http => id =>
   new Task((rej, res) => getStore(http)(id).then(res, rej))
 
-
 export const loadTask = http =>
-  compose(map(toViewModel),chain(eitherToTask), map(parse), getStoreTask(http))
+  compose(map(toStoreModel),chain(eitherToTask), map(parse), getStoreTask(http))
+
+//============================================================================
+
+const toBrand = dto => {
+  const brand = {logo:prop('Logo', dto), name:prop('Name', dto)}
+  return brand
+}
+
+
+export const toViewModel = storeDto => brandDto =>{
+  const storeModel = assoc('brand', toBrand(brandDto),storeDto)
+  return storeModel
+}
+
+export const getBrand = http => store =>
+  http.get(`http://localhost:8080/brands/${store.brandId}`)
+
+export const getLogoTask = http => store =>
+  new Task((rej, res) => getBrand(http)(store).then(res, rej))
+
+export const getBrandTask = http => storeDto =>
+  compose(map(toViewModel(storeDto)), chain(eitherToTask), map(parse), getLogoTask(http))(storeDto)
+
 
 //
 //

@@ -27,7 +27,9 @@ export const toViewModel = Dto => {
     return dto
 }
 
-export const storeDto = clientId => tenantId => adminId => dto => {
+export const storeDto = clientId => tenantId => brandId => adminId => dto => {
+  console.log('tenantId',tenantId)
+
   let Dto =
     { Name: dto.name
     , LandlordEntity: dto.landlordEntity
@@ -38,14 +40,15 @@ export const storeDto = clientId => tenantId => adminId => dto => {
     , Comments: dto.comments
     , TenantId: tenantId
     , UserId: clientId
+    , BrandId: brandId
     , ModifiedBy: adminId
     }
 
   return Task.of(Dto)
 }
 
-export const toStoreDto = clientId => tenantId => adminId =>
-  storeDto(clientId)(tenantId)(adminId)
+export const toStoreDto = clientId => tenantId => brandId => adminId =>
+  storeDto(clientId)(tenantId)(brandId)(adminId)
 
 export const saveStore = http => data =>
   http.post(`http://localhost:8080/stores/add`, data)
@@ -56,6 +59,8 @@ export const saveStoreTask = http => data =>
 export const toSaveStoreTask = http  =>
   compose(map(toViewModel), chain(eitherToTask), map(parse),  saveStoreTask(http))
 
+
+//==============================FETCH BRAND======================================
 export const toBrandViewModel = Dto => {
     let dto =
       { logo: Dto.Logo
