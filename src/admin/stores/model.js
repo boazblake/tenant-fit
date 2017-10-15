@@ -22,15 +22,14 @@ export const addTerms = item => {
   return assoc('_terms', terms, item)
 }
 
-export const getStores = http => id =>
-  http.get(`http://localhost:8080/admin/${id}/allstores`, id)
-  // http.get(`http://localhost:8080/admin/${id}/allStores`)
+export const getStores = http =>
+  http.get(`http://localhost:8080/stores`)
 
-export const getStoresTask = http => id =>
-  new Task((rej, res) => getStores(http)(id).then(res, rej))
+export const getStoresTask = http =>
+  new Task((rej, res) => getStores(http).then(res, rej))
 
-export const loadTask = http =>
-  compose(map(map(addTerms)), map(map(toViewModel)), chain(eitherToTask), map(parse), getStoresTask(http))
+export const loadTask =
+  compose(map(map(addTerms)), map(map(toViewModel)), chain(eitherToTask), map(parse), getStoresTask)
 
   // ==========================================================================//
 

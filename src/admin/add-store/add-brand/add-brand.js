@@ -46,7 +46,7 @@ export class addBrand {
       c.emitter.publish('notify-error', error.response)
     }
 
-    loadTask(this.http)(this.adminId).fork(onError(this), onSuccess(this))
+    loadTask(this.http).fork(onError(this), onSuccess(this))
   }
 
 

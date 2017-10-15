@@ -32,7 +32,8 @@ export class addStoreUnit {
 
   bind() {
     this.brandId = JSON.parse(sessionStorage.brandId)
-    console.log(this.brandId);
+    this.clientId = JSON.parse(sessionStorage.clientId)
+    this.tenantId = JSON.parse(sessionStorage.tenantId)
   }
 
   attached(){

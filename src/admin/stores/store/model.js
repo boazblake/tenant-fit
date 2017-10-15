@@ -43,7 +43,6 @@ const toBrand = dto => {
   return brand
 }
 
-
 export const toViewModel = storeDto => brandDto =>{
   const storeModel = assoc('brand', toBrand(brandDto),storeDto)
   return storeModel

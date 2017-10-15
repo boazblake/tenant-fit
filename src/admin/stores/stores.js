@@ -9,7 +9,6 @@ import styles from './styles.css'
 import { clone } from 'ramda'
 import { log } from 'utilities'
 
-
 @inject(EventAggregator, HttpClient, DialogService)
 export class Stores {
   constructor( emitter, http, modal ) {
@@ -68,7 +67,7 @@ export class Stores {
     }
 
     const handler = c => _ =>
-      loadTask(c.http)(c.userId).fork(onError(c), onSuccess(c))
+      loadTask(c.http).fork(onError(c), onSuccess(c))
 
     handler(this)()
   }

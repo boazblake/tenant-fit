@@ -17,7 +17,7 @@ export const toRequest = userId => dto =>
   })
 
 export const users = http => id =>
-  http.get(`http://localhost:8080/admin/${id}/allusers`)
+  http.get(`http://localhost:8080/users/allusers`)
 
 export const usersTask = http => id =>
   new Task((rej, res) => users(http)(id).then(res, rej))

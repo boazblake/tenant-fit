@@ -15,14 +15,14 @@ export const toRequest = userId => dto =>{
           })
 }
 
-export const brands = http => id =>
-  http.get(`http://localhost:8080/admin/${id}/allBrands`)
+export const brands = http =>
+  http.get(`http://localhost:8080/brands/`)
 
-export const getBrands = http => id =>
-  new Task((rej, res) => brands(http)(id).then(res, rej))
+export const getBrands = http =>
+  new Task((rej, res) => brands(http).then(res, rej))
 
-export const loadTask = http =>
-  compose(map(map(toViewModel)),chain(eitherToTask), map(parse), getBrands(http))
+export const loadTask =
+  compose(map(map(toViewModel)),chain(eitherToTask), map(parse), getBrands)
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,7 +34,7 @@ export const addTask = http => data =>
   new Task( (rej, res) => add(http)(data).then(res, rej))
 
 export const addBrandTask = http => userId =>
-  compose(map(toViewModel), map(log('dto to create brand')),chain(eitherToTask), map(parse), addTask(http), toRequest(userId),log('wtf'))
+  compose(map(toViewModel),chain(eitherToTask), map(parse), addTask(http), toRequest(userId))
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -54,4 +54,4 @@ export const fetchLogo = http => query =>
   new Task((rej, res) => logo(http)(query).then(res, rej))
 
 export const fetchLogoTask = http =>
-  compose( map(log(';wtf')), map(map(toLogo)), chain(eitherToTask), map(parse), fetchLogo(http), toQuery)
+  compose(map(map(toLogo)), chain(eitherToTask), map(parse), fetchLogo(http), toQuery)

@@ -89,13 +89,11 @@ export class addTenant {
     }
 
     const onSuccess = c => tenant => {
-      log('success')(tenant)
       this.emitter.publish('notify-success', `${tenant.name} was sucessfully added to the database`)
       this.isDisabled = true
       this.storeTenant(tenant)
     }
 
-    console.log(tenant)
     addTenantTask(this.http)(this.adminId)(this.clientId)(tenant).fork(onError(this), onSuccess(this))
   }
 
@@ -106,7 +104,6 @@ export class addTenant {
   }
 
   DropDownChanged(tenant) {
-    console.log('dd changed',tenant)
     tenant.name === undefined || tenant.name === ""
       ? this.clearTenant()
       : this.isDisabled = true

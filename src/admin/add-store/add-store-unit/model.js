@@ -28,8 +28,6 @@ export const toViewModel = Dto => {
 }
 
 export const storeDto = clientId => tenantId => brandId => adminId => dto => {
-  console.log('tenantId',tenantId)
-
   let Dto =
     { Name: dto.name
     , LandlordEntity: dto.landlordEntity
@@ -70,7 +68,7 @@ export const toBrandViewModel = Dto => {
 }
 
 export const fetchBrand = http => adminId => logoId =>
-  http.get(`http://localhost:8080/admin/${adminId}/allBrands/${logoId}`)
+  http.get(`http://localhost:8080/brands/${logoId}`)
 
 export const fetchBrandTask = http => adminId => logoId =>
   new Task((rej, res) => fetchBrand(http)(adminId)(logoId).then(res, rej))

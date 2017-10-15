@@ -2,7 +2,7 @@ import { customElement, useView, inject, bindable, observable } from 'aurelia-fr
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogController } from 'aurelia-dialog'
 import { HttpClient } from 'aurelia-http-client'
-import { getStoreTask, updateStoreTask } from './model'
+import {getBrandTask, getStoreTask, updateStoreTask } from './model'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 import { clone, equals } from 'ramda'
@@ -33,7 +33,6 @@ export class StorePopup {
     //console.log(newValue, oldValue)
   }
 
-
   attached() {
     const onError = error =>{
       console.error(error);
@@ -45,7 +44,9 @@ export class StorePopup {
       this.state.store = clone(this.data.store)
     }
 
-    getStoreTask(this.http)(this.storeId).fork(onError, onSuccess)
+    getStoreTask(this.http)(this.storeId)
+    .chain(getBrandTask(this.http))
+    .fork(onError, onSuccess)
   }
 
   editForm() {
