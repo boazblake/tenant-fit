@@ -1,8 +1,27 @@
 <template >
-  <require from='./user/user'></require>
-  <div class="container ">
-    <div class="user tile is-ancestor" au animate>
-      <user class="tile is-parent" repeat.for="user of users" u.bind="user"></user>
+  <require from="./user/user"></require>
+  <require from="../toolbar/toolbar"></require>
+
+  <div class="container" >
+    <toolbar props.bind="state.props"></toolbar>
+    <div show.bind="state.isCard" class="section">
+      <div class="columns is-multiline">
+        <user repeat.for="user of state.users" class="column" u.bind="user" is-card.bind="state.isCard"></user>
+      </div>
+    </div>
+
+
+    <div show.bind="!state.isCard" class="section">
+      <table  class="table is-striped">
+        <thead>
+          <tr>
+            <th>USER NAME</th>
+            <th>USER IS ADMIN</th>
+          </tr>
+        </thead>
+          <tbody as-element="user" repeat.for="user of state.users" u.bind="user"  is-card.bind="state.isCard"></tbody>
+      </table>
     </div>
   </div>
-</template>
+
+</template >

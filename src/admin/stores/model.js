@@ -50,8 +50,8 @@ export const filterUnConfirmed = filterable => x =>{
   return x[filterable] !== true
 }
 
-export const filtered = filterable => stores =>
-  filter(filterUnConfirmed(filterable), stores)
+export const filtered = filterable => xs =>
+  filter(filterUnConfirmed(filterable), xs)
 
 export const filterTask = filterable =>
   compose(Task.of, filtered(filterable))

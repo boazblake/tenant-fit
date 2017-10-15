@@ -111,7 +111,6 @@ export class addBrand {
       console.error(error)
       c.emitter.publish('notify-error', error.response)
       c.emitter.publish('loading-channel', false)
-    //TODO:end gif
     }
 
     const onSuccess = c => data => {

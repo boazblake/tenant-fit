@@ -1,0 +1,13 @@
+user .column{
+  margin:auto;
+  flex-wrap:flex;
+  display: flex;
+  padding: 20px;
+  background: #fafafa;;
+  min-width:350px;
+}
+
+user .table {
+  padding: 0;
+  background:rgba(41, 128, 185,1.0);
+}

@@ -1,21 +1,27 @@
 import Task from 'data.task'
-import { compose, map, identity } from 'ramda'
-import { log } from 'utilities'
+import { assoc, compose, clone, chain, identity, map, prop, props, range, values } from 'ramda'
+import { eitherToTask, log, parse } from 'utilities'
+import moment from 'moment'
 
-export const toVm = Dto => {
+export const parseDate = date =>
+  moment.utc(date)
+
+export const toUserModel = Dto => {
   let dto =
-    { name: Dto.Name
+    { isAdmin: Dto.IsAdmin
+    , name: Dto.Name
     , _id: Dto._id
-    , isAdmin: Dto.IsAdmin
     }
+
   return dto
 }
 
-export const get = http => adminId => id =>
+// =================================GET USER==========================================================
+export const getUser = http => id =>
   http.get(`http://localhost:8080/users/${id}`)
 
-export const getTask = http => adminId => id =>
-  new Task((rej, res) => get(http)(adminId)(id).then(res, rej))
+export const getUserTask = http => id =>
+  new Task((rej, res) => getUser(http)(id).then(res, rej))
 
-export const getUserTask = adminId => id =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), getTask(adminId)(id))
+export const loadTask = http =>
+  compose(map(toUserModel),chain(eitherToTask), map(parse), getUserTask(http))

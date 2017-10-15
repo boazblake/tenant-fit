@@ -1,65 +1,63 @@
 import Task from 'data.task'
-import { compose, map, identity } from 'ramda'
-import { log } from 'utilities'
+import { assoc, compose, clone, chain, identity, map, prop, props, range, values } from 'ramda'
+import { eitherToTask, log, parse } from 'utilities'
+import moment from 'moment'
 
-export const passwordDic = {
-  password: 'text',
-  text: 'password'
+export const parseDate = date =>
+  moment.utc(date)
+
+export const dirtyState = oldStore => {
+  console.log(oldStore)
 }
 
-export const toggleVisibility = label =>
-  passwordDic[label]
 
 export const toVm = Dto => {
   let dto =
-    { name: Dto.Name
-    // , landlordEntity: Dto.LandlordEntity
-    , email: Dto.email
-    , cellphone: Dto.CellPhone
-    , password: Dto.password
-    , id: Dto._id
+    { email: Dto.email
     , isAdmin: Dto.IsAdmin
-    // , comments: Dto.Comments
-    // , tenantId: TenantId
-    // , userId: ClientId
+    , password: Dto.Password
+    , name: Dto.Name
+    , cellPhone: Dto.CellPhone
+    , _id: Dto._id
     }
 
   return dto
 }
 
-export const toRequest = adminId => dto => {
-  let Dto =
-    { Name: dto.name
-    // , landlordEntity: dto.LandlordEntity
-    , email: dto.email
-    , CellPhone: dto.cellphone
-    , password: dto.password
-    , ModifiedBy: adminId
-    // , comments: dto.Comments
-    // , tenantId: TenantId
-    // , userId: ClientId
-    }
 
-  return Dto
+export const toDto = adminId => dto => {
+  let Dto =
+  { email: dto.email
+  , IsAdmin: dto.isAdmin
+  , password: dto.Password
+  , Name: dto.name
+  , CellPhone: dto.cellPhone
+  , _id: dto._id
+  }
+
+return Dto
 }
 
 
-export const get = http => adminId => userId =>
-  http.get(`http://localhost:8080/users/${userId}`)
+// GET STORE===============================================================================
+export const get = http => id =>
+  http.get(`http://localhost:8080/users/${id}`)
 
-export const getTask = http => adminId => userId =>
-  new Task((rej, res) => get(http)(adminId)(userId).then(res, rej))
+export const getTask = http => id =>
+  new Task((rej, res) => get(http)(id).then(res, rej))
 
-export const getUserTask = adminId => userId =>
-compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), getTask(adminId)(userId))
+export const getUserTask = http =>
+  compose(map(toVm),map(identity(dto => JSON.parse(dto.response))),  getTask(http))
 
 
 
-export const update = http => adminId => userId => dto =>
-  http.put(`http://localhost:8080/users/${userId}`, dto)
+  // UPDATE STORE===============================================================================
+export const update = http => adminId => userId => Dto =>
+  http.put(`http://localhost:8080/users/${userId}`, Dto)
 
-export const updateTask = http => adminId => userId => dto =>
-  new Task((rej, res) => update(http)(adminId)(userId)(dto).then(res, rej))
+export const updateUser = http => adminId => userId => Dto =>
+  new Task((rej, res) => update(http)(adminId)(userId)(Dto).then(res, rej))
 
 export const updateUserTask = http => adminId => userId =>
-  compose(map(toVm), map(identity(dto => JSON.parse(dto.response))), map(log('data')), updateTask(http)(adminId)(userId),toRequest(adminId))
+  compose( map(toVm),  map(identity(Dto => JSON.parse(Dto.response))), updateUser(http)(adminId)(userId), toDto(adminId))
+  // compose(map(toViewModel(storeDto)), chain(eitherToTask), map(parse), getLogoTask(http))(storeDto)

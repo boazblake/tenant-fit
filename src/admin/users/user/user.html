@@ -1,22 +1,72 @@
 <template>
-  <div class="tile is-child card card-card" au-animate>
-    <div class="card-header">
-      <div class="card-header-title">
-        <p class="title is-small">${state.user.name}</p>
-      </div>
-      <div if.bind="state.user.isAdmin" class="card-header-icon">
-        <i  class="fa fa-user "></i>
-      </div>
-    </div>
-    <div class="card-content">
-      <div class="content">
+  <require from="valueConverters/index"></require>
 
+    <div if.bind="isCard" class="card card-card" >
+      <div class="card-header">
+        <div class="card-header-title">
+          <p class="title is-small">${state.user.name}</p>
+        </div>
+        <div if.bind="state.user.isAdmin" class="card-header-icon">
+          <i  class="fa fa-user-circle-o "></i>
+        </div>
       </div>
+      <div class="card-content">
+        <div class="content">
+        </div>
+      </div>
+      <footer class="card-footer" css="border-color:${background}; ${css('card')('borderWidth')}">
+        <div class="card-footer-item">
+          <a class="left">
+            <span class="button">
+              <i class="fa fa-envelope"></i>
+            </span>
+          </a>
+          <a class="right">
+            <span class="button">
+              <i class="fa fa-phone"></i>
+            </span>
+          </a>
+        </div>
+        <div class="card-footer-item">
+          <a class="">
+            <span >
+              <button class="" click.delegate="showUser(state.user._id)">MORE DETAILS</button>
+            </span>
+          </a>
+        </div>
+      </footer>
     </div>
-    <footer class="card-footer">
-      <i class="button card-footer-item fa fa-phone"></i>
-      <i class="button card-footer-item fa fa-envelope"></i>
-      <i class="button card-footer-item fa fa-cog" click.delegate="showUser(state.user._id)"></i>
-    </footer>
-  </div>
-</template>
+
+    <template if.bind="!isCard">
+      <tr class="${isSelected ? 'is-selected' : '' }" click.delegate="selected()" >
+        <td>${state.user.name}</td>
+        <td>
+          <i if.bind="state.user.isAdmin"  class="fa fa-user-circle-o "></i>
+        </td>
+        <td class="field has-addons">
+          <p class="control">
+            <a class="button">
+              <span class="icon is-small">
+                <i class="fa fa-envelope"></i>
+              </span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button">
+              <span class="icon is-small" click.delegate="showUser(state.user._id)">
+                <i class="fa fa-info"></i>
+              </span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button">
+              <span class="icon is-small">
+                <i class="fa fa-phone"></i>
+              </span>
+            </a>
+          </p>
+        </td>
+      </tr>
+    </template>
+
+</template >
