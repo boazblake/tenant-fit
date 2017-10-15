@@ -41,10 +41,10 @@ export const directionTask = dir =>
 
   // ==========================================================================//
 export const filterAdmins = filterable => x =>{
-  if (toString(filterable) === '') {
+  if (filterable.length === 0) {
     return x
   }
-  return x[filterable] === true
+    return x[filterable] === true
 }
 
 export const filtered = filterable => xs =>
