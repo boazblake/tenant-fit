@@ -101,7 +101,6 @@ export class addBrand {
   }
 
   DropDownChanged(brand) {
-    console.log('dd changed',brand)
     !brand || brand.name === undefined || brand.name === ""
       ? this.clearBrand()
       : this.isDisabled = true
@@ -111,12 +110,16 @@ export class addBrand {
     const onError = c => error => {
       console.error(error)
       c.emitter.publish('notify-error', error.response)
+      c.emitter.publish('loading-channel', false)
+    //TODO:end gif
     }
 
-    const onSuccess = c => data =>
+    const onSuccess = c => data => {
       c.data.newBrands = data
+      c.emitter.publish('loading-channel', false)
+    }
 
-
+    this.emitter.publish('loading-channel', true)
     fetchLogoTask(this.http)(this.query).fork(onError(this), onSuccess(this))
   }
 

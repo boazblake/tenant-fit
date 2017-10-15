@@ -27,11 +27,11 @@
       </div>
       <ul class="nav navbar-nav navbar-right">
         <a if.bind="state.authStatus" class="" click.delegate="logout()">LOGOUT</a>
-        <li class="loader" if.bind="router.isNavigating">
+        <li class="loader" if.bind="router.isNavigating || isLoading">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
         </li>
       </ul>
-
+      
     </div>
   </nav>
 

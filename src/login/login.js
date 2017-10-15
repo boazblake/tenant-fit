@@ -1,16 +1,14 @@
-import {PLATFORM} from 'aurelia-pal';
-import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
+import { customElement, useView, inject } from 'aurelia-framework'
 import { HttpClient, json } from 'aurelia-http-client'
+import {PLATFORM} from 'aurelia-pal';
 import { Router } from 'aurelia-router'
+import { map } from 'ramda'
 import { CheckAuth } from 'authConfig'
 import { userModel, registerTask, loginTask } from './model'
 import { log } from 'utilities'
-import { map } from 'ramda'
 import { styles } from './styles.css'
 
-@customElement('login')
-@useView('./login.html')
 @inject(HttpClient, EventAggregator, Router)
 export class Login {
   constructor(http, emitter, router) {
@@ -26,18 +24,18 @@ export class Login {
   login() {
     this.user = userModel(this._user)
 
-    const onError = error =>{
+    const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error.response)
+      c.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = user => {
-      this.emitter.publish('auth-channel', true)
-      this.state.user = user
-      this.toLogin()
+    const onSuccess = c => user => {
+      c.emitter.publish('auth-channel', true)
+      c.state.user = user
+      c.toLogin()
     }
 
-    loginTask(this.http)(this.user).fork(onError, onSuccess)
+    loginTask(this.http)(this.user).fork(onError(this), onSuccess(this))
   }
 
   toLogin() {
@@ -55,7 +53,6 @@ export class Login {
   }
 
   toClient(user) {
-    console.log('toclient', user)
     sessionStorage.setItem('userName', JSON.stringify(user.name))
     sessionStorage.setItem('userId', JSON.stringify(user.id))
     this.router.navigateToRoute('home', {id: user.id})

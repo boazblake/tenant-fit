@@ -1,17 +1,14 @@
-import { customElement, useView, inject, bindable, observable } from 'aurelia-framework'
-import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogController } from 'aurelia-dialog'
+import { EventAggregator } from 'aurelia-event-aggregator'
+import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
-import {getBrandTask, getStoreTask, updateStoreTask } from './model'
+import { clone, equals } from 'ramda'
+import { getBrandTask, getStoreTask, updateStoreTask } from './model'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
-import { clone, equals } from 'ramda'
 
-@customElement('store-popup')
-@useView('./store-popup.html')
 @inject(HttpClient, DialogController, EventAggregator)
 export class StorePopup {
-  @observable state
   constructor( http, dController, emitter) {
     this.disposables = new Set()
     this.dController = dController
@@ -27,10 +24,6 @@ export class StorePopup {
   activate(storeId){
     this.storeId = storeId
     this.adminId = CheckAuth.adminId()
-  }
-
-  stateChanged(newValue, oldValue){
-    //console.log(newValue, oldValue)
   }
 
   attached() {
@@ -67,7 +60,6 @@ export class StorePopup {
     }
 
     const onSuccess = store => {
-      console.log('store',store)
       this.data.store = store
       this.state.store = clone(this.data.store)
       this.emitter.publish('notify-success', `${store.name} was successfuly updated`)

@@ -9,8 +9,8 @@ const Dto = {
 }
 
 
-const styleDto = component => attribute => {
-  console.log(Dto[component][attribute], component, attribute)
+const styleDto = component => attribute => { 
+ //TODO:  console.log(Dto[component][attribute], component, attribute)
   return Dto[component][attribute]
 }
 

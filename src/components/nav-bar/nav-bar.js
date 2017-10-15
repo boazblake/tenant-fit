@@ -1,7 +1,7 @@
+import { EventAggregator } from 'aurelia-event-aggregator'
 import { useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { CheckAuth } from 'authConfig'
-import { EventAggregator } from 'aurelia-event-aggregator'
 import styles from './styles.css'
 
 @inject(HttpClient, EventAggregator, Element)
@@ -25,7 +25,7 @@ export class NavBar {
 
     const handler = authStatus => {
       this.state.currentUser = JSON.parse(sessionStorage.userName)
-      this.state.authStatus = CheckAuth.auth()
+      this.state.authStatus = authStatus
       this.state.adminStatus = CheckAuth.isAdmin()
     }
 

@@ -83,7 +83,6 @@ export class addStoreUnit {
       this.emitter.publish('notify-error', error)
     }
 
-    log('updates to store')(store)
     toStoreDto(this.clientId)(this.tenantId)(this.brandId)(this.adminId)(store).fork(onError(this), onSuccess(this))
   }
 
@@ -94,7 +93,6 @@ export class addStoreUnit {
     }
 
     const onSuccess = c => store => {
-      log('success')(store)
       this.emitter.publish('notify-success', `${store.name} was sucessfully added to the database`)
       this.isDisabled = true
       this.clearStoreSession(store)
@@ -115,7 +113,6 @@ export class addStoreUnit {
   }
 
   DropDownChanged(store) {
-    console.log(store)
     store !== null
       ? this.isDisabled = true
       : this.isDisabled = false

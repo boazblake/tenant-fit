@@ -12,7 +12,6 @@ export const dirtyState = oldStore => {
 
 
 export const toVm = Dto => {
-  console.log('DTO', Dto)
   let dto =
     { comments: Dto.Comments
     , confirmedOn: Dto.ConfirmedOn
@@ -98,4 +97,4 @@ export const getLogoTask = http => store =>
   new Task((rej, res) => getBrand(http)(store).then(res, rej))
 
 export const getBrandTask = http => storeDto =>
-  compose(map(log('where is my brand')), map(toViewModel(storeDto)), chain(eitherToTask), map(parse), getLogoTask(http))(storeDto)
+  compose(map(toViewModel(storeDto)), chain(eitherToTask), map(parse), getLogoTask(http))(storeDto)
