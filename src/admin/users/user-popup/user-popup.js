@@ -1,4 +1,4 @@
-import { DialogController } from 'aurelia-dialog'
+import { DialogController, DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
@@ -9,11 +9,12 @@ import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 import { log } from 'utilities'
 
-@inject(HttpClient, DialogController, EventAggregator)
+@inject(HttpClient, DialogController, DialogService, EventAggregator)
 export class UserPopup {
-  constructor( http, dController, emitter) {
+  constructor( http, dController, modal, emitter) {
     this.disposables = new Set()
     this.dController = dController
+    this.modal = modal
     this.state = {}
     this.data = {}
     this.http = http
@@ -21,6 +22,7 @@ export class UserPopup {
     this.isEditable = false
     this.isDisabled = true
     this.styles = styles
+    this.toRemove = false
   }
 
   activate(userId){
@@ -63,5 +65,18 @@ export class UserPopup {
     validateUserTask(this.state.user)(this.data.user)
       .chain(updateUserTask(this.http)(this.adminId)(this.userId))
         .fork(onError(this), onSuccess(this))
+  }
+
+  delete() {
+    console.log('toRemove', this.toRemove)
+    this.toRemove ? this.modal
+    .open('are you sre you want to delete this user? once you submit all the information will be lost')
+    .whenClosed(response => {
+      if(!response.wasCancelled) {
+        console.log('user will be deleted')
+      } else {
+        console.log('user is safe')
+      }
+    }) : console.log('user is safe')
   }
 }

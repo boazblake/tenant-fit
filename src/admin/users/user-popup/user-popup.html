@@ -7,7 +7,7 @@
         <div class="is-grouped is-small">
           <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()"><i class=""></i></button>
           <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()"><i class=""></i></button>
-          <abbr title="User is Admin"><i if.bind="!state.user.isAdmin" class="fa fa-flag" ></i></abbr>
+          <abbr title="User is Admin"><i if.bind="state.user.isAdmin" class="fa fa-user-circle-o" ></i></abbr>
         </div>
         <div class="field control title">
           <strong><input class="input is-large title" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled"></strong >
@@ -16,28 +16,28 @@
     <ai-dialog-body class="container">
       <div class="box">
         <div class="field-body">
-          <label class="label" for="propertyName">Name</label>
+          <label class="label" for="name">Name</label>
           <div class="control">
             <input class="input is-expanded" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled">
           </div>
         </div>
 
         <div class="field-body">
-          <label class="label" for="landlordEntity">EMAIL</label>
+          <label class="label" for="email">EMAIL</label>
           <div class="control">
             <input class="input is-expanded" type="text" name="email" value.two-way="state.user.email" disabled.bind="isDisabled">
           </div>
         </div>
 
         <div class="field-body">
-          <label class="label" for="landlordEntity">PASSWORD</label>
+          <label class="label" for="password">PASSWORD</label>
           <div class="control">
             <input class="input is-expanded" type="text" name="password" value.two-way="state.user.password" disabled.bind="isDisabled">
           </div>
         </div>
 
         <div class="field-body">
-          <label class="label" for="landlordEntity">CELLPHONE</label>
+          <label class="label" for="cellphone">CELLPHONE</label>
           <div class="control">
             <input class="input is-expanded" type="number" name="cellphone" value.two-way="state.user.cellPhone" disabled.bind="isDisabled">
           </div>
@@ -50,6 +50,13 @@
           </div>
         </div>
         
+        <div class="field is-left">
+          <label for="remove"><i class="fa fa-trash"></i></label>
+          <div class="control">
+            <input class="checkbox" type="checkbox" name="isAdmin" checked.bind="toRemove" change.delegate="delete()" disabled.bind="isRemoveDisabled" >
+          </div>
+        </div>
+
       </div>
       </ai-dialog-body>
 
