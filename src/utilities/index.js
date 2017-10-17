@@ -20,3 +20,8 @@ export const parse =
 
 export const dateToIso = date =>
   moment(date).toISOString()
+
+export const toTask = dto =>
+  dto.msg
+    ? Task.rejected(dto.msg)
+    : Task.of(dto)

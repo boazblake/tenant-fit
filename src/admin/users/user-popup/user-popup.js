@@ -2,8 +2,9 @@ import { DialogController } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
-import { clone, equals } from 'ramda'
+import { clone, chain, equals } from 'ramda'
 import { getUserTask, updateUserTask } from './model'
+import { validateUserTask } from './validations'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 
@@ -38,7 +39,7 @@ export class UserPopup {
     }
 
     getUserTask(this.http)(this.userId)
-    .fork(onError(this), onSuccess(this))
+      .fork(onError(this), onSuccess(this))
   }
 
   editForm() {
@@ -46,15 +47,8 @@ export class UserPopup {
     this.isEditable = !this.isEditable
   }
 
-  validateUser() {
-    equals(this.state.user, this.data.user)
-      ? this.emitter.publish('notify-info', 'nothing to update')
-      : this.updateUser(this.state.user._id)
-  }
-
-  updateUser(userId) {
-    const onError = c => error =>{
-      console.error(error);
+  update() {
+    const onError = c => error => {
       c.emitter.publish('notify-error', error.response)
     }
 
@@ -65,8 +59,8 @@ export class UserPopup {
       c.dController.ok(c.state.user)
     }
 
-    updateUserTask(this.http)(this.adminId)(userId)(this.state.user).fork(onError(this), onSuccess(this))
+    validateUserTask(this.state.user)(this.data.user)
+      .chain(updateUserTask(this.http)(this.adminId)(this.userId))
+        .fork(onError(this), onSuccess(this))
   }
-
-
 }

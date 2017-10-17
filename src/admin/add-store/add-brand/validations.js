@@ -1,4 +1,4 @@
-import Task from 'data.task'
+import { toTask } from 'utilities'
 import { compose } from 'ramda'
 
 export const validate = dto => {
@@ -9,11 +9,6 @@ export const validate = dto => {
 
   return validation
 }
-
-export const toTask = dto =>
-  dto.msg
-    ? Task.rejected(dto.msg)
-    : Task.of(dto)
 
 export const validateBrandTask =
   compose(toTask, validate )
