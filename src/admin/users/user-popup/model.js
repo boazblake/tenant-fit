@@ -12,10 +12,11 @@ export const dirtyState = oldStore => {
 
 
 export const toVm = Dto => {
+  console.log('from mongo', Dto)
   let dto =
     { email: Dto.email
     , isAdmin: Dto.IsAdmin
-    , password: Dto.Password
+    , password: Dto.password
     , name: Dto.Name
     , cellPhone: Dto.CellPhone
     , _id: Dto._id
@@ -29,7 +30,7 @@ export const toDto = adminId => dto => {
   let Dto =
   { email: dto.email
   , IsAdmin: dto.isAdmin
-  , password: dto.Password
+  , password: dto.password
   , Name: dto.name
   , CellPhone: dto.cellPhone
   , _id: dto._id

@@ -7,6 +7,7 @@ import { getUserTask, updateUserTask } from './model'
 import { validateUserTask } from './validations'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
+import { log } from 'utilities'
 
 @inject(HttpClient, DialogController, EventAggregator)
 export class UserPopup {
