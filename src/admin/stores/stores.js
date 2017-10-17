@@ -43,7 +43,7 @@ export class Stores {
     const handler = c => msg =>
       c.state.isCard = msg
 
-    this.disposables.add(this.emitter.subscribe('store-isCard-channel', handler(this)))
+    this.disposables.add(this.emitter.subscribe('isCard-channel', handler(this)))
   }
 
   detached() {

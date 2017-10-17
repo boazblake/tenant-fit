@@ -40,10 +40,12 @@ export class Users {
   }
 
   orientation() {
-    const handler = c => msg =>
+    const handler = c => msg => {
+      console.log('orienation users', msg)
       c.state.isCard = msg
+    }
 
-    this.disposables.add(this.emitter.subscribe('user-isCard-channel', handler(this)))
+    this.disposables.add(this.emitter.subscribe('isCard-channel', handler(this)))
   }
 
   detached() {
