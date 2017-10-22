@@ -147,27 +147,6 @@ export class Users {
     this.disposables.add(this.emitter.subscribe('search-channel', handler(this)))
   }
 
-  showStore(id) {
-    this.getStore(id)
-  }
-
-  getStore(id) {
-    const onError = c => error => {
-      console.error(error);
-      c.errors.push({type:'users', msg: 'error with getting users'})
-    }
-
-    const onSuccess = c => store => {
-      c.store = store
-      c.errors['store'] = ''
-      c.openModal(id)
-      c.emitter.publish('loading-channel', false)
-    }
-
-    this.emitter.publish('loading-channel', true)
-    getUserTask(this.http)(id).fork(onError(this), onSuccess(this))
-  }
-
   reset() {
     this.state.props.sorters =
     [ { key: 'Name', value: 'name' }

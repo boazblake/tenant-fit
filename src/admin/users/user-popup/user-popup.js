@@ -33,6 +33,10 @@ export class UserPopup {
   }
 
   attached() {
+    load()
+  }
+
+  load() {
     const onError = c => error =>{
       console.error(error);
       this.emitter.publish('notify-error', error.response)
@@ -54,18 +58,22 @@ export class UserPopup {
 
   submit() {
     const onError = c => error => {
-      if (error.msg) c.emitter.publish('notify-error', error.msg)
+      if (error.msg) return c.emitter.publish('notify-error', error.msg)
       c.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = c => user => {
+      if (user.msg) {
+        c.dController.ok(user)
+        return c.emitter.publish('notify-warning', user.msg)
+      }
       c.data.user = user
       c.state.user = clone(c.data.user)
-      c.emitter.publish('notify-success', `${user.name} was successfuly submitd`)
+      c.emitter.publish('notify-success', `${user.name} was successfuly updated`)
       c.dController.ok(c.state.user)
     }
 
-    validateUserTask(this.state.user)(this.data.user)(this.toRemove).bimap(tap(onError(this)), tap(onSuccess(this)))
+    validateUserTask(this.state.user)(this.data.user)(this.toRemove)//.bimap(tap(onError(this)), tap(onSuccess(this)))
       .chain(toDestinationTask(this.http)(this.adminId)(this.userId))
         .fork(onError(this), onSuccess(this))
   }
@@ -78,6 +86,10 @@ export class UserPopup {
     this.isRemovable = confirm(`Are you sure? \n WARNING \n On Submission, this will delete all data associated with ${this.state.user.name}`)
     this.toRemove = this.isRemovable ? !this.toRemove : this.toRemove
     this.background()
+  }
+
+  detached() {
+    this.disposables.forEach(x => x.dispose())
   }
 
   reset() {

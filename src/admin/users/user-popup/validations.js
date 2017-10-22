@@ -12,12 +12,11 @@ export const validatePassword = x => identity(x)
 export const validateIsAdmin = x => identity(x)
 
 export const toUserModel = (dto, isRemovable) => {
-  console.log('isRemovable', isRemovable)
   const userModel =
     { email: validateEmail(prop('email', dto))
     , password: validatePassword(prop('password', dto))
     , name: validateName(prop('name', dto))
-    , cellPhone: validateCellphone(prop('cellphone', dto))
+    , cellPhone: validateCellphone(prop('cellPhone', dto))
     , isAdmin: validateIsAdmin(prop('isAdmin', dto))
     , _id: prop('_id', dto)
     , toRemove:isRemovable
@@ -30,7 +29,6 @@ export const compareStates = newState => oldState => isRemovable => {
   if ( equals(newState, oldState) && ! isRemovable ) {
     return {msg: 'nothing to update'}
   } else {
-    console.log('else',equals(newState, oldState))
     return toUserModel(newState, isRemovable)
   }
 }

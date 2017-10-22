@@ -54,13 +54,12 @@ export class User {
   showUser(id) {
     console.log(id)
     this.modal.open( {viewModel: UserPopup, model: id }).whenClosed(response => {
-      if (!response.wasCancelled) {
-        console.log('updated', response)
-        this.data.user = response.output
-        this.state.user = clone(this.data.user)
-      } else {
-        console.log('not updated', response)
+      if (response.wasCancelled) return console.log('not updated', response)
+      if (response.output.msg) {
+        this.emitter.publish('notify-error', response.output.msg)
       }
+      this.data.user = response.output
+      this.state.user = clone(this.data.user)
     })
   }
 
