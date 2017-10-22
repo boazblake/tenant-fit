@@ -22,6 +22,11 @@ export const dateToIso = date =>
   moment(date).toISOString()
 
 export const toTask = dto =>
-  dto.msg
-    ? Task.rejected(dto.msg)
-    : Task.of(dto)
+  new Task((rej, res) => {
+    if (dto.msg) {
+      rej(dto)
+    } else {
+      res(dto)
+    }
+  })
+

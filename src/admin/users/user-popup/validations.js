@@ -11,7 +11,8 @@ export const validateCellphone = x => identity(x)
 export const validatePassword = x => identity(x)
 export const validateIsAdmin = x => identity(x)
 
-export const toUserModel = dto => {
+export const toUserModel = (dto, isRemovable) => {
+  console.log('isRemovable', isRemovable)
   const userModel =
     { email: validateEmail(prop('email', dto))
     , password: validatePassword(prop('password', dto))
@@ -19,20 +20,20 @@ export const toUserModel = dto => {
     , cellPhone: validateCellphone(prop('cellphone', dto))
     , isAdmin: validateIsAdmin(prop('isAdmin', dto))
     , _id: prop('_id', dto)
+    , toRemove:isRemovable
     }
   
   return userModel
 }
   
-export const compareStates = newState => oldState => {
-  if ( equals(newState, oldState) ) {
-    console.log('clean state')
+export const compareStates = newState => oldState => isRemovable => {
+  if ( equals(newState, oldState) && ! isRemovable ) {
     return {msg: 'nothing to update'}
   } else {
-    console.log('dirty state')
-    return toUserModel(newState)
+    console.log('else',equals(newState, oldState))
+    return toUserModel(newState, isRemovable)
   }
 }
 
-export const validateUserTask = newState =>
-    compose(toTask ,compareStates(newState))
+export const validateUserTask = newState => oldState =>
+    compose(toTask, compareStates(newState)(oldState))

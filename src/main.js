@@ -16,8 +16,9 @@ export async function configure(aurelia) {
 
     .feature(PLATFORM.moduleName('components/footer/index'))
     .feature(PLATFORM.moduleName('components/nav-bar/index'))
-    .feature(PLATFORM.moduleName('components/modal/index'))
+    .feature(PLATFORM.moduleName('components/dialog/index'))
     .feature(PLATFORM.moduleName('components/notify/index'))
+    .feature(PLATFORM.moduleName('components/delete/index'))
 
     .feature(PLATFORM.moduleName('utilities/index'))
     .feature(PLATFORM.moduleName('valueConverters/index'))

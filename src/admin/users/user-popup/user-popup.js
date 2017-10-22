@@ -2,14 +2,15 @@ import { DialogController, DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
-import { clone, chain, equals } from 'ramda'
-import { getUserTask, updateUserTask } from './model'
+import { clone, chain, equals, tap } from 'ramda'
+import { getUserTask, toDestinationTask, getRemoveColor } from './model'
 import { validateUserTask } from './validations'
 import styles from './styles.css'
+import Delete from 'components'
 import { CheckAuth } from 'authConfig'
 import { log } from 'utilities'
 
-@inject(HttpClient, DialogController, DialogService, EventAggregator)
+@inject(HttpClient, DialogController, DialogService, EventAggregator, Delete)
 export class UserPopup {
   constructor( http, dController, modal, emitter) {
     this.disposables = new Set()
@@ -19,10 +20,11 @@ export class UserPopup {
     this.data = {}
     this.http = http
     this.emitter = emitter
-    this.isEditable = false
-    this.isDisabled = true
     this.styles = styles
-    this.toRemove = false
+  }
+
+  bind() {
+    this.reset()
   }
 
   activate(userId){
@@ -50,33 +52,39 @@ export class UserPopup {
     this.isEditable = !this.isEditable
   }
 
-  update() {
+  submit() {
     const onError = c => error => {
+      if (error.msg) c.emitter.publish('notify-error', error.msg)
       c.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = c => user => {
       c.data.user = user
       c.state.user = clone(c.data.user)
-      c.emitter.publish('notify-success', `${user.name} was successfuly updated`)
+      c.emitter.publish('notify-success', `${user.name} was successfuly submitd`)
       c.dController.ok(c.state.user)
     }
 
-    validateUserTask(this.state.user)(this.data.user)
-      .chain(updateUserTask(this.http)(this.adminId)(this.userId))
+    validateUserTask(this.state.user)(this.data.user)(this.toRemove).bimap(tap(onError(this)), tap(onSuccess(this)))
+      .chain(toDestinationTask(this.http)(this.adminId)(this.userId))
         .fork(onError(this), onSuccess(this))
   }
 
-  delete() {
-    console.log('toRemove', this.toRemove)
-    this.toRemove ? this.modal
-    .open('are you sre you want to delete this user? once you submit all the information will be lost')
-    .whenClosed(response => {
-      if(!response.wasCancelled) {
-        console.log('user will be deleted')
-      } else {
-        console.log('user is safe')
-      }
-    }) : console.log('user is safe')
+  background() { 
+    this.removeColor = getRemoveColor(this.toRemove)
+  }
+
+  highlight() {
+    this.isRemovable = confirm(`Are you sure? \n WARNING \n On Submission, this will delete all data associated with ${this.state.user.name}`)
+    this.toRemove = this.isRemovable ? !this.toRemove : this.toRemove
+    this.background()
+  }
+
+  reset() {
+    this.isRemovable = false
+    this.toRemove = false
+    this.isEditable = false
+    this.isDisabled = true
+    this.background()
   }
 }
