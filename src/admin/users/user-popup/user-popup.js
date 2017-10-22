@@ -33,7 +33,7 @@ export class UserPopup {
   }
 
   attached() {
-    load()
+    this.load()
   }
 
   load() {
