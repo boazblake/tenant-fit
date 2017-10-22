@@ -43,6 +43,9 @@
 
     <template if.bind="!isCard">
       <tr class="${isSelected ? 'is-selected' : '' }" click.delegate="selected()" >
+        <td>
+        <img src="${state.store.brand.logo}" alt="logo" class="card-header-img">
+        </td>
         <td>${state.store.name}</td>
         <td>${state.store.propertyName}</td>
         <td css="border-color:${background}; ${css('list')('borderWidth')}">${state.store.leaseNotificationDate | leaseDateFormat}</td>

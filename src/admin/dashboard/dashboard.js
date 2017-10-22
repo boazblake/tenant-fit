@@ -29,6 +29,13 @@ const routes =
   , title: 'USERS'
   , settings: { roles: [] }
   }
+, { route: 'users/:id'
+  , name: 'user-page'
+  , moduleId: PLATFORM.moduleName('../users/user-page/user-page')
+  , nav: false
+  , title: 'USER PAGE'
+  , settings: { roles: [] }
+  }
 , { route: ''
   , redirect: 'stores'
   }

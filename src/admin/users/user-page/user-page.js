@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { customElement, useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone, chain, equals, tap } from 'ramda'
-import { getUserTask, toDestinationTask, getRemoveColor } from './model'
+import { loadTask, toDestinationTask, getRemoveColor } from './model'
 import { validateUserTask } from './validations'
 import styles from './styles.css'
 import Delete from 'components'
@@ -11,7 +11,7 @@ import { CheckAuth } from 'authConfig'
 import { log } from 'utilities'
 
 @inject(HttpClient, DialogController, DialogService, EventAggregator, Delete)
-export class UserPopup {
+export class UserPage {
   constructor( http, dController, modal, emitter) {
     this.disposables = new Set()
     this.dController = dController
@@ -33,7 +33,7 @@ export class UserPopup {
   }
 
   attached() {
-    load()
+    this.load()
   }
 
   load() {
@@ -47,7 +47,7 @@ export class UserPopup {
       this.state.user = clone(this.data.user)
     }
 
-    getUserTask(this.http)(this.userId)
+    loadTask(this.http)(this.userId)
       .fork(onError(this), onSuccess(this))
   }
 
@@ -73,7 +73,7 @@ export class UserPopup {
       c.dController.ok(c.state.user)
     }
 
-    validateUserTask(this.state.user)(this.data.user)(this.toRemove)//.bimap(tap(onError(this)), tap(onSuccess(this)))
+    validateTask(this.state.user)(this.data.user)(this.toRemove)//.bimap(tap(onError(this)), tap(onSuccess(this)))
       .chain(toDestinationTask(this.http)(this.adminId)(this.userId))
         .fork(onError(this), onSuccess(this))
   }

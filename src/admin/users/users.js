@@ -5,7 +5,6 @@ import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
 import { loadTask, sortTask, directionTask, filterTask, searchTask } from './model'
 import { getUserTask } from './user/model'
-import { userPopup } from './user-popup/user-popup'
 import styles from './styles.css'
 import { log } from 'utilities'
 
@@ -48,10 +47,6 @@ export class Users {
     this.disposables.add(this.emitter.subscribe('isCard-channel', handler(this)))
   }
 
-  detached() {
-    this.disposables.forEach(x => x.dispose())
-  }
-
   load() {
     const onError = c => error => {
       console.error(error)
@@ -62,16 +57,20 @@ export class Users {
       c.data.users = users
       c.users = clone(users)
       c.state.users = clone(users)
-      c.emitter.publish('filter-channel', c.state.filterBy)
-      c.emitter.publish('sort-channel', c.state.sortBy)
-      c.emitter.publish('direction-channel', c.state.direction)
-      c.emitter.publish('loading-channel', false)
+      c.notifyAll()
     }
 
     const handler = c => _ =>
       loadTask(c.http).fork(onError(c), onSuccess(c))
 
     handler(this)()
+  }
+
+  notifyAll() {
+    this.emitter.publish('filter-channel', this.state.filterBy)
+    this.emitter.publish('sort-channel', this.state.sortBy)
+    this.emitter.publish('direction-channel', this.state.direction)
+    this.emitter.publish('loading-channel', false)
   }
 
   sort() {
@@ -165,8 +164,8 @@ export class Users {
     this.state.isCard = true
   }
 
-  removeDisposables() {
-    this.disposables = new Set();
+  detached() {
+    this.disposables.forEach(x => x.dispose())
   }
 
 }

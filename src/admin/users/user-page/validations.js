@@ -1,18 +1,18 @@
-import { equals, compose, identity, prop, test } from 'ramda'
+import { equals, compose, identity, prop, test, trim } from 'ramda'
 import { log, toTask } from 'utilities'
 
 
 export const validateEmail = email =>
   test(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-  ,email) ? email : {msg: 'error with email'}
+  ,trim(email)) ? trim(email) : {msg: `error with email ${email}`}
 
-export const validateName = x => identity(x)
-export const validateCellphone = x => identity(x)
-export const validatePassword = x => identity(x)
+export const validateName = x => identity(trim(x))
+export const validateCellphone = x => identity(trim(x))
+export const validatePassword = x => x ? identity(trim(x)) : identity(x)
 export const validateIsAdmin = x => identity(x)
 
-export const toUserModel = (dto, isRemovable) => {
-  const userModel =
+export const toModel = (dto, isRemovable) => {
+  const model =
     { email: validateEmail(prop('email', dto))
     , password: validatePassword(prop('password', dto))
     , name: validateName(prop('name', dto))
@@ -22,16 +22,16 @@ export const toUserModel = (dto, isRemovable) => {
     , toRemove:isRemovable
     }
   
-  return userModel
+  return model
 }
   
 export const compareStates = newState => oldState => isRemovable => {
   if ( equals(newState, oldState) && ! isRemovable ) {
     return {msg: 'nothing to update'}
   } else {
-    return toUserModel(newState, isRemovable)
+    return toModel(newState, isRemovable)
   }
 }
 
-export const validateUserTask = newState => oldState =>
+export const validateTask = newState => oldState =>
     compose(toTask, compareStates(newState)(oldState))

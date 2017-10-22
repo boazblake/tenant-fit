@@ -3,12 +3,14 @@ import {assoc, compose, map, chain, identity, prop, props, reverse, values, join
 import { parse, eitherToTask, log } from 'utilities'
 
 export const toViewModel = Dto => {
+  console.log('stores', Dto)
   let dto =
     { name: Dto.Name
     , leaseExpDate: Dto.LeaseExpirationDate
     , leaseNotifDate: Dto.LeaseNotificationDate
     , propertyName: Dto.PropertyName
     , isConfirmed: Dto.IsConfirmed
+    , brandId: Dto.BrandId
     , _id: Dto._id
     }
   return dto

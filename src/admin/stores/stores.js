@@ -172,6 +172,7 @@ export class Stores {
     , { key: 'Lease Notification Date', value: 'leaseNotifDate' }
     , { key: 'Lease Expiration Date', value: 'leaseExpDate' }
     , { key: 'Property Location', value: 'propertyName' }
+    , { key: 'Brand', value: 'brandId' }
     ]
 
     this.state.props.filters = [

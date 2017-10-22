@@ -5,12 +5,12 @@ import { HttpClient } from 'aurelia-http-client'
 import moment from 'moment'
 import { clone } from 'ramda'
 import { loadTask } from './model.js'
-import { UserPopup } from '../user-popup/user-popup'
+import { UserPage } from '../user-page/user-page'
 import styles from './styles.css'
 import css from './css.js'
 import { log } from 'utilities'
 
-@inject(HttpClient, DialogService, EventAggregator, UserPopup)
+@inject(HttpClient, DialogService, EventAggregator, UserPage)
 export class User {
   @bindable u
   @bindable isCard
@@ -53,14 +53,16 @@ export class User {
 
   showUser(id) {
     console.log(id)
-    this.modal.open( {viewModel: UserPopup, model: id }).whenClosed(response => {
-      if (response.wasCancelled) return console.log('not updated', response)
-      if (response.output.msg) {
-        this.emitter.publish('notify-error', response.output.msg)
-      }
-      this.data.user = response.output
-      this.state.user = clone(this.data.user)
-    })
+    // this.emitter.publish('show-user-channel', true)
+    this.router.navigateToRoute('user-page', {id});
+    // this.modal.open( {viewModel: UserPage, model: id }).whenClosed(response => {
+    //   if (response.wasCancelled) return console.log('not updated', response)
+    //   if (response.output.msg) {
+    //     this.emitter.publish('notify-error', response.output.msg)
+    //   }
+    //   this.data.user = response.output
+    //   this.state.user = clone(this.data.user)
+    // })
   }
 
   multiSelect() {

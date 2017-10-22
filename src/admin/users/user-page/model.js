@@ -41,38 +41,38 @@ export const get = http => id =>
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))
 
-export const getUserTask = http =>
+export const loadTask = http =>
   compose(map(toViewModel),map(identity(dto => JSON.parse(dto.response))),  getTask(http))
 
 // UPDATE USER===============================================================================
 export const update = http => adminId => userId => Dto =>
   http.put(`http://localhost:8080/users/${userId}`, Dto)
 
-export const updateUser = http => adminId => userId => Dto =>
+export const updateTask = http => adminId => userId => Dto =>
   new Task((rej, res) => update(http)(adminId)(userId)(Dto).then(res, rej))
 
 
-export const submitUserTask = http => adminId => userId =>
-  compose(map(toViewModel), chain(eitherToTask), map(parse), updateUser(http)(adminId)(userId), toDto(adminId))
+export const toSubmitTask = http => adminId => userId =>
+  compose(map(toViewModel), chain(eitherToTask), map(parse), updateTask(http)(adminId)(userId), toDto(adminId))
 
 
 // DESTINATION USER===============================================================================
 
-export const toDelete = http => adminId => userId =>
+export const remove = http => adminId => userId =>
   http.delete(`http://localhost:8080/users/${userId}`)
 
-export const deleteUser = http => adminId => userId =>
-  new Task((rej, res) => toDelete(http)(adminId)(userId).then(res, rej))
+export const removeTask = http => adminId => userId =>
+  new Task((rej, res) => remove(http)(adminId)(userId).then(res, rej))
 
 
-export const deleteUserTask = http => adminId =>
-  compose(chain(eitherToTask), map(parse), deleteUser(http)(adminId))
+export const toRemoveTask = http => adminId =>
+  compose(chain(eitherToTask), map(parse), removeTask(http)(adminId))
 
 
 // DESTINATION USER===============================================================================
 
 export const checkDto = http => adminId => userId => dto =>
-  dto.toRemove ? deleteUserTask(http)(adminId)(userId) : submitUserTask(http)(adminId)(userId)(dto)
+  dto.toRemove ? toRemoveTask(http)(adminId)(userId) : toSubmitTask(http)(adminId)(userId)(dto)
 
 
 export const toDestinationTask = http => adminId => userId =>
