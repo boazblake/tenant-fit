@@ -66,7 +66,7 @@
       </ai-dialog-body>
 
       <ai-dialog-footer class="box">
-        <button class="button is-danger" click.trigger="dController.cancel(message)">DISMISS</button>
+        <a class="button is-danger" route-href="route: users;">DISMISS</a>
         <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>
       </ai-dialog-footer>
     </div>

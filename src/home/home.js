@@ -6,7 +6,7 @@ import { CheckAuth } from 'authConfig'
 
 const routes =
   [{ route: [':dashboard/:id']
-    , name: 'dashboard'
+    , name: 'client-dashboard'
     , moduleId: PLATFORM.moduleName('./dashboard/dashboard')
     , nav: false
     , title: 'Dashboard'

@@ -28,7 +28,7 @@ export class UserPage {
   }
 
   activate(userId){
-    this.userId = userId
+    this.userId = userId.id
     this.adminId = CheckAuth.adminId()
   }
 

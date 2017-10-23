@@ -30,7 +30,7 @@
         <div class="card-footer-item">
           <a class="">
             <span >
-              <a class="button" route-href="route: user-page; params.bind: {id:state.user._id}" >MORE DETAILS</a>
+              <a class="button" route-href="route: user-page; params.bind: {id:u._id}" >MORE DETAILS</a>
             </span>
           </a>
         </div>
@@ -53,8 +53,8 @@
           </p>
           <p class="control">
             <a class="button">
-              <span class="icon is-small" click.delegate="showUser(state.user._id)">
-                <i class="fa fa-info"></i>
+              <span class="icon is-small">
+              <a class="button" route-href="route: user-page; params.bind: {id:u._id}" ><i class="fa fa-info"></i></a>
               </span>
             </a>
           </p>
