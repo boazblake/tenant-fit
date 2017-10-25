@@ -1,24 +1,28 @@
 import { bindable, inject } from 'aurelia-framework'
 import { DialogService } from 'aurelia-dialog'
-import { dialog } from 'components'
+import { Dialog } from '../dialog/dialog'
+import { identity } from 'ramda'
 
-@inject(DialogService)
 export class Delete {
-@bindable action = () => {}
-@bindable msg
+  static inject = [DialogService];
+@bindable action
+@bindable isRemovable
+@bindable user
   constructor(ds) {
-    this.ds = DialogService
+    this.ds = ds
   }
 
-  do() {
-    console.log(this.ds)
+  delete() {
     this.ds.open(
-      { viewModel: dialog
-      , model: this.msg
+      { viewModel: Dialog
+      , model: {title: 'DELETE',  body:`Are you sure? \n WARNING \n On Submission, this will delete all data associated with ${this.user.name}, isRemovable: ${this.isRemovable}`, data: this.isRemovable}
       })
-      .then(result => {
-        if (result.wasCancelled) return
-        this.action()
+      .whenClosed(result => {
+        if (result.wasCancelled) {
+          return identity(this.isRemovable)
+        } else if (!result.wasCancelled) {
+          return this.isRemovable = !this.isRemovable
+        }
       })
   }
 }

@@ -1,16 +1,16 @@
 <template>
-   <ai-dialog>
-     <ai-dialog-header>
-        <h2>${message}</h2>
-     </ai-dialog-header>
+   <ux-dialog>
+     <ux-dialog-header>
+        <h2>${title}</h2>
+     </ux-dialog-header>
 
-      <ai-dialog-body>
-         <h2>${message}</h2>
-      </ai-dialog-body>
+      <ux-dialog-body>
+         <h2>${body}</h2>
+      </ux-dialog-body>
 
-      <ai-dialog-footer>
-         <button click.trigger = "controller.cancel()">Cancel</button>
-         <button click.trigger = "controller.ok(message)">Ok</button>
-      </ai-dialog-footer>
-   </ai-dialog>
+      <ux-dialog-footer>
+         <button attach-focus.bind="!data" click.trigger="controller.cancel()">Cancel</button>
+         <button attach-focus.bind="data" click.trigger="controller.ok()">Ok</button>
+      </ux-dialog-footer>
+   </ux-dialog>
 </template>

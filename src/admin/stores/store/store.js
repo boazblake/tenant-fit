@@ -10,7 +10,7 @@ import styles from './styles.css'
 import css from './css.js'
 import { log } from 'utilities'
 
-@inject(HttpClient, DialogService, EventAggregator, StorePopup)
+@inject(HttpClient, DialogService, EventAggregator)
 export class Store {
   @bindable s
   @bindable isCard

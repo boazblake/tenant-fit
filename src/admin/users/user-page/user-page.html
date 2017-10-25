@@ -3,29 +3,32 @@
   <require from="valueConverters/index"></require>
   <require from="components/delete/delete"></require>
 
-  <ai-dialog class="hero" au-animate>
-      <ai-dialog-header class="box" css="background-color:${removeColor};">
-        <div class="level">
-          <div class="level-left">
-            <div class="is-grouped is-small">
-              <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()"><i class=""></i></button>
-              <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()"><i class=""></i></button>
-              <abbr title="User is Admin"><i if.bind="state.user.isAdmin" class="fa fa-user-circle-o" ></i></abbr>
-            </div>
-          </div>
-            <div class="field level-right">
-                <i class="fa fa-trash button is-error" click.trigger="highlight()"></i>
-              <div class="control">
-                <!-- <delete msg.bind="this.msg"></delete> -->
-              <!-- <input class="checkbox" type="checkbox" name="isAdmin" checked.bind="toRemove" change.delegate="delete()" disabled.bind="isRemoveDisabled" > -->
-            </div>
+  <div class="container">
+    <div class="hero">
+      <div class="level">
+        <div class="level-left">
+          <div class="is-grouped is-small">
+            <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()">
+              <i class=""></i>
+            </button>
+            <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()">
+              <i class=""></i>
+            </button>
+            <abbr title="User is Admin">
+              <i if.bind="state.user.isAdmin" class="fa fa-user-circle-o"></i>
+            </abbr>
           </div>
         </div>
-        <div class="field control title">
-          <strong><input class="input is-large title" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled"></strong >
+        <div class="level-item">
+          <div class="field control title" css.bind="isRemovable ? 'background-color:red;' : ''">
+            <strong>
+              <h2 class="is-large title">${state.user.name}</h2>
+            </strong>
+          </div>
         </div>
-    </ai-dialog-header>
-    <ai-dialog-body class="container">
+        <div class="field level-right">
+        </div>
+      </div>
       <div class="box">
         <div class="field-body">
           <label class="label" for="name">Name</label>
@@ -58,17 +61,18 @@
         <div class="field is-left">
           <label class="field-label" for="isAdmin">Is Admin</label>
           <div class="control">
-            <input class="checkbox" type="checkbox" name="isAdmin" checked.bind="state.user.isAdmin"  disabled.bind="isDisabled">
+            <input class="checkbox" type="checkbox" name="isAdmin" checked.bind="state.user.isAdmin" disabled.bind="isDisabled">
           </div>
         </div>
 
-      </div>
-      </ai-dialog-body>
+        <delete user.bind="state.user" is-removable.two-way="isRemovable" action.call="$parent.isRemovableChanged()" show.bind="!isDisabled"></delete>        
 
-      <ai-dialog-footer class="box">
-        <a class="button is-danger" route-href="route: users;">DISMISS</a>
-        <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>
-      </ai-dialog-footer>
+      </div>
     </div>
-  </ai-dialog>
-<template >
+    <div class="box">
+      <a class="button is-danger" route-href="route: users;">DISMISS</a>
+      <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>
+    </div>
+  </div>
+
+  <template>

@@ -80,5 +80,5 @@ export const toDestinationTask = http => adminId => userId =>
   
 
 // COLOR USER===============================================================================
-export const getRemoveColor = bool =>
+export const getChangeColor = bool =>
   bool ? 'red' : ''

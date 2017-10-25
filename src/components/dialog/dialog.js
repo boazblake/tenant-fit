@@ -5,12 +5,20 @@ import {DialogController} from 'aurelia-dialog';
 export class Dialog {
    constructor(controller) {
       this.controller = controller;
-      this.answer = null;
-
-      controller.settings.centerHorizontalOnly = true;
+    }
+    
+    canActivate({title, body, data}) {
+      this.title = title
+      this.body = body
+      this.data = data
+    }
+    
+    activate() {
+      // controller.settings.centerHorizontalOnly = true;
+      this.load()
    }
 
-   activate(msg) {
-      this.message = msg;
+   load() {
    }
+
 }
