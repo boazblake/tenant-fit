@@ -9,8 +9,8 @@
       </ux-dialog-body>
 
       <ux-dialog-footer>
-         <button attach-focus.bind="!data" click.trigger="controller.cancel()">Cancel</button>
-         <button attach-focus.bind="data" click.trigger="controller.ok()">Ok</button>
+         <button attach-focus.bind="!isRemovable" click.trigger="controller.cancel()">Cancel</button>
+         <button attach-focus.bind="isRemovable" click.trigger="controller.ok()">Ok</button>
       </ux-dialog-footer>
    </ux-dialog>
 </template>

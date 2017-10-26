@@ -65,7 +65,7 @@
           </div>
         </div>
 
-        <delete user.bind="state.user" is-removable.two-way="isRemovable" action.call="$parent.isRemovableChanged()" show.bind="!isDisabled"></delete>        
+        <delete is-removable.two-way="isRemovable" deletable.bind="state.user" show.bind="!isDisabled"></delete>        
 
       </div>
     </div>

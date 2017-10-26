@@ -69,18 +69,4 @@ export class Dashboard {
   attached(params) {
   }
 
-  openModal() {
-      this.modal.open( {viewModel: '', model: 'Are you sure?' }).then(response => {
-         console.log(response);
-
-         if (!response.wasCancelled) {
-            console.log('OK');
-         } else {
-            console.log('cancelled');
-         }
-         console.log(response.output);
-      });
-   }
-
-
  }

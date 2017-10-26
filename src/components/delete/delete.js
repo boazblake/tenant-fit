@@ -5,17 +5,27 @@ import { identity } from 'ramda'
 
 export class Delete {
   static inject = [DialogService];
-@bindable action
+@bindable deletable
 @bindable isRemovable
-@bindable user
   constructor(ds) {
     this.ds = ds
   }
-
+  
+  attached() {
+    this.reset()
+ }
+  
+  do() {
+    this.isRemovable 
+    ? this.undelete()
+    : this.delete()
+  }
+  
   delete() {
+    this.msg = `ARE YOU SURE? \n WARNING \n On Submission, this will delete all data associated with ${this.deletable.name}`
     this.ds.open(
       { viewModel: Dialog
-      , model: {title: 'DELETE',  body:`Are you sure? \n WARNING \n On Submission, this will delete all data associated with ${this.user.name}, isRemovable: ${this.isRemovable}`, data: this.isRemovable}
+      , model: {title: 'DELETE',  body:this.msg, isRemovable: this.isRemovable}
       })
       .whenClosed(result => {
         if (result.wasCancelled) {
@@ -24,5 +34,15 @@ export class Delete {
           return this.isRemovable = !this.isRemovable
         }
       })
+  }
+
+  undelete() {
+    this.msg = ''
+    return this.isRemovable = !this.isRemovable
+  }
+
+  reset() {
+    this.msg= ''
+    this.deletable= {}
   }
 }

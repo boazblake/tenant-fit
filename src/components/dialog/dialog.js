@@ -7,18 +7,9 @@ export class Dialog {
       this.controller = controller;
     }
     
-    canActivate({title, body, data}) {
+    canActivate({title, body, isRemovable}) {
       this.title = title
       this.body = body
-      this.data = data
+      this.isRemovable = isRemovable
     }
-    
-    activate() {
-      // controller.settings.centerHorizontalOnly = true;
-      this.load()
-   }
-
-   load() {
-   }
-
 }
