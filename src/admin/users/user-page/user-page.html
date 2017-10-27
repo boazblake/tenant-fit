@@ -2,76 +2,38 @@
   <require from="./styles.css"></require>
   <require from="valueConverters/index"></require>
   <require from="components/delete/delete"></require>
+  <require from="components/edit-form/edit-form"></require>
+  <require from="../user-details/user-details"></require>
+
 
   <div class="container">
-    <div class="hero">
-      <div class="level">
-        <div class="level-left">
-          <div class="is-grouped is-small">
-            <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()">
-              <i class=""></i>
-            </button>
-            <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()">
-              <i class=""></i>
-            </button>
-            <abbr title="User is Admin">
-              <i if.bind="state.user.isAdmin" class="fa fa-user-circle-o"></i>
-            </abbr>
+    <div class="container">
+      <div class="hero">
+        <div class="level">
+          <div class="level-left">
+            <div class="is-grouped is-small">
+              <edit-form is-editable.bind="isEditable" is-disabled.bind="isDisabled"></edit-form>
+              <i if.bind="user.isAdmin" class="fa fa-user-circle-o"></i>
+            </div>
+          </div>
+          <div class="level-item">
+            <div class="field control title" css.bind="isRemovable ? 'background-color:red;' : ''">
+              <strong>
+                <h2 class="is-large title">${user.name}</h2>
+              </strong>
+            </div>
+          </div>
+          <div class="field level-right">
           </div>
         </div>
-        <div class="level-item">
-          <div class="field control title" css.bind="isRemovable ? 'background-color:red;' : ''">
-            <strong>
-              <h2 class="is-large title">${state.user.name}</h2>
-            </strong>
-          </div>
-        </div>
-        <div class="field level-right">
+
+        <user-details user-id.bind="userId" admin-id.bind="adminId"></user-details>
+
+        <div class="box">
+          <a class="button is-danger" route-href="route: users;">DISMISS</a>
+          <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>
         </div>
       </div>
-      <div class="box">
-        <div class="field-body">
-          <label class="label" for="name">Name</label>
-          <div class="control">
-            <input class="input is-expanded" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled">
-          </div>
-        </div>
-
-        <div class="field-body">
-          <label class="label" for="email">EMAIL</label>
-          <div class="control">
-            <input class="input is-expanded" type="text" name="email" value.two-way="state.user.email" disabled.bind="isDisabled">
-          </div>
-        </div>
-
-        <div class="field-body">
-          <label class="label" for="password">PASSWORD</label>
-          <div class="control">
-            <input class="input is-expanded" type="text" name="password" value.two-way="state.user.password" disabled.bind="isDisabled">
-          </div>
-        </div>
-
-        <div class="field-body">
-          <label class="label" for="cellPhone">CELLPHONE</label>
-          <div class="control">
-            <input class="input is-expanded" type="number" name="cellPhone" value.two-way="state.user.cellPhone" disabled.bind="isDisabled">
-          </div>
-        </div>
-
-        <div class="field is-left">
-          <label class="field-label" for="isAdmin">Is Admin</label>
-          <div class="control">
-            <input class="checkbox" type="checkbox" name="isAdmin" checked.bind="state.user.isAdmin" disabled.bind="isDisabled">
-          </div>
-        </div>
-
-        <delete is-removable.two-way="isRemovable" deletable.bind="state.user" show.bind="!isDisabled"></delete>        
-
-      </div>
-    </div>
-    <div class="box">
-      <a class="button is-danger" route-href="route: users;">DISMISS</a>
-      <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>
     </div>
   </div>
 

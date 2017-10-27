@@ -20,7 +20,6 @@ export class Users {
     }
     this.emitter = emitter
     this.http = http
-    this.errors = []
     this.styles = styles
   }
 

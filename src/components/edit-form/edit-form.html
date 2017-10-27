@@ -1,0 +1,8 @@
+<template>
+  <button show.bind="!isEditable" class="fa fa-lock" click.delegate="edit()">
+    <i class=""></i>
+  </button>
+  <button show.bind="isEditable" class="fa fa-unlock" click.delegate="edit()">
+    <i class=""></i>
+  </button>
+</template>

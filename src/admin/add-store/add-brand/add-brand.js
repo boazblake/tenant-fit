@@ -91,7 +91,6 @@ export class addBrand {
       c.storeBrand(brand)
     }
 
-    console.log('brand',b)
     addBrandTask(this.http)(this.adminId)(b).fork(onError(this), onSuccess(this))
   }
 
