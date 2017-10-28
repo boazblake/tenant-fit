@@ -59,7 +59,11 @@ export class UserDetails {
       c.data.user = user
       c.state.user = clone(c.data.user)
     }
-    loadTask(this.http)(this.userId).fork(onError(this), onSuccess(this))
+
+    loadTask(this.http)(this.userId)(this.adminId).fork(
+      onError(this),
+      onSuccess(this)
+    )
   }
 
   editForm(c, { isDisabled, isEditable }) {

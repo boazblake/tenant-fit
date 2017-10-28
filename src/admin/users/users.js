@@ -1,16 +1,20 @@
 import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
-import { customElement, useView, inject } from 'aurelia-framework'
+import { inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
-import { loadTask, sortTask, directionTask, filterTask, searchTask } from './model'
-import { getUserTask } from './user/model'
+import {
+  loadTask,
+  sortTask,
+  directionTask,
+  filterTask,
+  searchTask
+} from './model'
 import styles from './styles.css'
-import { log } from 'utilities'
 
 @inject(EventAggregator, HttpClient, DialogService)
 export class Users {
-  constructor( emitter, http, modal ) {
+  constructor(emitter, http, modal) {
     this.disposables = new Set()
     this.users = []
     this.userId = null
@@ -23,7 +27,7 @@ export class Users {
     this.styles = styles
   }
 
-  activate(params){
+  activate(params) {
     this.userId = params.id
     this.reset()
     this.orientation()
@@ -43,7 +47,9 @@ export class Users {
       c.state.isCard = msg
     }
 
-    this.disposables.add(this.emitter.subscribe('isCard-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('isCard-channel', handler(this))
+    )
   }
 
   load() {
@@ -60,7 +66,7 @@ export class Users {
     }
 
     const handler = c => _ =>
-      loadTask(c.http).fork(onError(c), onSuccess(c))
+      loadTask(c.http)(c.adminId).fork(onError(c), onSuccess(c))
 
     handler(this)()
   }
@@ -75,7 +81,7 @@ export class Users {
   sort() {
     const onError = c => _ => {}
 
-    const onSuccess = c => results =>{
+    const onSuccess = c => results => {
       c.state.users = results
     }
 
@@ -83,7 +89,7 @@ export class Users {
       c.state.sortBy = msg
 
       sortTask(c.state.sortBy)(c.state.users)
-      .chain(filterTask(c.state.filterBy))
+        .chain(filterTask(c.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError(c), onSuccess(c))
     }
@@ -94,19 +100,20 @@ export class Users {
   filter() {
     const onError = c => _ => {}
 
-    const onSuccess = c => results =>
-      c.state.users = results
+    const onSuccess = c => results => (c.state.users = results)
 
     const handler = c => msg => {
       c.state.filterBy = msg
 
       filterTask(c.state.filterBy)(c.data.users)
-      .chain(sortTask(c.state.sortBy))
+        .chain(sortTask(c.state.sortBy))
         .chain(directionTask(c.state.direction))
         .fork(onError(c), onSuccess(c))
     }
 
-    this.disposables.add(this.emitter.subscribe('filter-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('filter-channel', handler(this))
+    )
   }
 
   direction() {
@@ -120,18 +127,20 @@ export class Users {
       c.state.direction = msg
 
       sortTask(c.state.sortBy)(c.data.users)
-      .chain(filterTask(c.state.filterBy))
+        .chain(filterTask(c.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError(c), onSuccess(c))
     }
 
-    this.disposables.add(this.emitter.subscribe('direction-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('direction-channel', handler(this))
+    )
   }
 
   search() {
     const onError = c => _ => {}
 
-    const onSuccess = c => results => (c.state.users  = results)
+    const onSuccess = c => results => (c.state.users = results)
 
     const handler = c => msg => {
       c.state.query = msg
@@ -142,17 +151,17 @@ export class Users {
         .chain(directionTask(c.state.direction))
         .fork(onError(c), onSuccess(c))
     }
-    this.disposables.add(this.emitter.subscribe('search-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('search-channel', handler(this))
+    )
   }
 
   reset() {
-    this.state.props.sorters =
-    [ { key: 'Name', value: 'name' }
-    ]
+    this.state.props.sorters = [{ key: 'Name', value: 'name' }]
 
     this.state.props.filters = [
-      {key: 'Choose a Filter', value: ''},
-      {key: 'Admin', value: 'isAdmin'}
+      { key: 'Choose a Filter', value: '' },
+      { key: 'Admin', value: 'isAdmin' }
     ]
     this.data = {}
     this.state.users = []
@@ -166,5 +175,4 @@ export class Users {
   detached() {
     this.disposables.forEach(x => x.dispose())
   }
-
 }

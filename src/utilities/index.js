@@ -11,15 +11,14 @@ export const log = msg => x => {
 }
 
 export const eitherToTask = x =>
-  x.cata({Left: e => Task.rejected(new ParsError(e))
-        , Right: s => Task.of(s)
-        })
+  x.cata({
+    Left: e => Task.rejected(new ParsError(e)),
+    Right: s => Task.of(s)
+  })
 
-export const parse =
-  Either.try(compose(JSON.parse, prop('response')))
+export const parse = Either.try(compose(JSON.parse, prop('response')))
 
-export const dateToIso = date =>
-  moment(date).toISOString()
+export const dateToIso = date => moment(date).toISOString()
 
 export const toTask = dto =>
   new Task((rej, res) => {
@@ -30,3 +29,4 @@ export const toTask = dto =>
     }
   })
 
+export const noop = _ => {}

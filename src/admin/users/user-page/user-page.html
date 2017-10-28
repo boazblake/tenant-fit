@@ -3,7 +3,8 @@
   <require from="valueConverters/index"></require>
   <require from="components/delete/delete"></require>
   <require from="components/edit-form/edit-form"></require>
-  <require from="../user-details/user-details"></require>
+  <require from="./user-details/user-details"></require>
+  <require from="./tenant-section/tenant-section"></require>
 
 
   <div class="container">
@@ -19,7 +20,7 @@
           <div class="level-item">
             <div class="field control title" css.bind="isRemovable ? 'background-color:red;' : ''">
               <strong>
-                <h2 class="is-large title">${user.name}</h2>
+                <div class="title is-1">${user.name}</div>
               </strong>
             </div>
           </div>
@@ -27,8 +28,14 @@
           </div>
         </div>
 
-        <user-details user-id.bind="userId" admin-id.bind="adminId"></user-details>
-
+        <div class="columns">
+          <div class="column">
+            <user-details user-id.bind="userId" admin-id.bind="adminId"></user-details>
+          </div>
+          <div class="column">
+            <tenant-section user-id.bind="userId" admin-id.bind="adminId"></tenant-section>
+          </div>
+        </div>
         <div class="box">
           <a class="button is-danger" route-href="route: users;">DISMISS</a>
           <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>

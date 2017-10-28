@@ -1,0 +1,10 @@
+<template>
+  <div class="box">
+    <div class="title is-4">TENANTS</div>
+    <table>
+      <tr repeat.for='t of state.tenants'>
+        <td>${t.name}</td>
+      </tr>
+    </table>
+  </div>
+</template>

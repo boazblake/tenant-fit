@@ -1,5 +1,5 @@
 import Task from 'data.task'
-import { compose, chain, identity, map } from 'ramda'
+import { compose, chain, map } from 'ramda'
 import { eitherToTask, parse } from 'utilities'
 import moment from 'moment'
 
@@ -33,16 +33,18 @@ export const toDto = adminId => dto => {
 }
 
 // GET USER===============================================================================
-export const get = http => id => http.get(`http://localhost:8080/users/${id}`)
+export const get = http => userId => adminId =>
+  http.get(`http://localhost:8080/users/${userId}`)
 
-export const getTask = http => id =>
-  new Task((rej, res) => get(http)(id).then(res, rej))
+export const getTask = http => userId => adminId =>
+  new Task((rej, res) => get(http)(userId)(adminId).then(res, rej))
 
-export const loadTask = http =>
+export const loadTask = http => userId =>
   compose(
     map(toViewModel),
-    map(identity(dto => JSON.parse(dto.response))),
-    getTask(http)
+    chain(eitherToTask),
+    map(parse),
+    getTask(http)(userId)
   )
 
 // UPDATE USER===============================================================================
