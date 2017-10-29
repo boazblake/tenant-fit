@@ -12,7 +12,7 @@ export const log = msg => x => {
 
 export const eitherToTask = x =>
   x.cata({
-    Left: e => Task.rejected(new ParsError(e)),
+    Left: e => Task.rejected(new ParseError(e)),
     Right: s => Task.of(s)
   })
 

@@ -1,0 +1,10 @@
+<template>
+  <aside class="box menu">
+    <div class="title is-4 menu-label">STORES</div>
+    <ul class="menu-list">
+      <li repeat.for='s of state.stores'>
+        <a style="text-decoration: none;">${s.name}</a>
+      </li>
+    </ul>
+  </aside>
+</template>

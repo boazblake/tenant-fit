@@ -1,10 +1,10 @@
 <template>
-  <div class="box">
-    <div class="title is-4">TENANTS</div>
-    <table>
-      <tr repeat.for='t of state.tenants'>
-        <td>${t.name}</td>
-      </tr>
-    </table>
-  </div>
+  <aside class="box menu">
+    <div class="title is-4 menu-label">TENANTS</div>
+    <ul class="menu-list">
+      <li repeat.for='t of state.tenants'>
+        <a style="text-decoration: none;">${t.name}</a>
+      </li>
+    </ul>
+  </aside>
 </template>

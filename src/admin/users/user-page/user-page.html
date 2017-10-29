@@ -5,6 +5,7 @@
   <require from="components/edit-form/edit-form"></require>
   <require from="./user-details/user-details"></require>
   <require from="./tenant-section/tenant-section"></require>
+  <require from="./store-section/store-section"></require>
 
 
   <div class="container">
@@ -34,6 +35,9 @@
           </div>
           <div class="column">
             <tenant-section user-id.bind="userId" admin-id.bind="adminId"></tenant-section>
+          </div>
+          <div class="column">
+            <store-section user-id.bind="userId" admin-id.bind="adminId"></store-section>
           </div>
         </div>
         <div class="box">
