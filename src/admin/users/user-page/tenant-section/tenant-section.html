@@ -2,9 +2,18 @@
   <aside class="box menu">
     <div class="title is-4 menu-label">TENANTS</div>
     <ul class="menu-list">
-      <li repeat.for='t of state.tenants'>
-        <a style="text-decoration: none;">${t.name}</a>
+      <li repeat.for='t of state.tenants' element.ref='tenantRef'>
+        <a style="text-decoration: none;" click.trigger="do(t.name)">${t.name}</a>
       </li>
     </ul>
   </aside>
+
+  <template ref="tenantText">
+    <div class="field-body">
+      <label class="label" for="tenentText">New Tenant Name</label>
+      <div class="control">
+        <input class="input is-expanded" type="text" click.delegate="update()">
+      </div>
+    </div>
+  </template>
 </template>

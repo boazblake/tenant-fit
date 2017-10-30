@@ -45,11 +45,12 @@ export class UserPage {
   load() {
     const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error.response)
+      c.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = c => user => {
       c.user = user
+      c.emitter.publish('loading-channel', false)
     }
 
     loadTask(this.http)(this.userId).fork(onError(this), onSuccess(this))

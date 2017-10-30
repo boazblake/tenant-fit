@@ -25,7 +25,9 @@ export class UserDetails {
     this.router = router
   }
 
-  activate() {}
+  activate() {
+    this.emitter.publish('loading-channel', true)
+  }
 
   attached() {
     this.reset()
@@ -58,6 +60,7 @@ export class UserDetails {
     const onSuccess = c => user => {
       c.data.user = user
       c.state.user = clone(c.data.user)
+      c.emitter.publish('loading-channel', false)
     }
 
     loadTask(this.http)(this.userId)(this.adminId).fork(

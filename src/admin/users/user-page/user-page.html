@@ -2,7 +2,7 @@
   <require from="./styles.css"></require>
   <require from="valueConverters/index"></require>
   <require from="components/delete/delete"></require>
-  <require from="components/edit-form/edit-form"></require>
+  <require from="components/editable/editable"></require>
   <require from="./user-details/user-details"></require>
   <require from="./tenant-section/tenant-section"></require>
   <require from="./store-section/store-section"></require>
@@ -14,7 +14,7 @@
         <div class="level">
           <div class="level-left">
             <div class="is-grouped is-small">
-              <edit-form is-editable.bind="isEditable" is-disabled.bind="isDisabled"></edit-form>
+              <editable is-editable.bind="isEditable" is-disabled.bind="isDisabled"></editable>
               <i if.bind="user.isAdmin" class="fa fa-user-circle-o"></i>
             </div>
           </div>
@@ -30,15 +30,15 @@
         </div>
 
         <div class="columns">
-          <div class="column">
+          <div class="column is-half">
             <user-details user-id.bind="userId" admin-id.bind="adminId"></user-details>
           </div>
-          <div class="column">
+          <div class="column is-half">
             <tenant-section user-id.bind="userId" admin-id.bind="adminId"></tenant-section>
           </div>
-          <div class="column">
-            <store-section user-id.bind="userId" admin-id.bind="adminId"></store-section>
-          </div>
+        </div>
+        <div class="column is-full">
+          <store-section user-id.bind="userId" admin-id.bind="adminId"></store-section>
         </div>
         <div class="box">
           <a class="button is-danger" route-href="route: users;">DISMISS</a>

@@ -17,6 +17,7 @@ export class StoreSection {
   }
 
   attached() {
+    this.emitter.publish('loading-channel', true)
     this.reset()
     this.load()
   }
@@ -25,7 +26,7 @@ export class StoreSection {
     const onSuccess = c => stores => {
       c.data.stores = stores
       c.state.stores = clone(c.data.stores)
-      console.log('here be stores', stores)
+      c.emitter.publish('loading-channel', false)
     }
 
     const onError = c => error => {
