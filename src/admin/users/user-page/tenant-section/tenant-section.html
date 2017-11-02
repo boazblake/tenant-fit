@@ -1,19 +1,16 @@
 <template>
+  <require from="components/delete/delete"></require>
+  <require from="components/update/update"></require>
+
   <aside class="box menu">
     <div class="title is-4 menu-label">TENANTS</div>
     <ul class="menu-list">
-      <li repeat.for='t of state.tenants' element.ref='tenantRef'>
-        <a style="text-decoration: none;" click.trigger="do(t.name)">${t.name}</a>
+      <li repeat.for="t of state.tenants" element.ref="tenantRef">
+        <a style="text-decoration: none;" click.delegate="showStores(t._id)">${t.name}
+          <update is-editable.bind="isEditable" editable.bind="state.user" show.bind="isEditable"></update>
+          <delete is-removable.bind="isEditable" deletable.bind="state.user" show.bind="isEditable"></delete>
+        </a>
       </li>
     </ul>
   </aside>
-
-  <template ref="tenantText">
-    <div class="field-body">
-      <label class="label" for="tenentText">New Tenant Name</label>
-      <div class="control">
-        <input class="input is-expanded" type="text" click.delegate="update()">
-      </div>
-    </div>
-  </template>
 </template>

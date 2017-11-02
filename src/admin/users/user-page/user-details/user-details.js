@@ -41,13 +41,13 @@ export class UserDetails {
     const deleteFormHandler = c => msg => this.editForm(c, msg)
 
     this.disposables.add(
-      this.emitter.subscribe('edit-form-channel', editFormHandler(this))
+      this.emitter.subscribe('edit-channel', editFormHandler(this))
     )
     this.disposables.add(
-      this.emitter.subscribe('user-submit-channel', submitFormHandler(this))
+      this.emitter.subscribe('submit-channel', submitFormHandler(this))
     )
     this.disposables.add(
-      this.emitter.subscribe('delete-user-channel', deleteFormHandler(this))
+      this.emitter.subscribe('delete-channel', deleteFormHandler(this))
     )
   }
 

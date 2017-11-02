@@ -1,11 +1,12 @@
-import { compose, chain, map } from 'ramda'
+import { compose, chain, identity, map } from 'ramda'
 import Task from 'data.task'
 import { log, eitherToTask, parse } from 'utilities'
 
 export const tostoreDto = Dto => {
   const dto = {
     name: Dto.Name,
-    _id: Dto._id
+    _id: Dto._id,
+    tenantId: Dto.TenantId
   }
   return dto
 }
@@ -42,3 +43,13 @@ export const loadTask = http => userId => adminId =>
     map(parse),
     getstoresTask(http)(userId)
   )(adminId)
+
+export const filteredStores = filter => x => {
+  console.log(filter, x.tenantId, x.tenantId === filter)
+  return x.tenantId === filter
+}
+
+export const filterList = filter => xs =>
+  filter === '' ? identity(xs) : xs.filter(x => x.tenantId === filter)
+
+export const filterTask = filter => compose(Task.of, filterList(filter))

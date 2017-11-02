@@ -2,7 +2,6 @@ import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { bindable, inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
-import { Update } from 'components/update/update'
 import { clone } from 'ramda'
 import { loadTask } from './model'
 
@@ -12,6 +11,7 @@ export class TenantSection {
   @bindable adminId
 
   constructor(ds, emitter, http) {
+    this.disposables = new Set()
     this.ds = ds
     this.emitter = emitter
     this.http = http
@@ -22,7 +22,24 @@ export class TenantSection {
   attached() {
     this.emitter.publish('loading-channel', true)
     this.reset()
+    this.listen()
     this.load()
+  }
+
+  listen() {
+    const editTenantHandler = c => msg => this.edit(c, msg)
+    const submitTenantHandler = c => msg => this.submit(c, msg)
+    const deleteHandler = c => msg => this.delete(c, msg)
+
+    this.disposables.add(
+      this.emitter.subscribe('edit-channel', editTenantHandler(this))
+    )
+    this.disposables.add(
+      this.emitter.subscribe('submit-channel', submitTenantHandler(this))
+    )
+    this.disposables.add(
+      this.emitter.subscribe('delete-channel', deleteHandler(this))
+    )
   }
 
   load() {
@@ -44,26 +61,20 @@ export class TenantSection {
     )
   }
 
-  do(tenant) {
-    this.ds
-      .open({
-        viewModel: Update,
-        model: {
-          title: `Update ${tenant} name`,
-          body: this.tenantText
-        }
-      })
-      .whenClosed(result => {
-        if (result.wasCancelled) {
-          this.emitter.publish('notify-info', `${tenant} has not been modified`)
-        } else if (!result.wasCancelled) {
-          console.log(this.tenant)
-          this.emitter.publish(
-            'notify-success',
-            `${tenant} has been successfully modified`
-          )
-        }
-      })
+  edit(c, { _, isEditable }) {
+    c.isEditable = isEditable
+  }
+
+  delete(c, msg) {
+    console.log(msg)
+  }
+
+  submit(c, msg) {
+    console.log(msg)
+  }
+
+  showStores(id) {
+    this.emitter.publish('show-store-channel', id)
   }
 
   reset() {
@@ -72,5 +83,6 @@ export class TenantSection {
     // })
     this.state = {}
     this.data = {}
+    this.isEditable = false
   }
 }

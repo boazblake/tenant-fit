@@ -12,7 +12,7 @@ export class Editable {
 
   edit() {
     const msg = { isDisabled: !this.isDisabled, isEditable: !this.isEditable }
-    this.emitter.publish('edit-form-channel', msg)
+    this.emitter.publish('edit-channel', msg)
   }
 
   reset() {

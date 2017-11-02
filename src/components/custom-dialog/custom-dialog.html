@@ -1,0 +1,21 @@
+<template>
+  <ux-dialog>
+    <ux-dialog-header>
+      <h2>${title}</h2>
+    </ux-dialog-header>
+
+    <ux-dialog-body>
+      <div class="field-body" repeat.for="input of inputs">
+        <label class="label" for="input.name">New ${input.name}</label>
+        <div class="control">
+          <input class="input is-expanded" type="input.type" value.bind="input.value">
+        </div>
+      </div>
+    </ux-dialog-body>
+
+    <ux-dialog-footer>
+      <button attach-focus.bind="!isActionable" click.trigger="controller.cancel(model)">Cancel</button>
+      <button attach-focus.bind="isActionable" click.trigger="controller.ok(model)">Ok</button>
+    </ux-dialog-footer>
+  </ux-dialog>
+</template>

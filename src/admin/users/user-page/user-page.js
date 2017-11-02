@@ -34,11 +34,11 @@ export class UserPage {
     const editFormHandler = c => msg => c.editForm(c, msg)
 
     this.disposables.add(
-      this.emitter.subscribe('delete-user-channel', deleteFormHandler(this))
+      this.emitter.subscribe('delete-channel', deleteFormHandler(this))
     )
 
     this.disposables.add(
-      this.emitter.subscribe('edit-form-channel', editFormHandler(this))
+      this.emitter.subscribe('edit-channel', editFormHandler(this))
     )
   }
 

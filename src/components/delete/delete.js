@@ -35,13 +35,10 @@ export class Delete {
       })
       .whenClosed(result => {
         if (result.wasCancelled) {
-          this.emitter.publish(
-            'delete-user-channel',
-            identity(this.isRemovable)
-          )
+          this.emitter.publish('delete-channel', identity(this.isRemovable))
         } else if (!result.wasCancelled) {
           this.isRemovable = !this.isRemovable
-          this.emitter.publish('delete-user-channel', this.isRemovable)
+          this.emitter.publish('delete-channel', this.isRemovable)
         }
       })
   }
@@ -49,7 +46,7 @@ export class Delete {
   undelete() {
     this.isRemovable = false
     this.msg = ''
-    this.emitter.publish('delete-user-channel', this.isRemovable)
+    this.emitter.publish('delete-channel', this.isRemovable)
   }
 
   reset() {

@@ -1,4 +1,4 @@
-import { compose, chain, map } from 'ramda'
+import { compose, chain, keys, map, values } from 'ramda'
 import Task from 'data.task'
 import { log, eitherToTask, parse } from 'utilities'
 
@@ -42,3 +42,16 @@ export const loadTask = http => userId => adminId =>
     map(parse),
     getTenantsTask(http)(userId)
   )(adminId)
+
+export const toDtoKeys = dto => console.log(keys(dto))
+
+export const toModel = dto => keys => {
+  // const Dto = {
+  //   name:
+  // }
+  // return Dto
+}
+
+export const toDialogModel = dto => compose(toModel(dto, toDtoKeys))(dto)
+
+export const dialogModel = compose(map(toDialogModel))

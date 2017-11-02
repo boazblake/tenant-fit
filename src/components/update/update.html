@@ -1,16 +1,5 @@
 <template>
-  <ux-dialog>
-    <ux-dialog-header>
-      <h2>${title}</h2>
-    </ux-dialog-header>
-
-    <ux-dialog-body>
-      <div ref="body"></div>
-    </ux-dialog-body>
-
-    <ux-dialog-footer>
-      <button attach-focus.bind="!isActionable" click.trigger="controller.cancel()">Cancel</button>
-      <button attach-focus.bind="isActionable" click.trigger="controller.ok()">Ok</button>
-    </ux-dialog-footer>
-  </ux-dialog>
+  <button class="button is-error" click.trigger="do()">
+    <i class="fa fa-pencil-square-o"></i>
+  </button>
 </template>

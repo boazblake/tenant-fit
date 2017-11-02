@@ -2,6 +2,7 @@
   <require from="./styles.css"></require>
   <require from="valueConverters/index"></require>
   <require from="components/delete/delete"></require>
+  <require from="components/update/update"></require>
 
   <div class="box">
     <div class="title is-4 menu-label">DETAILS</div>
@@ -40,6 +41,7 @@
       </div>
     </div>
 
+    <update is-editable.bind="isEditable" editable.bind="state.user" show.bind="!isDisabled"></update>
     <delete is-removable.bind="isRemovable" deletable.bind="state.user" show.bind="!isDisabled"></delete>
 
   </div>
