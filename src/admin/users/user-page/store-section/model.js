@@ -44,10 +44,7 @@ export const loadTask = http => userId => adminId =>
     getstoresTask(http)(userId)
   )(adminId)
 
-export const filteredStores = filter => x => {
-  console.log(filter, x.tenantId, x.tenantId === filter)
-  return x.tenantId === filter
-}
+export const filteredStores = filter => x => x.tenantId === filter
 
 export const filterList = filter => xs =>
   filter === '' ? identity(xs) : xs.filter(x => x.tenantId === filter)

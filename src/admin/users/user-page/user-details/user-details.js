@@ -1,53 +1,53 @@
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { bindable, inject } from 'aurelia-framework'
-import { Router } from 'aurelia-router'
 import { HttpClient } from 'aurelia-http-client'
-import { clone, chain, equals, tap } from 'ramda'
-import { loadTask, toDestinationTask, getchangeColor } from './model'
+import { clone } from 'ramda'
+import { loadTask, toDestinationTask } from './model'
 import { validateTask } from './validations'
 import styles from './styles.css'
-import { CheckAuth } from 'authConfig'
-import { log } from 'utilities'
 
-@inject(HttpClient, EventAggregator, Router)
+@inject(EventAggregator, HttpClient)
 export class UserDetails {
   @bindable userId
   @bindable adminId
-  @bindable isRemovable
+  @bindable isLocked
 
-  constructor(http, emitter, router) {
+  constructor(emitter, http) {
     this.disposables = new Set()
     this.state = {}
     this.data = {}
     this.http = http
     this.emitter = emitter
     this.styles = styles
-    this.router = router
-  }
-
-  activate() {
-    this.emitter.publish('loading-channel', true)
+    this.isRemovable = false
+    this.isEditable = false
+    this.isDisabled = true
+    this.isLocked = true
   }
 
   attached() {
+    this.emitter.publish('loading-channel', true)
     this.reset()
     this.listen()
     this.load()
   }
 
   listen() {
-    const editFormHandler = c => msg => this.editForm(c, msg)
-    const submitFormHandler = c => msg => this.submit(c, msg)
-    const deleteFormHandler = c => msg => this.editForm(c, msg)
+    const updateHandler = c => msg => {
+      console.log('updated')
+      this.update(c, msg)
+    }
+    const submitHandler = c => msg => this.submit(c, msg)
+    const deleteHandler = c => msg => this.delete(c, msg)
 
     this.disposables.add(
-      this.emitter.subscribe('edit-channel', editFormHandler(this))
+      this.emitter.subscribe("update-'user'-channel", updateHandler(this))
     )
     this.disposables.add(
-      this.emitter.subscribe('submit-channel', submitFormHandler(this))
+      this.emitter.subscribe("submit-'user'-channel", submitHandler(this))
     )
     this.disposables.add(
-      this.emitter.subscribe('delete-channel', deleteFormHandler(this))
+      this.emitter.subscribe("delete-'user'-channel", deleteHandler(this))
     )
   }
 
@@ -60,6 +60,7 @@ export class UserDetails {
     const onSuccess = c => user => {
       c.data.user = user
       c.state.user = clone(c.data.user)
+      c.state.users = [clone(c.data.user)]
       c.emitter.publish('loading-channel', false)
     }
 
@@ -69,9 +70,17 @@ export class UserDetails {
     )
   }
 
-  editForm(c, { isDisabled, isEditable }) {
+  isDisabledChanged() {
+    console.log(this.isDisabled)
+  }
+
+  update(c, isDisabled) {
     c.isDisabled = isDisabled
-    c.isEditable = isEditable
+    console.log('update user', isDisabled)
+  }
+
+  lockForm(c, isLocked) {
+    c.isLocked = isLocked
   }
 
   submit(c, _) {
@@ -104,8 +113,11 @@ export class UserDetails {
   }
 
   reset() {
+    this.state = {}
+    this.data = {}
     this.isRemovable = false
     this.isEditable = false
     this.isDisabled = true
+    this.isLocked = true
   }
 }

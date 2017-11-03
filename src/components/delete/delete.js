@@ -13,21 +13,19 @@ export class Delete {
     this.emitter = emitter
   }
 
-  attached() {
-    this.reset()
-  }
-
   do() {
     this.isRemovable ? this.undelete() : this.delete()
   }
 
   delete() {
+    console.log(this.deletable)
     this.msg = `ARE YOU SURE? \n WARNING \n On Submission, this will delete all data associated with ${this
       .deletable.name}`
     this.ds
       .open({
         viewModel: Dialog,
         model: {
+          deletable: this.deletable,
           title: 'DELETE',
           body: this.msg,
           isRemovable: this.isRemovable
@@ -35,10 +33,16 @@ export class Delete {
       })
       .whenClosed(result => {
         if (result.wasCancelled) {
-          this.emitter.publish('delete-channel', identity(this.isRemovable))
+          this.emitter.publish(
+            `delete-${this.deletable._id}-channel`,
+            identity(this.isRemovable)
+          )
         } else if (!result.wasCancelled) {
           this.isRemovable = !this.isRemovable
-          this.emitter.publish('delete-channel', this.isRemovable)
+          this.emitter.publish(
+            `delete-${this.deletable._id}-channel`,
+            this.isRemovable
+          )
         }
       })
   }
@@ -46,11 +50,9 @@ export class Delete {
   undelete() {
     this.isRemovable = false
     this.msg = ''
-    this.emitter.publish('delete-channel', this.isRemovable)
-  }
-
-  reset() {
-    this.msg = ''
-    this.deletable = {}
+    this.emitter.publish(
+      `delete-${this.deletable._id}-channel`,
+      this.isRemovable
+    )
   }
 }

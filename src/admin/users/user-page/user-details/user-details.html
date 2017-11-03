@@ -9,28 +9,28 @@
     <div class="field-body">
       <label class="label" for="name">Name</label>
       <div class="control">
-        <input class="input is-expanded" type="text" name="name" value.two-way="state.user.name" disabled.bind="isDisabled">
+        <input class="input is-expanded" type="text" name="name" value.bind="state.user.name" disabled.bind="isDisabled">
       </div>
     </div>
 
     <div class="field-body">
       <label class="label" for="email">EMAIL</label>
       <div class="control">
-        <input class="input is-expanded" type="text" name="email" value.two-way="state.user.email" disabled.bind="isDisabled">
+        <input class="input is-expanded" type="text" name="email" value.bind="state.user.email" disabled.bind="isDisabled">
       </div>
     </div>
 
     <div class="field-body">
       <label class="label" for="password">PASSWORD</label>
       <div class="control">
-        <input class="input is-expanded" type="text" name="password" value.two-way="state.user.password" disabled.bind="isDisabled">
+        <input class="input is-expanded" type="text" name="password" value.bind="state.user.password" disabled.bind="isDisabled">
       </div>
     </div>
 
     <div class="field-body">
       <label class="label" for="cellPhone">CELLPHONE</label>
       <div class="control">
-        <input class="input is-expanded" type="number" name="cellPhone" value.two-way="state.user.cellPhone" disabled.bind="isDisabled">
+        <input class="input is-expanded" type="number" name="cellPhone" value.bind="state.user.cellPhone" disabled.bind="isDisabled">
       </div>
     </div>
 
@@ -41,8 +41,8 @@
       </div>
     </div>
 
-    <update is-editable.bind="isEditable" editable.bind="state.user" show.bind="!isDisabled"></update>
-    <delete is-removable.bind="isRemovable" deletable.bind="state.user" show.bind="!isDisabled"></delete>
+    <update is-disabled.bind="isDisabled" type="'user'" editable.bind="state.user" show.bind="!isLocked"></update>
+    <delete deletable.bind="state.user" show.bind="!isLocked"></delete>
 
   </div>
 

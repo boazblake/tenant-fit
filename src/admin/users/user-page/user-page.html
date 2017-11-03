@@ -2,7 +2,7 @@
   <require from="./styles.css"></require>
   <require from="valueConverters/index"></require>
   <require from="components/delete/delete"></require>
-  <require from="components/editable/editable"></require>
+  <require from="components/locker/locker"></require>
   <require from="./user-details/user-details"></require>
   <require from="./tenant-section/tenant-section"></require>
   <require from="./store-section/store-section"></require>
@@ -14,7 +14,7 @@
         <div class="level">
           <div class="level-left">
             <div class="is-grouped is-small">
-              <editable is-editable.bind="isEditable" is-disabled.bind="isDisabled"></editable>
+              <locker is-locked.bind="isLocked"></locker>
               <i if.bind="user.isAdmin" class="fa fa-user-circle-o"></i>
             </div>
           </div>
@@ -31,10 +31,10 @@
 
         <div class="columns">
           <div class="column is-half">
-            <user-details user-id.bind="userId" admin-id.bind="adminId"></user-details>
+            <user-details user-id.bind="userId" admin-id.bind="adminId" is-locked.bind="isLocked"></user-details>
           </div>
           <div class="column is-half">
-            <tenant-section user-id.bind="userId" admin-id.bind="adminId"></tenant-section>
+            <tenant-section user-id.bind="userId" admin-id.bind="adminId" is-locked.bind="isLocked"></tenant-section>
           </div>
         </div>
         <div class="column is-full">
@@ -42,7 +42,7 @@
         </div>
         <div class="box">
           <a class="button is-danger" route-href="route: users;">DISMISS</a>
-          <button show.bind="isEditable" class="button is-success" click.trigger="submit()">SUBMIT</button>
+          <button show.bind="!isLocked" class="button is-success" click.trigger="submit()">SUBMIT</button>
         </div>
       </div>
     </div>

@@ -59,7 +59,6 @@ export class StoreSection {
   filterStores() {
     const onSuccess = c => stores => {
       c.state.stores = stores
-      console.log('end', stores, c.state.stores)
       c.emitter.publish('loading-channel', false)
     }
 

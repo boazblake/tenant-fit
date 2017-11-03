@@ -2,23 +2,23 @@ import { bindable, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { DialogService } from 'aurelia-dialog'
 import { Dialog } from '../dialog/dialog'
-import { identity } from 'ramda'
+
 @inject(DialogService, EventAggregator)
 export class Update {
   static inject = [DialogService, EventAggregator]
   @bindable editable
-  @bindable isEditable
+  @bindable isDisabled
+  @bindable type
+
   constructor(ds, emitter) {
     this.ds = ds
     this.emitter = emitter
-  }
-
-  attached() {
-    this.reset()
+    this.isEditable = false
   }
 
   do() {
-    this.isEditable ? this.unupdate() : this.update()
+    this.edi
+    this.update()
   }
 
   update() {
@@ -29,28 +29,17 @@ export class Update {
         viewModel: Dialog,
         model: {
           title: 'UPDATE',
-          body: this.msg,
-          isEditable: this.isEditable
+          editable: this.editable,
+          body: this.msg
         }
       })
       .whenClosed(result => {
         if (result.wasCancelled) {
-          this.emitter.publish('update-channel', identity(this.isEditable))
+          this.emitter.publish(`update-${this.type}-channel`, this.isDisabled)
         } else if (!result.wasCancelled) {
-          this.isEditable = !this.isEditable
-          this.emitter.publish('update-channel', this.isEditable)
+          console.log('after', `update-${this.type}-channel`)
+          this.emitter.publish(`update-${this.type}-channel`, !this.isDisabled)
         }
       })
-  }
-
-  unupdate() {
-    this.isEditable = false
-    this.msg = ''
-    this.emitter.publish('update-channel', this.isEditable)
-  }
-
-  reset() {
-    this.msg = ''
-    this.editable = {}
   }
 }

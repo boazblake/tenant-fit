@@ -16,6 +16,8 @@ export class UserPage {
     this.emitter = emitter
     this.styles = styles
     this.router = router
+    this.isRemovable = false
+    this.isLocked = true
   }
 
   activate(userId) {
@@ -31,14 +33,14 @@ export class UserPage {
 
   listen() {
     const deleteFormHandler = c => msg => (c.isRemovable = msg)
-    const editFormHandler = c => msg => c.editForm(c, msg)
+    const lockFormHandler = c => msg => c.lockForm(c, msg)
 
     this.disposables.add(
       this.emitter.subscribe('delete-channel', deleteFormHandler(this))
     )
 
     this.disposables.add(
-      this.emitter.subscribe('edit-channel', editFormHandler(this))
+      this.emitter.subscribe('lock-channel', lockFormHandler(this))
     )
   }
 
@@ -56,13 +58,12 @@ export class UserPage {
     loadTask(this.http)(this.userId).fork(onError(this), onSuccess(this))
   }
 
-  editForm(c, { isDisabled, isEditable }) {
-    c.isDisabled = isDisabled
-    c.isEditable = isEditable
+  lockForm(c, isLocked) {
+    c.isLocked = isLocked
   }
 
   submit() {
-    this.emitter.publish('user-submit-channel', true)
+    this.emitter.publish("submit-'user'-channel", true)
   }
 
   detached() {
@@ -70,8 +71,9 @@ export class UserPage {
   }
 
   reset() {
+    this.state = {}
+    this.data = {}
     this.isRemovable = false
-    this.isEditable = false
-    this.isDisabled = true
+    this.isLocked = true
   }
 }

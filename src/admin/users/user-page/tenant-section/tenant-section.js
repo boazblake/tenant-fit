@@ -1,22 +1,24 @@
-import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { bindable, inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
 import { loadTask } from './model'
 
-@inject(DialogService, EventAggregator, HttpClient)
+@inject(EventAggregator, HttpClient)
 export class TenantSection {
   @bindable userId
   @bindable adminId
+  @bindable isLocked
 
-  constructor(ds, emitter, http) {
+  constructor(emitter, http) {
     this.disposables = new Set()
-    this.ds = ds
     this.emitter = emitter
     this.http = http
     this.state = {}
     this.data = {}
+    this.isEditable = false
+    this.isDisabled = true
+    this.isLocked = true
   }
 
   attached() {
@@ -30,6 +32,7 @@ export class TenantSection {
     const editTenantHandler = c => msg => this.edit(c, msg)
     const submitTenantHandler = c => msg => this.submit(c, msg)
     const deleteHandler = c => msg => this.delete(c, msg)
+    const updateHandler = c => msg => this.update(c, msg)
 
     this.disposables.add(
       this.emitter.subscribe('edit-channel', editTenantHandler(this))
@@ -39,6 +42,9 @@ export class TenantSection {
     )
     this.disposables.add(
       this.emitter.subscribe('delete-channel', deleteHandler(this))
+    )
+    this.disposables.add(
+      this.emitter.subscribe("update-'tenant'-channel", updateHandler(this))
     )
   }
 
@@ -73,8 +79,15 @@ export class TenantSection {
     console.log(msg)
   }
 
+  update(c, isDisabled) {
+    c.isDisabled = isDisabled
+    console.log('update tenant.isdisabled', c.isDisabled)
+  }
+
   showStores(id) {
-    this.emitter.publish('show-store-channel', id)
+    if (this.isLocked) {
+      this.emitter.publish('show-store-channel', id)
+    }
   }
 
   reset() {
@@ -84,5 +97,7 @@ export class TenantSection {
     this.state = {}
     this.data = {}
     this.isEditable = false
+    this.isLocked = true
+    this.isDisabled = true
   }
 }
