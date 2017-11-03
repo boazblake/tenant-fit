@@ -13,7 +13,7 @@
             </div>
           </div>
           <update is-disabled.bind="isDisabled" type="'tenant'" editable.bind="t" show.bind="!isLocked"></update>
-          <delete deletable.bind="t" show.bind="!isLocked"></delete>
+          <delete deletable.bind="t" type="'tenant'" show.bind="!isLocked"></delete>
         </a>
       </li>
     </ul>

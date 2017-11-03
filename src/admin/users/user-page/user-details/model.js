@@ -63,7 +63,7 @@ export const toSubmitTask = http => adminId => userId =>
     toDto(adminId)
   )
 
-// DESTINATION USER===============================================================================
+// DELETE USER===============================================================================
 
 export const remove = http => adminId => userId =>
   http.delete(`http://localhost:8080/users/${userId}`)

@@ -1,21 +1,23 @@
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { bindable, inject } from 'aurelia-framework'
+import { Router } from 'aurelia-router'
 import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
 import { loadTask, toDestinationTask } from './model'
 import { validateTask } from './validations'
 import styles from './styles.css'
 
-@inject(EventAggregator, HttpClient)
+@inject(EventAggregator, HttpClient, Router)
 export class UserDetails {
   @bindable userId
   @bindable adminId
   @bindable isLocked
 
-  constructor(emitter, http) {
+  constructor(emitter, http, router) {
     this.disposables = new Set()
     this.state = {}
     this.data = {}
+    this.router = router
     this.http = http
     this.emitter = emitter
     this.styles = styles
@@ -33,10 +35,7 @@ export class UserDetails {
   }
 
   listen() {
-    const updateHandler = c => msg => {
-      console.log('updated')
-      this.update(c, msg)
-    }
+    const updateHandler = c => msg => this.update(c, msg)
     const submitHandler = c => msg => this.submit(c, msg)
     const deleteHandler = c => msg => this.delete(c, msg)
 
@@ -44,7 +43,7 @@ export class UserDetails {
       this.emitter.subscribe("update-'user'-channel", updateHandler(this))
     )
     this.disposables.add(
-      this.emitter.subscribe("submit-'user'-channel", submitHandler(this))
+      this.emitter.subscribe('submit-channel', submitHandler(this))
     )
     this.disposables.add(
       this.emitter.subscribe("delete-'user'-channel", deleteHandler(this))
@@ -60,7 +59,6 @@ export class UserDetails {
     const onSuccess = c => user => {
       c.data.user = user
       c.state.user = clone(c.data.user)
-      c.state.users = [clone(c.data.user)]
       c.emitter.publish('loading-channel', false)
     }
 
@@ -70,13 +68,13 @@ export class UserDetails {
     )
   }
 
-  isDisabledChanged() {
-    console.log(this.isDisabled)
-  }
-
   update(c, isDisabled) {
     c.isDisabled = isDisabled
-    console.log('update user', isDisabled)
+  }
+
+  delete(c, { isRemovable, deletable }) {
+    c.isRemovable = isRemovable
+    console.log(`${deletable} is now rmeovable`, c.isRemovable)
   }
 
   lockForm(c, isLocked) {

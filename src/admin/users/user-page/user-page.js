@@ -63,7 +63,7 @@ export class UserPage {
   }
 
   submit() {
-    this.emitter.publish("submit-'user'-channel", true)
+    this.emitter.publish('submit-channel', true)
   }
 
   detached() {

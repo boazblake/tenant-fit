@@ -43,15 +43,42 @@ export const loadTask = http => userId => adminId =>
     getTenantsTask(http)(userId)
   )(adminId)
 
-export const toDtoKeys = dto => console.log(keys(dto))
+// UPDATE TENANT===============================================================================
+export const update = http => adminId => userId => Dto =>
+  http.put(`http://localhost:8080/users/${userId}`, Dto)
 
-export const toModel = dto => keys => {
-  // const Dto = {
-  //   name:
-  // }
-  // return Dto
-}
+export const updateTask = http => adminId => userId => Dto =>
+  new Task((rej, res) => update(http)(adminId)(userId)(Dto).then(res, rej))
 
-export const toDialogModel = dto => compose(toModel(dto, toDtoKeys))(dto)
+export const toSubmitTask = http => adminId => userId =>
+  compose(
+    map(toViewModel),
+    chain(eitherToTask),
+    map(parse),
+    updateTask(http)(adminId)(userId),
+    toDto(adminId)
+  )
 
-export const dialogModel = compose(map(toDialogModel))
+// DELETE TENANT===============================================================================
+
+export const remove = http => adminId => userId =>
+  http.delete(`http://localhost:8080/users/${userId}`)
+
+export const removeTask = http => adminId => userId =>
+  new Task((rej, res) => remove(http)(adminId)(userId).then(res, rej))
+
+export const toRemoveTask = http => adminId =>
+  compose(chain(eitherToTask), map(parse), removeTask(http)(adminId))
+
+// DESTINATION TENANT===============================================================================
+
+export const checkDto = http => adminId => userId => dto =>
+  dto.toRemove
+    ? toRemoveTask(http)(adminId)(userId)
+    : toSubmitTask(http)(adminId)(userId)(dto)
+
+export const toDestinationTask = http => adminId => userId =>
+  compose(checkDto(http)(adminId)(userId))
+
+// COLOR TENANT===============================================================================
+export const getChangeColor = bool => (bool ? 'red' : '')

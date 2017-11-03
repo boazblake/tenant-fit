@@ -2,7 +2,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { bindable, inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
-import { loadTask } from './model'
+import { loadTask, toDestinationTask, getChangeColor } from './model'
 
 @inject(EventAggregator, HttpClient)
 export class TenantSection {
@@ -41,7 +41,7 @@ export class TenantSection {
       this.emitter.subscribe('submit-channel', submitTenantHandler(this))
     )
     this.disposables.add(
-      this.emitter.subscribe('delete-channel', deleteHandler(this))
+      this.emitter.subscribe("delete-'tenant'-channel", deleteHandler(this))
     )
     this.disposables.add(
       this.emitter.subscribe("update-'tenant'-channel", updateHandler(this))
@@ -71,8 +71,9 @@ export class TenantSection {
     c.isEditable = isEditable
   }
 
-  delete(c, msg) {
-    console.log(msg)
+  delete(c, { isRemovable, deletable }) {
+    c.isRemovable = isRemovable
+    console.log(`${deletable} is now rmeovable`, c.isRemovable)
   }
 
   submit(c, msg) {

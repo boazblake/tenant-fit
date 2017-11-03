@@ -8,6 +8,8 @@ export class Delete {
   static inject = [DialogService, EventAggregator]
   @bindable deletable
   @bindable isRemovable
+  @bindable type
+
   constructor(ds, emitter) {
     this.ds = ds
     this.emitter = emitter
@@ -34,15 +36,16 @@ export class Delete {
       .whenClosed(result => {
         if (result.wasCancelled) {
           this.emitter.publish(
-            `delete-${this.deletable._id}-channel`,
+            `delete-${this.type}-channel`,
             identity(this.isRemovable)
           )
         } else if (!result.wasCancelled) {
           this.isRemovable = !this.isRemovable
-          this.emitter.publish(
-            `delete-${this.deletable._id}-channel`,
-            this.isRemovable
-          )
+          console.log('delte is rmeoving ', this.type, this.isRemovable)
+          this.emitter.publish(`delete-${this.type}-channel`, {
+            isRemovable: this.isRemovable,
+            deletable: this.deletable
+          })
         }
       })
   }
@@ -50,9 +53,6 @@ export class Delete {
   undelete() {
     this.isRemovable = false
     this.msg = ''
-    this.emitter.publish(
-      `delete-${this.deletable._id}-channel`,
-      this.isRemovable
-    )
+    this.emitter.publish(`delete-${this.type}-channel`, this.isRemovable)
   }
 }
