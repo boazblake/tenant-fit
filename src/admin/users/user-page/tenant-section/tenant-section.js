@@ -2,7 +2,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { bindable, inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
-import { loadTask, toDestinationTask, getChangeColor } from './model'
+import { loadTask } from './model'
 
 @inject(EventAggregator, HttpClient)
 export class TenantSection {
@@ -16,36 +16,13 @@ export class TenantSection {
     this.http = http
     this.state = {}
     this.data = {}
-    this.isEditable = false
-    this.isDisabled = true
     this.isLocked = true
   }
 
   attached() {
     this.emitter.publish('loading-channel', true)
     this.reset()
-    this.listen()
     this.load()
-  }
-
-  listen() {
-    const editTenantHandler = c => msg => this.edit(c, msg)
-    const submitTenantHandler = c => msg => this.submit(c, msg)
-    const deleteHandler = c => msg => this.delete(c, msg)
-    const updateHandler = c => msg => this.update(c, msg)
-
-    this.disposables.add(
-      this.emitter.subscribe('edit-channel', editTenantHandler(this))
-    )
-    this.disposables.add(
-      this.emitter.subscribe('submit-channel', submitTenantHandler(this))
-    )
-    this.disposables.add(
-      this.emitter.subscribe("delete-'tenant'-channel", deleteHandler(this))
-    )
-    this.disposables.add(
-      this.emitter.subscribe("update-'tenant'-channel", updateHandler(this))
-    )
   }
 
   load() {
@@ -67,38 +44,9 @@ export class TenantSection {
     )
   }
 
-  edit(c, { _, isEditable }) {
-    c.isEditable = isEditable
-  }
-
-  delete(c, { isRemovable, deletable }) {
-    c.isRemovable = isRemovable
-    console.log(`${deletable} is now rmeovable`, c.isRemovable)
-  }
-
-  submit(c, msg) {
-    console.log(msg)
-  }
-
-  update(c, isDisabled) {
-    c.isDisabled = isDisabled
-    console.log('update tenant.isdisabled', c.isDisabled)
-  }
-
-  showStores(id) {
-    if (this.isLocked) {
-      this.emitter.publish('show-store-channel', id)
-    }
-  }
-
   reset() {
-    // setTimeout(() => {
-    //   console.log('reset', this.tenantText.innerHTML)
-    // })
     this.state = {}
     this.data = {}
-    this.isEditable = false
     this.isLocked = true
-    this.isDisabled = true
   }
 }

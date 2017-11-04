@@ -16,7 +16,7 @@ export class Delete {
   }
 
   do() {
-    this.isRemovable ? this.undelete() : this.delete()
+    this.isRemovable ? this.unDelete() : this.delete()
   }
 
   delete() {
@@ -35,13 +35,12 @@ export class Delete {
       })
       .whenClosed(result => {
         if (result.wasCancelled) {
-          this.emitter.publish(
-            `delete-${this.type}-channel`,
-            identity(this.isRemovable)
-          )
+          this.emitter.publish(`delete-${this.type}-channel`, {
+            isRemovable: identity(this.isRemovable),
+            deletable: this.deletable
+          })
         } else if (!result.wasCancelled) {
           this.isRemovable = !this.isRemovable
-          console.log('delte is rmeoving ', this.type, this.isRemovable)
           this.emitter.publish(`delete-${this.type}-channel`, {
             isRemovable: this.isRemovable,
             deletable: this.deletable
@@ -50,9 +49,12 @@ export class Delete {
       })
   }
 
-  undelete() {
+  unDelete() {
     this.isRemovable = false
     this.msg = ''
-    this.emitter.publish(`delete-${this.type}-channel`, this.isRemovable)
+    this.emitter.publish(`delete-${this.type}-channel`, {
+      isRemovable: this.isRemovable,
+      deletable: this.deletable
+    })
   }
 }

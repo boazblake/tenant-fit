@@ -68,7 +68,7 @@ export class UserDetails {
     )
   }
 
-  update(c, isDisabled) {
+  update(c, { isDisabled, _ }) {
     c.isDisabled = isDisabled
   }
 

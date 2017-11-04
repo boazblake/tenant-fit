@@ -32,15 +32,15 @@ export class UserPage {
   }
 
   listen() {
-    const deleteFormHandler = c => msg => (c.isRemovable = msg)
-    const lockFormHandler = c => msg => c.lockForm(c, msg)
+    const deleteHandler = c => msg => c.delete(c, msg)
+    const lockHandler = c => msg => c.lock(c, msg)
 
     this.disposables.add(
-      this.emitter.subscribe('delete-channel', deleteFormHandler(this))
+      this.emitter.subscribe(`delete-'user'-channel`, deleteHandler(this))
     )
 
     this.disposables.add(
-      this.emitter.subscribe('lock-channel', lockFormHandler(this))
+      this.emitter.subscribe('lock-channel', lockHandler(this))
     )
   }
 
@@ -58,12 +58,12 @@ export class UserPage {
     loadTask(this.http)(this.userId).fork(onError(this), onSuccess(this))
   }
 
-  lockForm(c, isLocked) {
+  lock(c, isLocked) {
     c.isLocked = isLocked
   }
 
-  submit() {
-    this.emitter.publish('submit-channel', true)
+  delete(c, isRemovable) {
+    c.isRemovable = isRemovable
   }
 
   detached() {

@@ -35,10 +35,16 @@ export class Update {
       })
       .whenClosed(result => {
         if (result.wasCancelled) {
-          this.emitter.publish(`update-${this.type}-channel`, this.isDisabled)
+          this.emitter.publish(`update-${this.type}-channel`, {
+            isDisabled: this.isDisabled,
+            editable: this.editable
+          })
         } else if (!result.wasCancelled) {
           console.log('after', `update-${this.type}-channel`)
-          this.emitter.publish(`update-${this.type}-channel`, !this.isDisabled)
+          this.emitter.publish(`update-${this.type}-channel`, {
+            isDisabled: !this.isDisabled,
+            editable: this.editable
+          })
         }
       })
   }

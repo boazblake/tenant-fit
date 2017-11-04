@@ -1,5 +1,6 @@
 import Task from 'data.task'
-import { compose, identity, map } from 'ramda'
+import { chain, compose, map } from 'ramda'
+import { parse, eitherToTask } from 'utilities'
 import moment from 'moment'
 
 export const parseDate = date => moment.utc(date)
@@ -24,11 +25,7 @@ export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))
 
 export const loadTask = http =>
-  compose(
-    map(toViewModel),
-    map(identity(dto => JSON.parse(dto.response))),
-    getTask(http)
-  )
+  compose(map(toViewModel), chain(eitherToTask), map(parse), getTask(http))
 
 // COLOR USER===============================================================================
 export const getChangeColor = bool => (bool ? 'red' : '')

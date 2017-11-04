@@ -1,20 +1,11 @@
 <template>
-  <require from="components/delete/delete"></require>
-  <require from="components/update/update"></require>
+  <require from="./tenent/tenant"></require>
 
   <aside class="box menu">
     <div class="title is-4 menu-label">TENANTS</div>
     <ul class="menu-list">
       <li repeat.for="t of state.tenants" element.ref="tenantRef">
-        <a style="text-decoration: none;" click.delegate="showStores(t._id)">
-          <div class="field is-left">
-            <div class="control">
-              <input class="checkbox" type="text" name="isAdmin" value="${t.name}" disabled.bind="isDisabled">
-            </div>
-          </div>
-          <update is-disabled.bind="isDisabled" type="'tenant'" editable.bind="t" show.bind="!isLocked"></update>
-          <delete deletable.bind="t" type="'tenant'" show.bind="!isLocked"></delete>
-        </a>
+        <tenant tenant.bind="t" user-id.bind="userId" admin-id.bind="adminId" is-locked.bind="isLocked"></tenant>
       </li>
     </ul>
   </aside>
