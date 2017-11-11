@@ -5,9 +5,10 @@
   <a style="text-decoration: none;" click.delegate="showStores(tenant._id)" css.bind="isRemovable ? 'background-color:red;' : ''">
     <div class="field is-left">
       <div class="control">
-        <input class="checkbox" type="text" name="isAdmin" value="${tenant.name}" disabled.bind="isDisabled">
+        <input class="input ${updated}" type="text" value.two-way="tenant.name" disabled.bind="isDisabled">
         <update is-disabled.bind="isDisabled" type="'tenant'" editable.bind="state.tenant" show.bind="!isLocked"></update>
-        <delete deletable.bind="state.tenant" type="'tenant'" show.bind="!isLocked"></delete>
+        <delete deletable.bind="state.tenant" type="'tenant'" show.bind="!isDisabled && !isLocked"></delete>
+        <button show.bind="!isDisabled && !isLocked" class="button is-success" click.trigger="submit()">SUBMIT</button>
       </div>
     </div>
   </a>

@@ -41,7 +41,6 @@ export const toSubmitTask = http => adminId => tenantId =>
   )
 
 // DELETE TENANT===============================================================================
-
 export const remove = http => adminId => tenantId =>
   http.delete(`http://localhost:8080/tenants/${tenantId}`)
 
@@ -52,7 +51,6 @@ export const toRemoveTask = http => adminId =>
   compose(chain(eitherToTask), map(parse), removeTask(http)(adminId))
 
 // DESTINATION TENANT===============================================================================
-
 export const checkDto = http => adminId => tenantId => dto =>
   dto.toRemove
     ? toRemoveTask(http)(adminId)(tenantId)

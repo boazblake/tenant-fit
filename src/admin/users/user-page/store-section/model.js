@@ -3,6 +3,7 @@ import Task from 'data.task'
 import { log, eitherToTask, parse } from 'utilities'
 
 export const tostoreDto = Dto => {
+  console.log('store in user pages', Dto)
   const dto = {
     name: Dto.Name,
     _id: Dto._id,

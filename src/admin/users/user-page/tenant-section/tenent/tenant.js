@@ -60,7 +60,7 @@ export class Tenant {
     c.deleteColor = getChangeColor(c.isRemovable)
   }
 
-  submit(c, _) {
+  submit() {
     const onError = c => error => {
       if (error.msg) return c.emitter.publish('notify-error', error.msg)
       c.emitter.publish('notify-error', error.response)
@@ -68,24 +68,26 @@ export class Tenant {
 
     const onSuccess = c => tenant => {
       if (tenant.msg) {
+        c.updated = 'is-danger'
         c.emitter.publish('notify-warning', tenant.msg)
+        return c.emitter.publish('reload-tenent-channel', true)
       }
       c.tenant = tenant
+      c.updated = 'is-success'
       c.emitter.publish(
         'notify-success',
         `${tenant.name} was successfuly updated`
       )
     }
 
-    validateTask(c.tenant)(c.state.tenant)(c.isRemovable)
-      .chain(toDestinationTask(c.http)(c.adminId)(c.tenant._id))
+    validateTask(this.tenant)(this.state.tenant)(this.isRemovable)
+      .chain(toDestinationTask(this.http)(this.adminId)(this.tenant._id))
       .fork(onError(this), onSuccess(this))
   }
 
   update(c, { isDisabled, editable }) {
     if (editable._id === c.tenant._id) {
       c.isDisabled = isDisabled
-      console.log('update tenant.isdisabled', c.isDisabled)
     }
   }
 

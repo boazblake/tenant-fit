@@ -1,17 +1,20 @@
 import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
-import { customElement, useView, inject } from 'aurelia-framework'
+import { inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone } from 'ramda'
-import { loadTask, sortTask, directionTask, filterTask, searchTask } from './model'
-import { getStoreTask } from './store/model'
-import { StorePopup } from './store-popup/store-popup'
+import {
+  loadTask,
+  sortTask,
+  directionTask,
+  filterTask,
+  searchTask
+} from './model'
 import styles from './styles.css'
-import { log } from 'utilities'
 
 @inject(EventAggregator, HttpClient, DialogService)
 export class Stores {
-  constructor( emitter, http, modal ) {
+  constructor(emitter, http) {
     this.disposables = new Set()
     this.stores = []
     this.userId = null
@@ -25,7 +28,7 @@ export class Stores {
     this.styles = styles
   }
 
-  activate(params){
+  activate(params) {
     this.userId = params.id
     this.reset()
     this.orientation()
@@ -40,10 +43,11 @@ export class Stores {
   }
 
   orientation() {
-    const handler = c => msg =>
-      c.state.isCard = msg
+    const handler = c => msg => (c.state.isCard = msg)
 
-    this.disposables.add(this.emitter.subscribe('isCard-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('isCard-channel', handler(this))
+    )
   }
 
   detached() {
@@ -66,8 +70,7 @@ export class Stores {
       c.emitter.publish('loading-channel', false)
     }
 
-    const handler = c => _ =>
-      loadTask(c.http).fork(onError(c), onSuccess(c))
+    const handler = c => _ => loadTask(c.http).fork(onError(c), onSuccess(c))
 
     handler(this)()
   }
@@ -75,7 +78,7 @@ export class Stores {
   sort() {
     const onError = _ => {}
 
-    const onSuccess = c => results =>{
+    const onSuccess = c => results => {
       c.state.stores = results
     }
 
@@ -83,7 +86,7 @@ export class Stores {
       c.state.sortBy = msg
 
       sortTask(c.state.sortBy)(c.state.stores)
-      .chain(filterTask(this.state.filterBy))
+        .chain(filterTask(this.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
@@ -94,19 +97,20 @@ export class Stores {
   filter() {
     const onError = _ => {}
 
-    const onSuccess = c => results =>
-      c.state.stores = results
+    const onSuccess = c => results => (c.state.stores = results)
 
     const handler = c => msg => {
       c.state.filterBy = msg
 
       filterTask(c.state.filterBy)(c.data.stores)
-      .chain(sortTask(c.state.sortBy))
+        .chain(sortTask(c.state.sortBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
 
-    this.disposables.add(this.emitter.subscribe('filter-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('filter-channel', handler(this))
+    )
   }
 
   direction() {
@@ -120,18 +124,20 @@ export class Stores {
       c.state.direction = msg
 
       sortTask(c.state.sortBy)(c.data.stores)
-      .chain(filterTask(c.state.filterBy))
+        .chain(filterTask(c.state.filterBy))
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
 
-    this.disposables.add(this.emitter.subscribe('direction-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('direction-channel', handler(this))
+    )
   }
 
   search() {
     const onError = _ => {}
 
-    const onSuccess = c => results => (c.state.stores  = results)
+    const onSuccess = c => results => (c.state.stores = results)
 
     const handler = c => msg => {
       c.state.query = msg
@@ -142,42 +148,23 @@ export class Stores {
         .chain(directionTask(c.state.direction))
         .fork(onError, onSuccess(c))
     }
-    this.disposables.add(this.emitter.subscribe('search-channel', handler(this)))
-  }
-
-  showStore(id) {
-    this.getStore(id)
-  }
-
-  getStore(id) {
-    const onError = c => error => {
-      console.error(error);
-      c.errors.push({type:'stores', msg: 'error with getting stores'})
-    }
-
-    const onSuccess = c => store => {
-      c.store = store
-      c.errors['store'] = ''
-      c.openModal(id)
-      c.emitter.publish('loading-channel', false)
-    }
-
-    this.emitter.publish('loading-channel', true)
-    getStoreTask(this.http)(id).fork(onError(this), onSuccess(this))
+    this.disposables.add(
+      this.emitter.subscribe('search-channel', handler(this))
+    )
   }
 
   reset() {
-    this.state.props.sorters =
-    [ { key: 'Name', value: 'name' }
-    , { key: 'Lease Notification Date', value: 'leaseNotifDate' }
-    , { key: 'Lease Expiration Date', value: 'leaseExpDate' }
-    , { key: 'Property Location', value: 'propertyName' }
-    , { key: 'Brand', value: 'brandId' }
+    this.state.props.sorters = [
+      { key: 'Name', value: 'name' },
+      { key: 'Lease Notification Date', value: 'leaseNotifDate' },
+      { key: 'Lease Expiration Date', value: 'leaseExpDate' },
+      { key: 'Property Location', value: 'propertyName' },
+      { key: 'Brand', value: 'brandId' }
     ]
 
     this.state.props.filters = [
-      {key: 'Choose a Filter', value: ''},
-      {key: 'Unconfirmed Stores', value: 'isConfirmed'}
+      { key: 'Choose a Filter', value: '' },
+      { key: 'Unconfirmed Stores', value: 'isConfirmed' }
     ]
     this.data = {}
     this.state.stores = []
@@ -189,7 +176,6 @@ export class Stores {
   }
 
   removeDisposables() {
-    this.disposables = new Set();
+    this.disposables = new Set()
   }
-
 }

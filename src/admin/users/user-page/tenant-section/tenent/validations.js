@@ -15,6 +15,7 @@ export const toModel = (dto, isRemovable) => {
 
 export const compareStates = newState => oldState => isRemovable => {
   console.log('isRemovble', isRemovable)
+  console.log(newState, oldState)
   if (equals(newState, oldState) && !isRemovable) {
     return { msg: 'nothing to update' }
   } else {

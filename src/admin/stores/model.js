@@ -1,18 +1,33 @@
 import Task from 'data.task'
-import {assoc, compose, map, chain, identity, prop, props, reverse, values, join, toLower, sortBy, filterBy, filter, test, toString } from 'ramda'
-import { parse, eitherToTask, log } from 'utilities'
+import {
+  assoc,
+  compose,
+  map,
+  chain,
+  identity,
+  prop,
+  props,
+  reverse,
+  values,
+  join,
+  toLower,
+  sortBy,
+  filter,
+  test,
+  toString
+} from 'ramda'
+import { parse, eitherToTask } from 'utilities'
 
 export const toViewModel = Dto => {
-  console.log('stores', Dto)
-  let dto =
-    { name: Dto.Name
-    , leaseExpDate: Dto.LeaseExpirationDate
-    , leaseNotifDate: Dto.LeaseNotificationDate
-    , propertyName: Dto.PropertyName
-    , isConfirmed: Dto.IsConfirmed
-    , brandId: Dto.BrandId
-    , _id: Dto._id
-    }
+  let dto = {
+    name: Dto.Name,
+    leaseExpDate: Dto.LeaseExpirationDate,
+    leaseNotifDate: Dto.LeaseNotificationDate,
+    propertyName: Dto.PropertyName,
+    isConfirmed: Dto.IsConfirmed,
+    brandId: Dto.BrandId,
+    _id: Dto._id
+  }
   return dto
 }
 
@@ -24,28 +39,31 @@ export const addTerms = item => {
   return assoc('_terms', terms, item)
 }
 
-export const getStores = http =>
-  http.get(`http://localhost:8080/stores`)
+export const getStores = http => http.get(`http://localhost:8080/stores`)
 
 export const getStoresTask = http =>
   new Task((rej, res) => getStores(http).then(res, rej))
 
-export const loadTask =
-  compose(map(map(addTerms)), map(map(toViewModel)), chain(eitherToTask), map(parse), getStoresTask)
+export const loadTask = compose(
+  map(map(addTerms)),
+  map(map(toViewModel)),
+  chain(eitherToTask),
+  map(parse),
+  getStoresTask
+)
 
-  // ==========================================================================//
+// ==========================================================================//
 
 export const sortTask = p =>
   compose(Task.of, sortBy(compose(toLower, toString, prop(p))))
 
-export const searchTask = query =>
-  compose(Task.of, filter(byTerms(query)))
+export const searchTask = query => compose(Task.of, filter(byTerms(query)))
 
 export const directionTask = dir =>
   compose(Task.of, dir === 'asc' ? identity : reverse)
 
-  // ==========================================================================//
-export const filterUnConfirmed = filterable => x =>{
+// ==========================================================================//
+export const filterUnConfirmed = filterable => x => {
   if (toString(filterable) === '') {
     return x
   }
@@ -55,5 +73,4 @@ export const filterUnConfirmed = filterable => x =>{
 export const filtered = filterable => xs =>
   filter(filterUnConfirmed(filterable), xs)
 
-export const filterTask = filterable =>
-  compose(Task.of, filtered(filterable))
+export const filterTask = filterable => compose(Task.of, filtered(filterable))

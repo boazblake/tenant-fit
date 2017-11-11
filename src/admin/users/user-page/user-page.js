@@ -66,6 +66,10 @@ export class UserPage {
     c.isRemovable = isRemovable
   }
 
+  isRemovableChanged(){
+    
+  }
+
   detached() {
     this.disposables.forEach(x => x.dispose())
   }

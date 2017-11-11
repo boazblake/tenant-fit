@@ -22,7 +22,19 @@ export class TenantSection {
   attached() {
     this.emitter.publish('loading-channel', true)
     this.reset()
+    this.listen()
     this.load()
+  }
+
+  listen() {
+    const reloadHandler = c => msg => {
+      if (msg) {
+        c.load()
+      }
+    }
+    this.disposables.add(
+      this.emitter.subscribe('reload-tenent-channel', reloadHandler(this))
+    )
   }
 
   load() {

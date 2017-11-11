@@ -81,7 +81,7 @@ export class UserDetails {
     c.isLocked = isLocked
   }
 
-  submit(c, _) {
+  submit() {
     const onError = c => error => {
       if (error.msg) return c.emitter.publish('notify-error', error.msg)
       c.emitter.publish('notify-error', error.response)
@@ -101,9 +101,9 @@ export class UserDetails {
       return this.router.navigateToRoute('users')
     }
 
-    validateTask(c.state.user)(c.data.user)(c.isRemovable) //.bimap(tap(onError(c)), tap(onSuccess(c)))
-      .chain(toDestinationTask(c.http)(c.adminId)(c.userId))
-      .fork(onError(c), onSuccess(c))
+    validateTask(this.state.user)(this.data.user)(this.isRemovable) //.bimap(tap(onError(c)), tap(onSuccess(c)))
+      .chain(toDestinationTask(this.http)(this.adminId)(this.userId))
+      .fork(onError(this), onSuccess(this))
   }
 
   detached() {

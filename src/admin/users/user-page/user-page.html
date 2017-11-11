@@ -9,8 +9,6 @@
 
 
   <div class="container">
-    <a class="button is-info" route-href="route: users;">
-      <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>BACK TO USERS</a>
     <div class="hero">
       <div class="level">
         <div class="level-left">
@@ -41,7 +39,6 @@
       <div class="column is-full">
         <store-section user-id.bind="userId" admin-id.bind="adminId"></store-section>
       </div>
-      <button show.bind="!isLocked" class="button is-success" click.trigger="submit()">SUBMIT</button>
     </div>
   </div>
 
