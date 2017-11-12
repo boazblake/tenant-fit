@@ -74,11 +74,13 @@ export class UserDetails {
 
   delete(c, { isRemovable, deletable }) {
     c.isRemovable = isRemovable
-    console.log(`${deletable} is now rmeovable`, c.isRemovable)
+    console.log(`${deletable.name} is now rmeovable`, c.isRemovable)
   }
 
-  lockForm(c, isLocked) {
-    c.isLocked = isLocked
+  isLockedChanged() {
+    if (this.isLocked === true) {
+      this.isDisabled = true
+    }
   }
 
   submit() {

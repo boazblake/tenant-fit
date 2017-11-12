@@ -62,13 +62,11 @@ export class UserPage {
     c.isLocked = isLocked
   }
 
-  delete(c, isRemovable) {
+  delete(c, { isRemovable, _ }) {
     c.isRemovable = isRemovable
   }
 
-  isRemovableChanged(){
-    
-  }
+  isRemovableChanged() {}
 
   detached() {
     this.disposables.forEach(x => x.dispose())

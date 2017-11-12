@@ -60,6 +60,12 @@ export class Tenant {
     c.deleteColor = getChangeColor(c.isRemovable)
   }
 
+  isLockedChanged() {
+    if (this.isLocked === true) {
+      this.isDisabled = true
+    }
+  }
+
   submit() {
     const onError = c => error => {
       if (error.msg) return c.emitter.publish('notify-error', error.msg)

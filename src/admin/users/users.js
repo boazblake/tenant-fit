@@ -1,4 +1,3 @@
-import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
@@ -12,9 +11,9 @@ import {
 } from './model'
 import styles from './styles.css'
 
-@inject(EventAggregator, HttpClient, DialogService)
+@inject(EventAggregator, HttpClient)
 export class Users {
-  constructor(emitter, http, modal) {
+  constructor(emitter, http) {
     this.disposables = new Set()
     this.users = []
     this.userId = null
