@@ -1,34 +1,41 @@
 import { DialogController } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
-import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { clone, equals } from 'ramda'
-import { getBrandTask, getStoreTask, updateStoreTask } from './model'
+import { getBrandTask, loadTask, updateStoreTask } from './model'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 
 @inject(HttpClient, DialogController, EventAggregator)
-export class StorePopup {
-  constructor( http, dController, emitter) {
+export class StorePage {
+  constructor(http, dController, emitter) {
     this.disposables = new Set()
     this.dController = dController
     this.state = {}
     this.data = {}
     this.http = http
     this.emitter = emitter
-    this.isEditable = false
+    this.isRemovable = false
+    this.isLocked = true
     this.isDisabled = true
     this.styles = styles
   }
 
-  activate(storeId){
-    this.storeId = storeId
+  activate(storeId) {
+    this.reset()
+    console.log('storeId', storeId)
+    this.storeId = storeId.id
     this.adminId = CheckAuth.adminId()
   }
 
   attached() {
-    const onError = error =>{
-      console.error(error);
+    this.load()
+  }
+
+  load() {
+    const onError = error => {
+      console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
@@ -37,9 +44,9 @@ export class StorePopup {
       this.state.store = clone(this.data.store)
     }
 
-    getStoreTask(this.http)(this.storeId)
-    .chain(getBrandTask(this.http))
-    .fork(onError, onSuccess)
+    loadTask(this.http)(this.storeId)
+      .chain(getBrandTask(this.http))
+      .fork(onError, onSuccess)
   }
 
   editForm() {
@@ -54,20 +61,31 @@ export class StorePopup {
   }
 
   updateStore(storeId) {
-    const onError = error =>{
-      console.error(error);
+    const onError = error => {
+      console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = store => {
       this.data.store = store
       this.state.store = clone(this.data.store)
-      this.emitter.publish('notify-success', `${store.name} was successfuly updated`)
+      this.emitter.publish(
+        'notify-success',
+        `${store.name} was successfuly updated`
+      )
       this.dController.ok(this.state.store)
     }
 
-    updateStoreTask(this.http)(this.adminId)(storeId)(this.state.store).fork(onError, onSuccess)
+    updateStoreTask(this.http)(this.adminId)(storeId)(this.state.store).fork(
+      onError,
+      onSuccess
+    )
   }
 
-
+  reset() {
+    this.state = {}
+    this.data = {}
+    this.isRemovable = false
+    this.isLocked = true
+  }
 }

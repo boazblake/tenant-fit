@@ -21,6 +21,8 @@ export class UserPage {
   }
 
   activate(userId) {
+    console.log('userId', userId)
+
     this.reset()
     this.userId = userId.id
     this.adminId = CheckAuth.adminId()

@@ -5,7 +5,6 @@ import { HttpClient } from 'aurelia-http-client'
 import moment from 'moment'
 import { clone } from 'ramda'
 import { loadTask, findColor, getBrandTask } from './model.js'
-import { StorePopup } from '../store-popup/store-popup'
 import styles from './styles.css'
 import css from './css.js'
 import { log } from 'utilities'
@@ -14,7 +13,7 @@ import { log } from 'utilities'
 export class Store {
   @bindable s
   @bindable isCard
-  constructor( http, modal, emitter ) {
+  constructor(http, modal, emitter) {
     this.disposables = new Set()
     this.data = {}
     this.state = {}
@@ -34,11 +33,11 @@ export class Store {
 
   load() {
     const onError = c => error => {
-      console.error(error);
+      console.error(error)
       c.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = c =>  store => {
+    const onSuccess = c => store => {
       c.data.store = store
 
       c.state.store = clone(c.data.store)
@@ -55,35 +54,25 @@ export class Store {
 
   background() {
     const today = moment()
-    const daysToNotif = moment(this.state.store.leaseNotificationDate).diff(today, 'days')
+    const daysToNotif = moment(this.state.store.leaseNotificationDate).diff(
+      today,
+      'days'
+    )
     const todaysColor = findColor(daysToNotif)
     this.background = todaysColor
-
-  }
-
-  showStore(id) {
-    console.log(id)
-    this.modal.open( {viewModel: StorePopup, model: id }).whenClosed(response => {
-      if (!response.wasCancelled) {
-        console.log('updated', response)
-        this.data.store = response.output
-        this.state.store = clone(this.data.store)
-      } else {
-        console.log('not updated', response)
-      }
-    })
   }
 
   multiSelect() {
-    const handler = c => msg =>
-      c.isSelectable = msg
+    const handler = c => msg => (c.isSelectable = msg)
 
-    this.disposables.add(this.emitter.subscribe('multiSelect-channel', handler(this)))
+    this.disposables.add(
+      this.emitter.subscribe('multiSelect-channel', handler(this))
+    )
   }
 
   selected() {
     if (this.isSelectable) {
-      return this.isSelected = ! this.isSelected
+      return (this.isSelected = !this.isSelected)
     }
   }
 
@@ -93,7 +82,6 @@ export class Store {
   }
 
   removeDisposables() {
-    this.disposables = new Set();
+    this.disposables = new Set()
   }
-
 }
