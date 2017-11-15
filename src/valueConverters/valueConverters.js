@@ -2,20 +2,18 @@ import moment from 'moment'
 
 export class FileListToArrayValueConverter {
   toView(fileList) {
-    let files = [];
+    let files = []
     if (!fileList) {
-      return files;
+      return files
     }
-    for(let i = 0; i < fileList.length; i++) {
-      files.push(fileList.item(i));
-    }
-    return files;
+    fileList.map(x => files.push(x))
+    return files
   }
 }
 
 export class BlobToUrlValueConverter {
   toView(blob) {
-    return URL.createObjectURL(blob);
+    return URL.createObjectURL(blob)
   }
 }
 
@@ -33,7 +31,7 @@ export class TruncateTo50ValueConverter {
 }
 
 export class TrimSearchValueConverter {
-  toView(value){
+  toView(value) {
     value.split(' ').join()
   }
 }

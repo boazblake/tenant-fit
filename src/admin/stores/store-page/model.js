@@ -3,13 +3,14 @@ import { assoc, compose, chain, map, prop } from 'ramda'
 import { eitherToTask, parse } from 'utilities'
 import moment from 'moment'
 
-export const parseDate = date => moment.utc(date)
+export const parseDate = date => moment.utc(date, 'YYYYMMDD')
 
 export const dirtyState = oldStore => {
   console.log(oldStore)
 }
 
 export const toVm = Dto => {
+  console.log('toVM', parseDate(Dto.LeaseExpirationDate))
   let dto = {
     comments: Dto.Comments,
     confirmedOn: Dto.ConfirmedOn,
@@ -33,6 +34,7 @@ export const toVm = Dto => {
 }
 
 export const toDto = adminId => dto => {
+  console.log('toDto', parseDate(dto.LeaseExpirationDate))
   let Dto = {
     Comments: dto.comments,
     ConfirmedOn: dto.isConfirmed ? moment() : '',

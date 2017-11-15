@@ -55,30 +55,30 @@ export class StorePage {
   }
 
   validateStore() {
+    console.log(this.state.store)
     equals(this.state.store, this.data.store)
       ? this.emitter.publish('notify-info', 'nothing to update')
       : this.updateStore(this.state.store._id)
   }
 
   updateStore(storeId) {
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error.response)
+      c.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = store => {
-      this.data.store = store
-      this.state.store = clone(this.data.store)
-      this.emitter.publish(
+    const onSuccess = c => store => {
+      c.data.store = store
+      c.state.store = clone(c.data.store)
+      c.emitter.publish(
         'notify-success',
         `${store.name} was successfuly updated`
       )
-      this.dController.ok(this.state.store)
     }
 
     updateStoreTask(this.http)(this.adminId)(storeId)(this.state.store).fork(
-      onError,
-      onSuccess
+      onError(this),
+      onSuccess(this)
     )
   }
 
