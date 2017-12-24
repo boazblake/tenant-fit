@@ -14,7 +14,7 @@ export const toRequest = userId => tenantUserId => dto => ({
 })
 
 export const tenants = http => id =>
-  http.get(`http://localhost:8080/tenants/userId/${id}`)
+  http.get(`https://buxy-proxy.herokuapp.com/tenants/userId/${id}`)
 
 export const getTenants = http => id =>
   new Task((rej, res) => tenants(http)(id).then(res, rej))
@@ -28,7 +28,7 @@ export const loadTask = http =>
   )
 
 export const add = http => data =>
-  http.post(`http://localhost:8080/tenants/add`, data)
+  http.post(`https://buxy-proxy.herokuapp.com/tenants/add`, data)
 
 export const addTask = http => data =>
   new Task((rej, res) => add(http)(data).then(res, rej))

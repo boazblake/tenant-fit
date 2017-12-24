@@ -28,7 +28,7 @@ export const toStoreModel = Dto => {
 
 // =================================GET STORE==========================================================
 export const getStore = http => id =>
-  http.get(`http://localhost:8080/stores/${id}`)
+  http.get(`https://buxy-proxy.herokuapp.com/stores/${id}`)
 
 export const getStoreTask = http => id =>
   new Task((rej, res) => getStore(http)(id).then(res, rej))
@@ -53,7 +53,7 @@ export const toViewModel = storeDto => brandDto => {
 }
 
 export const getBrand = http => store =>
-  http.get(`http://localhost:8080/brands/${store.brandId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/brands/${store.brandId}`)
 
 export const getLogoTask = http => store =>
   new Task((rej, res) => getBrand(http)(store).then(res, rej))

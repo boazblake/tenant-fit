@@ -2,9 +2,8 @@ import Task from 'data.task'
 import { compose, map, identity } from 'ramda'
 import { log } from 'utilities'
 
-
 export const get = http => id =>
-  http.get(`http://localhost:8080/stores/userId/${id}`, id)
+  http.get(`https://buxy-proxy.herokuapp.com/stores/userId/${id}`, id)
 
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))

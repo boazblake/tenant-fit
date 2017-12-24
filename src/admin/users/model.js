@@ -36,7 +36,7 @@ export const addTerms = item => {
 }
 
 export const getUsers = http => adminId =>
-  http.get(`http://localhost:8080/users`)
+  http.get(`https://buxy-proxy.herokuapp.com/users`)
 
 export const getUsersTask = http => adminId =>
   new Task((rej, res) => getUsers(http)(adminId).then(res, rej))

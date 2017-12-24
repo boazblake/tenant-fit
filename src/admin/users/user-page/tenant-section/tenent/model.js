@@ -26,7 +26,7 @@ export const toDto = adminId => dto => {
 
 // UPDATE TENANT===============================================================================
 export const update = http => adminId => tenantId => Dto =>
-  http.put(`http://localhost:8080/tenants/${tenantId}`, Dto)
+  http.put(`https://buxy-proxy.herokuapp.com/tenants/${tenantId}`, Dto)
 
 export const updateTask = http => adminId => tenantId => Dto =>
   new Task((rej, res) => update(http)(adminId)(tenantId)(Dto).then(res, rej))
@@ -42,7 +42,7 @@ export const toSubmitTask = http => adminId => tenantId =>
 
 // DELETE TENANT===============================================================================
 export const remove = http => adminId => tenantId =>
-  http.delete(`http://localhost:8080/tenants/${tenantId}`)
+  http.delete(`https://buxy-proxy.herokuapp.com/tenants/${tenantId}`)
 
 export const removeTask = http => adminId => tenantId =>
   new Task((rej, res) => remove(http)(adminId)(tenantId).then(res, rej))

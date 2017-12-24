@@ -10,9 +10,9 @@ export class NavBar {
   constructor(http, emitter, el) {
     this.emitter = emitter
     this.state = {
-      authStatus : false,
-      adminStatus : false,
-      currentUser : ''
+      authStatus: false,
+      adminStatus: false,
+      currentUser: ''
     }
     this.http = http
     this.styles = styles
@@ -29,21 +29,22 @@ export class NavBar {
       this.state.adminStatus = CheckAuth.isAdmin()
     }
 
-    const loader = bool =>
-      this.isLoading = bool
+    const loader = bool => (this.isLoading = bool)
 
-    this.emitter.subscribe('auth-channel', handler )
-    this.emitter.subscribe('loading-channel', loader )
+    this.emitter.subscribe('auth-channel', handler)
+    this.emitter.subscribe('loading-channel', loader)
 
     CheckAuth.auth()
-    ? this.emitter.publish('auth-channel', true )
-    : this.emitter.publish('auth-channel', false )
+      ? this.emitter.publish('auth-channel', true)
+      : this.emitter.publish('auth-channel', false)
   }
 
-  logout(){
+  logout() {
     sessionStorage.clear()
-    Promise.resolve(this.http.get("http://localhost:8080/auth/logout")).then(() => {
-      if(! CheckAuth.auth() ) this.emitter.publish('auth-channel', false )
+    Promise.resolve(
+      this.http.get('https://buxy-proxy.herokuapp.com/auth/logout')
+    ).then(() => {
+      if (!CheckAuth.auth()) this.emitter.publish('auth-channel', false)
       this.router.navigateToRoute('tenantfit')
     })
   }

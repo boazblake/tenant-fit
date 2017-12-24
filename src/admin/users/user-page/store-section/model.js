@@ -12,7 +12,7 @@ export const tostoreDto = Dto => {
 }
 
 export const stores = http => userId => adminId => storeId =>
-  http.get(`http://localhost:8080/stores/store/${storeId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/stores/store/${storeId}`)
 
 export const addStores = http => userId => adminId => store =>
   new Task((rej, res) =>
@@ -28,7 +28,7 @@ export const addStoresTask = http => userId => adminId =>
   )
 
 export const getstores = http => userId => adminId =>
-  http.get(`http://localhost:8080/stores/userId/${userId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/stores/userId/${userId}`)
 
 export const getstoresTask = http => userId => adminId =>
   new Task((rej, res) => getstores(http)(userId)(adminId).then(res, rej))

@@ -12,7 +12,7 @@ export const toTenantDto = Dto => {
 }
 
 export const getTenants = http => userId => adminId =>
-  http.get(`http://localhost:8080/tenants/userId/${userId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/tenants/userId/${userId}`)
 
 export const getTenantsTask = http => userId => adminId =>
   new Task((rej, res) => getTenants(http)(userId)(adminId).then(res, rej))

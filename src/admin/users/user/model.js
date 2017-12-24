@@ -17,7 +17,7 @@ export const toUserModel = Dto => {
 
 // =================================GET USER==========================================================
 export const getUser = http => userId => adminId =>
-  http.get(`http://localhost:8080/users/${userId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/users/${userId}`)
 
 export const getUserTask = http => userId => adminId =>
   new Task((rej, res) => getUser(http)(userId)(adminId).then(res, rej))

@@ -57,7 +57,8 @@ export const toDto = adminId => dto => {
 }
 
 // GET STORE===============================================================================
-export const get = http => id => http.get(`http://localhost:8080/stores/${id}`)
+export const get = http => id =>
+  http.get(`https://buxy-proxy.herokuapp.com/stores/${id}`)
 
 export const getTask = http => id =>
   new Task((rej, res) => get(http)(id).then(res, rej))
@@ -67,7 +68,7 @@ export const loadTask = http =>
 
 // UPDATE STORE===============================================================================
 export const update = http => adminId => storeId => Dto =>
-  http.put(`http://localhost:8080/stores/${storeId}`, Dto)
+  http.put(`https://buxy-proxy.herokuapp.com/stores/${storeId}`, Dto)
 
 export const updateStore = http => adminId => storeId => Dto =>
   new Task((rej, res) => update(http)(adminId)(storeId)(Dto).then(res, rej))
@@ -93,7 +94,7 @@ export const toViewModel = storeDto => brandDto => {
 }
 
 export const getBrand = http => store =>
-  http.get(`http://localhost:8080/brands/${store.brandId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/brands/${store.brandId}`)
 
 export const getLogoTask = http => store =>
   new Task((rej, res) => getBrand(http)(store).then(res, rej))

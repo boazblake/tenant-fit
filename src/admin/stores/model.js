@@ -39,7 +39,8 @@ export const addTerms = item => {
   return assoc('_terms', terms, item)
 }
 
-export const getStores = http => http.get(`http://localhost:8080/stores`)
+export const getStores = http =>
+  http.get(`https://buxy-proxy.herokuapp.com/stores`)
 
 export const getStoresTask = http =>
   new Task((rej, res) => getStores(http).then(res, rej))

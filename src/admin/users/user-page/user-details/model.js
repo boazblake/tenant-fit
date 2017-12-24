@@ -34,7 +34,7 @@ export const toDto = adminId => dto => {
 
 // GET USER===============================================================================
 export const get = http => userId => adminId =>
-  http.get(`http://localhost:8080/users/${userId}`)
+  http.get(`https://buxy-proxy.herokuapp.com/users/${userId}`)
 
 export const getTask = http => userId => adminId =>
   new Task((rej, res) => get(http)(userId)(adminId).then(res, rej))
@@ -49,7 +49,7 @@ export const loadTask = http => userId =>
 
 // UPDATE USER===============================================================================
 export const update = http => adminId => userId => Dto =>
-  http.put(`http://localhost:8080/users/${userId}`, Dto)
+  http.put(`https://buxy-proxy.herokuapp.com/users/${userId}`, Dto)
 
 export const updateTask = http => adminId => userId => Dto =>
   new Task((rej, res) => update(http)(adminId)(userId)(Dto).then(res, rej))
@@ -66,7 +66,7 @@ export const toSubmitTask = http => adminId => userId =>
 // DELETE USER===============================================================================
 
 export const remove = http => adminId => userId =>
-  http.delete(`http://localhost:8080/users/${userId}`)
+  http.delete(`https://buxy-proxy.herokuapp.com/users/${userId}`)
 
 export const removeTask = http => adminId => userId =>
   new Task((rej, res) => remove(http)(adminId)(userId).then(res, rej))
