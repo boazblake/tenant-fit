@@ -22,8 +22,9 @@ export class Update {
   }
 
   update() {
-    this.msg = `ARE YOU SURE? \n WARNING \n On Submission, this will update ${this
-      .editable.name}`
+    this.msg = `ARE YOU SURE? \n WARNING \n On Submission, this will update ${
+      this.editable.name
+    }`
     this.ds
       .open({
         viewModel: Dialog,
@@ -40,7 +41,6 @@ export class Update {
             editable: this.editable
           })
         } else if (!result.wasCancelled) {
-          console.log('after', `update-${this.type}-channel`)
           this.emitter.publish(`update-${this.type}-channel`, {
             isDisabled: !this.isDisabled,
             editable: this.editable

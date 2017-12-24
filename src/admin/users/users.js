@@ -42,7 +42,6 @@ export class Users {
 
   orientation() {
     const handler = c => msg => {
-      console.log('orienation users', msg)
       c.state.isCard = msg
     }
 

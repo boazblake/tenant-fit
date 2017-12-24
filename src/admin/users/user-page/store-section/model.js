@@ -3,7 +3,6 @@ import Task from 'data.task'
 import { log, eitherToTask, parse } from 'utilities'
 
 export const tostoreDto = Dto => {
-  console.log('store in user pages', Dto)
   const dto = {
     name: Dto.Name,
     _id: Dto._id,
@@ -15,13 +14,10 @@ export const tostoreDto = Dto => {
 export const stores = http => userId => adminId => storeId =>
   http.get(`http://localhost:8080/stores/store/${storeId}`)
 
-export const addStores = http => userId => adminId => store => {
-  // stores(http)(userId)(adminId)(store._id)
-  // .then(x => console.log('x', x))
-  return new Task((rej, res) =>
+export const addStores = http => userId => adminId => store =>
+  new Task((rej, res) =>
     stores(http)(userId)(adminId)(store._id).then(res, rej)
   )
-}
 
 export const addStoresTask = http => userId => adminId =>
   compose(

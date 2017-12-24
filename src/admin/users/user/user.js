@@ -52,7 +52,6 @@ export class User {
   }
 
   showUser(id) {
-    console.log(id)
     this.router.navigateToRoute('user-page', { id })
   }
 

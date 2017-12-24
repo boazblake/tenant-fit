@@ -20,9 +20,9 @@ export class Delete {
   }
 
   delete() {
-    console.log(this.deletable)
-    this.msg = `ARE YOU SURE? \n WARNING \n On Submission, this will delete all data associated with ${this
-      .deletable.name}`
+    this.msg = `ARE YOU SURE? \n WARNING \n On Submission, this will delete all data associated with ${
+      this.deletable.name
+    }`
     this.ds
       .open({
         viewModel: Dialog,

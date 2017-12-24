@@ -11,7 +11,7 @@ import { StorePopup } from '../store-popup/store-popup'
 @inject(HttpClient, DialogService, EventAggregator, StorePopup)
 export class Store {
   @bindable s
-  constructor( http, modal, emitter ) {
+  constructor(http, modal, emitter) {
     this.disposables = new Set()
     this.state = {}
     this.http = http
@@ -28,13 +28,12 @@ export class Store {
 
   getStore(id) {
     const onError = error => {
-      console.error(error);
+      console.error(error)
       this.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = store => {
       this.store = store
-      console.log('store - comp', this.store)
       this.errors['store'] = ''
       this.emitter.publish('loading-channel', false)
     }
@@ -44,11 +43,8 @@ export class Store {
   }
 
   showStore(id) {
-    this.modal.open( {viewModel: StorePopup, model: id })
+    this.modal.open({ viewModel: StorePopup, model: id })
   }
 
-
-  reset() {
-  }
-
+  reset() {}
 }
