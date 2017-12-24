@@ -1,13 +1,12 @@
 import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
-import { customElement, useView, inject, bindable } from 'aurelia-framework'
+import { inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import moment from 'moment'
 import { clone } from 'ramda'
 import { loadTask, findColor, getBrandTask } from './model.js'
 import styles from './styles.css'
 import css from './css.js'
-import { log } from 'utilities'
 
 @inject(HttpClient, DialogService, EventAggregator)
 export class Store {

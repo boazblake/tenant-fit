@@ -3,15 +3,23 @@
   <require from="valueConverters/index"></require>
 
   <ai-dialog class="hero" au-animate>
-      <ai-dialog-header class="box">
-        <div class="is-grouped is-small">
-          <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()"><i class=""></i></button>
-          <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()"><i class=""></i></button>
-          <abbr title="Store has not been confirmed"><i if.bind="!state.store.isConfirmed" class="fa fa-flag" ></i></abbr>
-        </div>
-        <div class="field control title">
-          <strong><input class="input is-large title" type="text" name="name" value.two-way="state.store.name" disabled.bind="isDisabled"></strong >
-        </div>
+    <ai-dialog-header class="box">
+      <div class="is-grouped is-small">
+        <button show.bind="!isEditable" class="fa fa-lock" click.delegate="editForm()">
+          <i class=""></i>
+        </button>
+        <button show.bind="isEditable" class="fa fa-unlock" click.delegate="editForm()">
+          <i class=""></i>
+        </button>
+        <abbr title="Store has not been confirmed">
+          <i if.bind="!state.store.isConfirmed" class="fa fa-flag"></i>
+        </abbr>
+      </div>
+      <div class="field control title">
+        <strong>
+          <input class="input is-large title" type="text" name="name" value.two-way="state.store.name" disabled.bind="isDisabled">
+        </strong>
+      </div>
     </ai-dialog-header>
     <ai-dialog-body class="container">
       <div class="box">
@@ -33,16 +41,20 @@
           <div class="field-body">
             <label class="label" for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
             <div class="control">
-              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" disabled.bind="isDisabled" max="${state.store.leaseNotificationDate}">
-              <p><span if.bind="isEditable" >previous date:</span>  ${state.store.leaseExpirationDate | leaseDateFormat}  </p>
+              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate"
+                disabled.bind="isDisabled" max="${state.store.leaseNotificationDate}">
+              <p>
+                <span if.bind="isEditable">previous date:</span> ${state.store.leaseExpirationDate | leaseDateFormat} </p>
             </div>
           </div>
 
           <div class="field-body">
             <label class="label" for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
             <div class="control">
-              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate"  disabled.bind="isDisabled"  min="${state.store.leaseExpirationDate}">
-              <p><span if.bind="isEditable" >previous date:</span> ${state.store.leaseNotificationDate | leaseDateFormat} </p>
+              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate"
+                disabled.bind="isDisabled" min="${state.store.leaseExpirationDate}">
+              <p>
+                <span if.bind="isEditable">previous date:</span> ${state.store.leaseNotificationDate | leaseDateFormat} </p>
             </div>
           </div>
         </div>
@@ -50,14 +62,14 @@
         <div class="field is-left">
           <label class="field-label" for="isConfirmed">CONFIRMATION</label>
           <div class="control">
-            <input class="checkbox" type="checkbox" name="isConfirmed" checked.bind="state.store.isConfirmed"  disabled.bind="isDisabled">
+            <input class="checkbox" type="checkbox" name="isConfirmed" checked.bind="state.store.isConfirmed" disabled.bind="isDisabled">
           </div>
         </div>
 
         <div class="field is-left">
           <label class="field-label" for="emailOptIn">Subscribe to Email Notifications</label>
           <div class="control">
-            <input class="checkbox" type="checkbox" name="emailOptIn" checked.bind="state.store.emailOptIn"  disabled.bind="isDisabled">
+            <input class="checkbox" type="checkbox" name="emailOptIn" checked.bind="state.store.emailOptIn" disabled.bind="isDisabled">
           </div>
         </div>
 
@@ -70,12 +82,12 @@
       </div>
 
       </div>
-      </ai-dialog-body>
+    </ai-dialog-body>
 
-      <ai-dialog-footer class="box">
-        <button class="button is-danger" click.trigger="dController.cancel(message)">DISMISS</button>
-        <button show.bind="isEditable" class="button is-success" click.trigger="validateStore()">UPDATE</button>
-      </ai-dialog-footer>
+    <ai-dialog-footer class="box">
+      <button class="button is-danger" click.trigger="goBack()">DISMISS</button>
+      <button show.bind="isEditable" class="button is-success" click.trigger="validateStore()">UPDATE</button>
+    </ai-dialog-footer>
     </div>
   </ai-dialog>
-<template >
+  <template>

@@ -1,4 +1,4 @@
-import { DialogController } from 'aurelia-dialog'
+import { Router } from 'aurelia-router'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
@@ -7,11 +7,11 @@ import { getBrandTask, loadTask, updateStoreTask } from './model'
 import styles from './styles.css'
 import { CheckAuth } from 'authConfig'
 
-@inject(HttpClient, DialogController, EventAggregator)
+@inject(HttpClient, Router, EventAggregator)
 export class StorePage {
-  constructor(http, dController, emitter) {
+  constructor(http, router, emitter) {
     this.disposables = new Set()
-    this.dController = dController
+    this.router = router
     this.state = {}
     this.data = {}
     this.http = http
@@ -24,7 +24,6 @@ export class StorePage {
 
   activate(storeId) {
     this.reset()
-    console.log('storeId', storeId)
     this.storeId = storeId.id
     this.adminId = CheckAuth.adminId()
   }
@@ -55,7 +54,6 @@ export class StorePage {
   }
 
   validateStore() {
-    console.log(this.state.store)
     equals(this.state.store, this.data.store)
       ? this.emitter.publish('notify-info', 'nothing to update')
       : this.updateStore(this.state.store._id)
@@ -80,6 +78,10 @@ export class StorePage {
       onError(this),
       onSuccess(this)
     )
+  }
+
+  goBack() {
+    this.router.navigateBack()
   }
 
   reset() {

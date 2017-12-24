@@ -13,6 +13,7 @@ export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
+    .history()
     .feature(PLATFORM.moduleName('components/footer/index'))
     .feature(PLATFORM.moduleName('components/nav-bar/index'))
     .feature(PLATFORM.moduleName('components/dialog/index'))
