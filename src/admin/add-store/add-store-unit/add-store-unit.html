@@ -1,8 +1,9 @@
-<template >
+<template>
   <require from="./styles.css"></require>
+  <require from="valueConverters/index"></require>
 
   <div class="">
-    <div class="" >
+    <div class="">
       <div class="">
         <h2 class="">ADD A NEW ${state.store.brand.name} STORE</h2>
         <img src="${state.store.brand.logo}" alt="">
@@ -11,42 +12,44 @@
         <div class="">
           <fieldset class="">
             <label class="" for="name">NAME</label>
-            <input type="text" class="" name="name" value.bind="state.store.name" style="outline: none; text-align:right;" >
+            <input type="text" class="" name="name" value.bind="state.store.name" style="outline: none; text-align:right;">
             <span class="" show.bind="errors.email">ERROR WITH NAME</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
             <label class=" " for="landlordEntity">LANDLORD</label>
-            <input type="text" class="" name="landlordEntity" value.bind="state.store.landlordEntity" style="outline: none; text-align:right;" >
+            <input type="text" class="" name="landlordEntity" value.bind="state.store.landlordEntity" style="outline: none; text-align:right;">
             <span class="" show.bind="errors.email">ERROR WITH LANDLORD</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
             <label class=" " for="propertyName">PROPERTY</label>
-            <input type="text" class="" name="propertyName" value.bind="state.store.propertyName" style="outline: none; text-align:right;" >
+            <input type="text" class="" name="propertyName" value.bind="state.store.propertyName" style="outline: none; text-align:right;">
             <span class="" show.bind="errors.email">ERROR WITH PROPERTY</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
             <label class=" " for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
-            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate" style="outline: none; text-align:right;" max="${state.store.leaseExpirationDate}">
+            <input type="date" class="" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate | dateFormat" style="outline: none; text-align:right;"
+              max="${state.store.leaseExpirationDate}">
             <span class="" show.bind="errors.email">ERROR WITH LEASE NOTIFICATION DATE</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
             <label class=" " for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
-            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate" style="outline: none; text-align:right;" min="${state.store.leaseNotificationDate}">
+            <input type="date" class="" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate | dateFormat" style="outline: none; text-align:right;"
+              min="${state.store.leaseNotificationDate}">
             <span class="" show.bind="errors.email">ERROR WITH LEASE EXPIRATION DATE</span>
           </fieldset>
         </div>
         <div class="">
           <fieldset class=" ">
             <label class=" " for="comments">COMMENTS</label>
-            <textarea type="text" class="" name="comments" value.bind="state.store.comments" style="outline: none; text-align:right;" ></textarea>
+            <textarea type="text" class="" name="comments" value.bind="state.store.comments" style="outline: none; text-align:right;"></textarea>
             <span class="" show.bind="errors.email">ERROR WITH NAME</span>
           </fieldset>
         </div>

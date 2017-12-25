@@ -33,19 +33,20 @@ export class StorePage {
   }
 
   load() {
-    const onError = error => {
+    const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error.response)
+      c.emitter.publish('notify-error', error.response)
     }
 
-    const onSuccess = store => {
-      this.data.store = store
-      this.state.store = clone(this.data.store)
+    const onSuccess = c => store => {
+      c.emitter.publish('loading-channel', false)
+      c.data.store = store
+      c.state.store = clone(c.data.store)
     }
 
     loadTask(this.http)(this.storeId)
       .chain(getBrandTask(this.http))
-      .fork(onError, onSuccess)
+      .fork(onError(this), onSuccess(this))
   }
 
   editForm() {

@@ -41,20 +41,20 @@
           <div class="field-body">
             <label class="label" for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
             <div class="control">
-              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate"
-                disabled.bind="isDisabled" max="${state.store.leaseNotificationDate}">
+              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate | dateFormat"
+                disabled.bind="isDisabled" max="${state.store.leaseNotificationDate}" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
               <p>
-                <span if.bind="isEditable">previous date:</span> ${state.store.leaseExpirationDate | leaseDateFormat} </p>
+                <span if.bind="isEditable">previous date:</span> ${state.store.leaseExpirationDate | dateFormat} </p>
             </div>
           </div>
 
           <div class="field-body">
             <label class="label" for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
             <div class="control">
-              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate"
+              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate | dateFormat"
                 disabled.bind="isDisabled" min="${state.store.leaseExpirationDate}">
               <p>
-                <span if.bind="isEditable">previous date:</span> ${state.store.leaseNotificationDate | leaseDateFormat} </p>
+                <span if.bind="isEditable">previous date:</span> ${state.store.leaseNotificationDate | dateFormat} </p>
             </div>
           </div>
         </div>

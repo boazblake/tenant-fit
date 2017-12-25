@@ -17,16 +17,9 @@ export class BlobToUrlValueConverter {
   }
 }
 
-export class LeaseDateFormatValueConverter {
+export class DateFormatValueConverter {
   toView(value) {
-    return moment.utc(value).format('ll')
-  }
-}
-
-export class TruncateTo50ValueConverter {
-  toView(value) {
-    console.log(value)
-    // return value.slice(0,5)
+    return moment.utc(value).format('YYYY-MM-DD')
   }
 }
 
