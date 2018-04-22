@@ -1,0 +1,7 @@
+<template>
+  <div class="sorterDropdown">
+    <select class="sorterDropDown" value.bind="sorter"  change.delegate="pub()" aria-label="Sort stores by option">
+      <option repeat.for="sorter of sorters" model.bind="sorter" >${sorter.key}</option>
+    </select>
+  </div>
+</template>

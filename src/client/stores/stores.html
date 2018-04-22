@@ -1,0 +1,32 @@
+<template >
+  <require from="./store/store"></require>
+  <require from="../toolbar/toolbar"></require>
+
+  <div class="container" >
+    <toolbar props.bind="state.props"></toolbar>
+    <div show.bind="state.isCard" class="section">
+      <div class="columns is-multiline">
+        <store repeat.for="store of state.stores" class="column" s.bind="store" is-card.bind="state.isCard"></store>
+      </div>
+    </div>
+
+
+    <div show.bind="!state.isCard" class="section">
+      <table  class="table is-striped">
+        <thead>
+          <tr>
+            <th>BRAND</th>
+            <th>STORE NAME</th>
+            <th>PROPERTY LOCATED AT</th>
+            <th>LEASE NOTIFICATION DATE</th>
+            <th>LEASE EXPIRATION DATE</th>
+            <th>INFO</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+          <tbody as-element="store" repeat.for="store of state.stores" s.bind="store"  is-card.bind="state.isCard"></tbody>
+      </table>
+    </div>
+  </div>
+
+</template >

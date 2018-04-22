@@ -1,0 +1,50 @@
+<template>
+  <require from="./styles.css"></require>
+  <require from="valueConverters/index"></require>
+  <require from="components/delete/delete"></require>
+  <require from="components/update/update"></require>
+
+  <div class="box">
+    <div class="title is-4 menu-label">DETAILS</div>
+    <div class="field-body">
+      <label class="label" for="name">Name</label>
+      <div class="control">
+        <input class="input is-expanded" type="text" name="name" value.bind="state.user.name" disabled.bind="isDisabled">
+      </div>
+    </div>
+
+    <div class="field-body">
+      <label class="label" for="email">EMAIL</label>
+      <div class="control">
+        <input class="input is-expanded" type="text" name="email" value.bind="state.user.email" disabled.bind="isDisabled">
+      </div>
+    </div>
+
+    <div class="field-body">
+      <label class="label" for="password">PASSWORD</label>
+      <div class="control">
+        <input class="input is-expanded" type="text" name="password" value.bind="state.user.password" disabled.bind="isDisabled">
+      </div>
+    </div>
+
+    <div class="field-body">
+      <label class="label" for="cellPhone">CELLPHONE</label>
+      <div class="control">
+        <input class="input is-expanded" type="number" name="cellPhone" value.bind="state.user.cellPhone" disabled.bind="isDisabled">
+      </div>
+    </div>
+
+    <div class="field is-left">
+      <label class="field-label" for="isAdmin">Is Admin</label>
+      <div class="control">
+        <input class="checkbox" type="checkbox" name="isAdmin" checked.bind="state.user.isAdmin" disabled.bind="isDisabled">
+      </div>
+    </div>
+
+    <update is-disabled.bind="isDisabled" type="'user'" editable.bind="state.user" show.bind="!isLocked"></update>
+    <delete deletable.bind="state.user" type="'user'" show.bind="!isDisabled && !isLocked"></delete>
+    <button show.bind="!isDisabled && !isLocked" class="button is-success" click.trigger="submit()">SUBMIT</button>
+
+  </div>
+
+  <template>

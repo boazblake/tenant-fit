@@ -1,0 +1,12 @@
+<template>
+  <require from="./tenent/tenant"></require>
+
+  <aside class="box menu">
+    <div class="title is-4 menu-label">TENANTS</div>
+    <ul class="menu-list">
+      <li repeat.for="t of state.tenants" element.ref="tenantRef">
+        <tenant tenant.bind="t" user-id.bind="userId" admin-id.bind="adminId" is-locked.bind="isLocked"></tenant>
+      </li>
+    </ul>
+  </aside>
+</template>

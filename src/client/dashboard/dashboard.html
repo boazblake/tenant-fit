@@ -1,0 +1,18 @@
+<template >
+  <require from="./styles.css"></require>
+
+  <div class="container">
+    <ul class="tabs" router.bind="router">
+      <li repeat.for="row of router.navigation" class=" ${row.isActive ? 'is-active' : ''}">
+        <a class="" show.bind="! row.settings.icon" href.bind="row.href">${row.title}</a>
+        <a class="" show.bind=" row.settings.icon" href.bind="row.href">
+          <i show.bind="row.settings.icon" class="">${row.title}</i>
+        </a>
+
+      </li>
+    </ul>
+
+    <router-view class="${router.isNavigating ? 'navigating' : ''}" swap-order="after" ></router-view>
+  </div>
+
+</template>

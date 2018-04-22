@@ -55,6 +55,6 @@ export class Login {
   toClient(user) {
     sessionStorage.setItem('userName', JSON.stringify(user.name))
     sessionStorage.setItem('userId', JSON.stringify(user.id))
-    this.router.navigateToRoute('home', {id: user.id})
+    this.router.navigateToRoute('client', {id: user.id})
   }
 }

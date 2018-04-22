@@ -1,0 +1,54 @@
+article.media.box {
+  display:inline-table;
+}
+
+article.media.box.list {
+  display: inline-flex;
+  width: 100%;
+}
+
+.tile.container.is-fluid.list {
+  display: flow-root;
+}
+
+.tile.container {
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  padding: 10px
+}
+
+  .body.list
+, .media-content.list
+, .media.right.list
+, .content.list {
+  display:flex;
+}
+
+
+.card:hover {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+}
+
+.card-header-img {
+  width: 60px;
+  height: 60px;
+}
+
+.fa-flag,
+.fa-fire {
+  color: red;
+}
+
+
+.listView {
+  border-width: 4px;
+}
+
+.cardView {
+  border-width: 2px;
+}

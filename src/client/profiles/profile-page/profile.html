@@ -1,0 +1,45 @@
+<template>
+  <require from="./styles.css"></require>
+  <require from="valueConverters/index"></require>
+  <require from="components/delete/delete"></require>
+  <require from="components/locker/locker"></require>
+  <require from="./profile/profile"></require>
+  <require from="./tenant-section/tenant-section"></require>
+  <require from="./store-section/store-section"></require>
+
+
+  <div class="container">
+    <div class="hero">
+      <div class="level">
+        <div class="level-left">
+          <div class="is-grouped is-small">
+            <locker is-locked.bind="isLocked"></locker>
+            <i if.bind="user.isAdmin" class="fa fa-user-circle-o"></i>
+          </div>
+        </div>
+        <div class="level-item">
+          <div class="field control title" css.bind="isRemovable ? 'background-color:red;' :''">
+            <strong>
+              <div class="title is-1">${user.name}</div>
+            </strong>
+          </div>
+        </div>
+        <div class="field level-right">
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-half">
+          <profile user-id.bind="userId" admin-id.bind="adminId" is-locked.bind="isLocked"></profile>
+        </div>
+        <div class="column is-half">
+          <tenant-section user-id.bind="userId" admin-id.bind="adminId" is-locked.bind="isLocked"></tenant-section>
+        </div>
+      </div>
+      <div class="column is-full">
+        <store-section user-id.bind="userId" admin-id.bind="adminId"></store-section>
+      </div>
+    </div>
+  </div>
+
+  <template>

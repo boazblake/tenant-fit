@@ -1,0 +1,80 @@
+<template>
+  <require from="./styles.css"></require>
+  <require from="valueConverters/index"></require>
+
+  <ai-dialog class="hero" au-animate>
+    <ai-dialog-header class="box">
+      <div class="is-grouped is-small">
+        <abbr title="Store has not been confirmed">
+          <i if.bind="!state.store.isConfirmed" class="fa fa-flag"></i>
+        </abbr>
+      </div>
+      <div class="field control title">
+        <strong>
+          ${state.store.name}
+        </strong>
+      </div>
+    </ai-dialog-header>
+    <ai-dialog-body class="container">
+      <div class="box">
+        <div class="field-body">
+          <label class="label" for="propertyName">Property Name</label>
+          <div class="control">
+            ${state.store.propertyName}
+          </div>
+        </div>
+
+        <div class="field-body">
+          <label class="label" for="landlordEntity">Landlord</label>
+          <div class="control">
+            ${state.store.landlordEntity}
+          </div>
+        </div>
+
+        <div class="is-grouped">
+          <div class="field-body">
+            <label class="label" for="leaseExpirationDate">LEASE EXPIRATION DATE</label>
+            <div class="control">
+              <input if.bind="isEditable" class="input" type="date" name="leaseExpirationDate" value.bind="state.store.leaseExpirationDate | dateFormat"
+                disabled.bind="isDisabled" max="${state.store.leaseNotificationDate}" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+              <p>
+                <span if.bind="isEditable">previous date:</span> ${state.store.leaseExpirationDate | dateFormat} </p>
+            </div>
+          </div>
+
+          <div class="field-body">
+            <label class="label" for="leaseNotificationDate">LEASE NOTIFICATION DATE</label>
+            <div class="control">
+              <input if.bind="isEditable" class="input" type="date" name="leaseNotificationDate" value.bind="state.store.leaseNotificationDate | dateFormat"
+                disabled.bind="isDisabled" min="${state.store.leaseExpirationDate}">
+              <p>
+                <span if.bind="isEditable">previous date:</span> ${state.store.leaseNotificationDate | dateFormat} </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-left">
+          <label class="field-label" for="emailOptIn">Subscribe to Email Notifications</label>
+          <div class="control">
+            <input class="checkbox" type="checkbox" name="emailOptIn" checked.bind="state.store.emailOptIn">
+          </div>
+        </div>
+
+        <div class="field is-left">
+          <label class="field-label" for="comments">COMMENTS</label>
+          <div class="control">
+            <textarea class="textarea" type="text" name="comments" value.two-way="state.store.comments" change.delegate="updateComments()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </ai-dialog-body>
+
+    <ai-dialog-footer class="box">
+      <button class="button is-danger" click.trigger="goBack()">DISMISS</button>
+      <button class="button is-success" click.trigger="validateStore()">UPDATE</button>
+    </ai-dialog-footer>
+    </div>
+  </ai-dialog>
+  <template>

@@ -1,0 +1,13 @@
+<template>
+  <require from="./multi-select/multi-select"></require>
+
+  <div class="is-grouped level-item ">
+    <div if.bind="isCard" >
+      <i class="button fa fa-list" click.delegate="pub()"></i>
+    </div>
+    <div if.bind="!isCard" class="field is-grouped">
+      <i class="button fa fa-table" click.delegate="pub()"></i>
+      <multi-select></multi-select>
+    </div>
+  </div>
+</template>

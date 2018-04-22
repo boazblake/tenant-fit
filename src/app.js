@@ -16,8 +16,8 @@ const routes = [
   },
   {
     route: 'tenantfit/dashboard/:id',
-    name: 'home',
-    moduleId: PLATFORM.moduleName('./home/home'),
+    name: 'client',
+    moduleId: PLATFORM.moduleName('./client/client'),
     nav: false,
     title: 'CLIENT',
     settings: { roles: ['auth'] }

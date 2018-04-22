@@ -1,8 +1,0 @@
-<template>
-  <require from="components/nav-bar/nav-bar"></require>
-  <require from="components/footer/footer"></require>
-
-  <nav-bar router.bind="router"></nav-bar>
-  <router-view class="${router.isNavigating ? 'navigating' : ''}" swap-order="after"></router-view>
-
-</template>
