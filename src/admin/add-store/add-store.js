@@ -6,13 +6,12 @@ import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 import { log } from 'utilities'
 
-
 @inject(HttpClient, DialogService, EventAggregator)
 export class AddStore {
-  constructor( http, modal, emitter ) {
+  constructor(http, modal, emitter) {
     this.disposables = new Set()
     this.adminId = null
-    this.data ={}
+    this.data = {}
     this.state = {}
     this.http = http
     this.isDisabled = false
@@ -25,23 +24,21 @@ export class AddStore {
       brand: false,
       storeUnit: false
     }
+    this.form = {}
   }
 
   bind() {
     this.adminId = CheckAuth.userId()
   }
 
-  attached(){
+  attached() {
     this.load()
     this.emitter.publish('loading-channel', false)
   }
 
   load() {
-    const handler = c => msg =>
-      c.show = msg
+    const handler = c => msg => (c.show = msg)
 
     this.emitter.subscribe('show-channel', handler(this))
   }
-
-
 }

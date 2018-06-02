@@ -1,8 +1,7 @@
 import { DialogService } from 'aurelia-dialog'
 import { EventAggregator } from 'aurelia-event-aggregator'
-import { customElement, useView, inject } from 'aurelia-framework'
+import { inject } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
-import { Router } from 'aurelia-router'
 import { style } from './styles.css'
 import { CheckAuth } from 'authConfig'
 
@@ -76,5 +75,7 @@ export class Dashboard {
     this.userId = CheckAuth.userId()
   }
 
-  attached(params) {}
+  attached(params) {
+    console.log(params, this.userId)
+  }
 }

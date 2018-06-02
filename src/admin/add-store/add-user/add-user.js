@@ -7,16 +7,14 @@ import { validateUserTask } from './validations'
 import { CheckAuth } from 'authConfig'
 import styles from './styles.css'
 
-
 @inject(DialogService, EventAggregator, HttpClient)
 export class addUser {
   @bindable adminId
 
-  constructor( modal, emitter, http ) {
+  constructor(modal, emitter, http) {
     this.disposables = new Set()
-    this.adminId = null
-    this.data ={
-      users:[]
+    this.data = {
+      users: []
     }
     this.state = {}
     this.http = http
@@ -27,22 +25,20 @@ export class addUser {
     this.isDisabled = false
   }
 
-  attached(){
+  attached() {
     this.emitter.publish('loading-channel', false)
     this.load()
   }
 
-  load(){
-    const onSuccess = c => users => {
-      this.data.users = users
-    }
+  load() {
+    const onSuccess = c => users => (c.data.users = users)
 
     const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error.response)
+      c.emitter.publish('notify-error', error.response)
     }
 
-    loadTask(this.http)(this.adminId).fork(onError(this), onSuccess(this))
+    loadTask(this.http).fork(onError(this), onSuccess(this))
   }
 
   next() {
@@ -58,46 +54,50 @@ export class addUser {
 
   validateUser() {
     const onSuccess = c => validatedUser => {
-      this.validatedUser = validatedUser
+      c.validatedUser = validatedUser
 
       validatedUser.id
-        ? this.storeUser(validatedUser)
-        : this.registerUser(validatedUser)
+        ? c.storeUser(validatedUser)
+        : c.registerUser(validatedUser)
     }
 
     const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error)
+      c.emitter.publish('notify-error', error)
     }
 
     validateUserTask(this.state.user).fork(onError(this), onSuccess(this))
   }
 
   registerUser(_user) {
-    const onError = c => error =>{
+    const onError = c => error => {
       console.error(error)
-      this.emitter.publish('notify-error', error.response)
+      c.emitter.publish('notify-error', error.response)
     }
 
     const onSuccess = c => user => {
-      this.emitter.publish('notify-success', `${user.name} was sucessfully added to the database`)
-      this.isDisabled = true
-      this.storeUser(user)
+      c.emitter.publish(
+        'notify-success',
+        `${user.name} was sucessfully added to the database`
+      )
+      c.isDisabled = true
+      c.storeUser(user)
     }
 
-    registerTask(this.http)(this.adminId)(_user).fork(onError(this), onSuccess(this))
+    registerTask(this.http)(this.adminId)(_user).fork(
+      onError(this),
+      onSuccess(this)
+    )
   }
 
   storeUser(user) {
     sessionStorage.setItem('clientName', JSON.stringify(user.name))
     sessionStorage.setItem('clientId', JSON.stringify(user.id))
     // this.emitter.publish('show-channel', {user: false})
-    this.emitter.publish('show-channel', {tenant: true})
+    this.emitter.publish('show-channel', { tenant: true })
   }
 
   DropDownChanged(user) {
-    user.name === ""
-      ? this.clearUser()
-      : this.isDisabled = true
-    }
- }
+    user.name === '' ? this.clearUser() : (this.isDisabled = true)
+  }
+}

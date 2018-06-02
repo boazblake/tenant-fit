@@ -20,7 +20,7 @@ const routes = [
     moduleId: PLATFORM.moduleName('./client/client'),
     nav: false,
     title: 'CLIENT',
-    settings: { roles: ['auth'] }
+    settings: { auth: true, roles: ['auth'] }
   },
   {
     route: 'tenantfit/:id',
@@ -28,7 +28,7 @@ const routes = [
     moduleId: PLATFORM.moduleName('./admin/admin'),
     nav: false,
     title: 'ADMIN',
-    settings: { roles: ['auth', 'admin'] }
+    settings: { auth: true, roles: ['auth', 'admin'] }
   }
 ]
 
@@ -57,9 +57,10 @@ export class App {
   }
 
   configureRouter(config, router) {
+    console.log(CheckAuth)
     config.title = 'Tenant Fit'
     config.options.pushState = true
-    config.addPipelineStep('authorize', AuthorizeStep)
+    // config.addPipelineStep('authorize', AuthorizeStep)
     config.exportToRouter(router)
     config.map(routes)
 

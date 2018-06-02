@@ -16,19 +16,18 @@ export const toRequest = userId => dto => ({
   ModifiedBy: userId
 })
 
-export const users = http => id =>
+export const users = http =>
   http.get(`https://buxy-proxy.herokuapp.com/users/allusers`)
 
-export const usersTask = http => id =>
-  new Task((rej, res) => users(http)(id).then(res, rej))
+export const usersTask = http =>
+  new Task((rej, res) => users(http).then(res, rej))
 
-export const loadTask = http =>
-  compose(
-    map(map(toViewModel)),
-    chain(eitherToTask),
-    map(parse),
-    usersTask(http)
-  )
+export const loadTask = compose(
+  map(map(toViewModel)),
+  chain(eitherToTask),
+  map(parse),
+  usersTask
+)
 
 // ===REGISTER USER============================================================
 export const add = http => data =>

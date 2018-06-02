@@ -1,12 +1,9 @@
 import { EventAggregator } from 'aurelia-event-aggregator'
-import { customElement, useView, inject } from 'aurelia-framework'
-import { HttpClient, json } from 'aurelia-http-client'
-import {PLATFORM} from 'aurelia-pal';
+import { inject } from 'aurelia-framework'
+import { HttpClient } from 'aurelia-http-client'
 import { Router } from 'aurelia-router'
-import { map } from 'ramda'
 import { CheckAuth } from 'authConfig'
-import { userModel, registerTask, loginTask } from './model'
-import { log } from 'utilities'
+import { userModel, loginTask } from './model'
 import { styles } from './styles.css'
 
 @inject(HttpClient, EventAggregator, Router)
@@ -45,16 +42,18 @@ export class Login {
   }
 
   toAdmin(user) {
-    sessionStorage.setItem('adminId', JSON.stringify(user.id))
-    sessionStorage.setItem('userId', JSON.stringify(user.id))
-    sessionStorage.setItem('isAdmin', JSON.stringify(user.isAdmin))
-    sessionStorage.setItem('userName', JSON.stringify(user.name))
-    this.router.navigateToRoute('admin', {id: user.id})
+    console.log(CheckAuth)
+    CheckAuth.toAdmin(user.id)
+    CheckAuth.toUserId(user.id)
+    CheckAuth.toUserName(user.name)
+    console.log(CheckAuth.userId())
+
+    this.router.navigateToRoute('admin', { id: CheckAuth.userId() })
   }
 
   toClient(user) {
-    sessionStorage.setItem('userName', JSON.stringify(user.name))
-    sessionStorage.setItem('userId', JSON.stringify(user.id))
-    this.router.navigateToRoute('client', {id: user.id})
+    CheckAuth.toUserName(user.name)
+    CheckAuth.toUserId(user.id)
+    this.router.navigateToRoute('client', { id: CheckAuth.userId() })
   }
 }
